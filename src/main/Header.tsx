@@ -1,9 +1,9 @@
 import React, {useState} from 'react';
 import {View, Image, TouchableOpacity, TextInput} from 'react-native';
 import {lightTheme} from '../styles/colors';
-import styles from '../styles/HeaderStyles';
+import styles from '../styles/HeaderStyle';
 
-function Header() {
+function Header(): JSX.Element {
   const [text, setText] = useState('');
   return (
     <View style={styles.headerBox}>

@@ -1,8 +1,10 @@
 import React from 'react';
-import {ScrollView, StatusBar, StyleSheet, Text} from 'react-native';
+import {ScrollView, StatusBar} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Header from './Header';
-import {lightTheme} from '../styles/colors';
+import VocaSection from './VocaSection';
+import styles from '../styles/MainPageStyle';
+import ServiceSection from './ServiceSection';
 
 function MainPage(): JSX.Element {
   return (
@@ -12,24 +14,15 @@ function MainPage(): JSX.Element {
         backgroundColor="transparent"
         translucent={true}
       />
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        contentContainerStyle={styles.scrollViewContent}
+        style={styles.scrollView}>
         <Header />
-        <Text>MainPage</Text>
+        <VocaSection />
+        <ServiceSection />
       </ScrollView>
     </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: lightTheme.white,
-  },
-  scrollView: {
-    borderWidth: 1,
-    borderColor: 'cyan',
-    marginHorizontal: 20,
-  },
-});
 
 export default MainPage;
