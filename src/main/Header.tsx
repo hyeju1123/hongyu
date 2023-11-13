@@ -2,16 +2,16 @@ import React, {useState} from 'react';
 import {View, Image, TouchableOpacity, TextInput} from 'react-native';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/HeaderStyle';
+import images from '../styles/images';
 
 function Header(): JSX.Element {
   const [text, setText] = useState('');
+  const {mainLantern, pencilWithZh} = images.module;
+
   return (
     <View style={styles.headerBox}>
       <TouchableOpacity activeOpacity={0.7}>
-        <Image
-          style={styles.logoImg}
-          source={require('../../images/mainLantern.png')}
-        />
+        <Image style={styles.logoImg} source={mainLantern} />
       </TouchableOpacity>
       <View style={styles.inputSection}>
         <TextInput
@@ -22,10 +22,7 @@ function Header(): JSX.Element {
           placeholderTextColor={lightTheme.ligthGray}
         />
         <TouchableOpacity style={styles.pencilWithZhImgWrapper}>
-          <Image
-            style={styles.pencilWithZhImg}
-            source={require('../../images/pencilWithZh.png')}
-          />
+          <Image style={styles.pencilWithZhImg} source={pencilWithZh} />
         </TouchableOpacity>
       </View>
     </View>

@@ -4,12 +4,23 @@ import {lightTheme} from '../styles/colors';
 
 type CardProps = PropsWithChildren<{
   marginVertical?: number;
+  theme?: string;
 }>;
 
-function Card({children, marginVertical = 5}: CardProps): JSX.Element {
+function Card({
+  children,
+  marginVertical = 5,
+  theme = 'red',
+}: CardProps): JSX.Element {
   return (
-    <View style={[styles.shdaow, {marginVertical}]}>
-      <View style={styles.card}>{children}</View>
+    <View
+      style={[
+        theme === 'red' ? styles.shdaow : styles.whiteShdaow,
+        {marginVertical},
+      ]}>
+      <View style={theme === 'red' ? styles.card : styles.whiteCard}>
+        {children}
+      </View>
     </View>
   );
 }
@@ -24,6 +35,18 @@ const styles = StyleSheet.create({
   },
   shdaow: {
     backgroundColor: lightTheme.darkRed,
+    borderRadius: 8,
+    paddingBottom: 3,
+  },
+  whiteCard: {
+    display: 'flex',
+    justifyContent: 'center',
+    backgroundColor: lightTheme.white,
+    borderRadius: 8,
+    padding: 10,
+  },
+  whiteShdaow: {
+    backgroundColor: lightTheme.shadowGray,
     borderRadius: 8,
     paddingBottom: 3,
   },

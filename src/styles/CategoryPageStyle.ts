@@ -1,24 +1,29 @@
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
+import {fonts} from './fonts';
 
 type Style = {
   container: ViewStyle;
   scrollView: ViewStyle;
-  scrollViewContent: ViewStyle;
+  text: TextStyle;
 };
 
-export const commonPart: Style = {
+const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.red,
   },
   scrollView: {
     marginHorizontal: 20,
+    marginVertical: 5,
   },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
+  text: {
+    fontFamily: fonts.mainBold,
+    color: lightTheme.black,
+    fontSize: 25,
+    marginVertical: 10,
+    alignSelf: 'center',
   },
 };
 

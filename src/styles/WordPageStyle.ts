@@ -1,24 +1,20 @@
-import {StyleSheet, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
 
 type Style = {
   container: ViewStyle;
-  scrollView: ViewStyle;
-  scrollViewContent: ViewStyle;
+  flatlist: ViewStyle;
 };
 
-export const commonPart: Style = {
+const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.red,
   },
-  scrollView: {
+  flatlist: {
     marginHorizontal: 20,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
+    marginVertical: 5,
   },
 };
 
@@ -27,10 +23,6 @@ const handleStyles = () => {
     ? StyleSheet.create({...commonPart})
     : StyleSheet.create({
         ...commonPart,
-        scrollView: {
-          ...commonPart.scrollView,
-          marginHorizontal: 35,
-        },
       });
 };
 
