@@ -14,6 +14,8 @@ import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import {useRealm} from '../context/RealmConfigContext';
 import {useIsFocused} from '@react-navigation/native';
+import {useSetRecoilState} from 'recoil';
+import {toastState} from '../recoil/ToastState';
 import useDebounce from '../hooks/debounce';
 import useDidMountEffect from '../hooks/didMount';
 import {selectWord, getDefaultWord} from '../service/selectData';
@@ -48,6 +50,7 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
   const [exToChage, setExToChange] = useState(wordData?.explanation || '');
   const [bookmark, setBookmark] = useState(wordData?.bookmarked);
   const debouncedEx = useDebounce(exToChage, 1000);
+  const handleToastState = useSetRecoilState(toastState);
 
   console.log('wordData: ', wordData);
 
@@ -55,6 +58,11 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
     () => {
       console.log('hello');
       updateExplanation(realm, id, debouncedEx);
+
+      handleToastState({text: '메모가 저장되었습니다!', status: true});
+      setTimeout(() => {
+        handleToastState(prev => ({...prev, status: false}));
+      }, 3000);
     },
     [debouncedEx, id, realm],
     () => {

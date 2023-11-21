@@ -5,7 +5,7 @@ import {
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import CategoryPage from '../hsk/CategoryPage';
-import {RootStackParamList} from '../../App';
+import {RootStackParamList} from './RootNavigation';
 import WordPage from '../hsk/WordPage';
 import WordDetailPage from '../bookmark/WordDetailPage';
 import EditWordPage from '../bookmark/EditWordPage';

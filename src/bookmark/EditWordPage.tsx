@@ -76,6 +76,7 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
           ))}
         </TouchableOpacity>
         <TextInput
+          multiline
           style={styles.textInput}
           value={textVal.meaning}
           onChangeText={value => handleChangeVal('meaning', value)}

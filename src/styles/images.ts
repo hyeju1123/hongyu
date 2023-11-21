@@ -14,6 +14,8 @@ const images = {
     search: require('../../images/search.png'),
     dumpling: require('../../images/dumpling.png'),
     checked: require('../../images/checked.png'),
+    checkedGreen: require('../../images/checkedGreen.png'),
+    closed: require('../../images/closed.png'),
   },
   wordClass: {
     명사: require('../../images/wordClass/noun.png'),
