@@ -9,16 +9,28 @@ import WordCard from '../module/WordCard';
 import {FlatList} from 'react-native';
 import {useQuery} from '../context/RealmConfigContext';
 import Voca from '../model/Voca';
+import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 
-type WordPageProps = NativeStackScreenProps<HskStackParamList, 'WordPage'>;
+type WordPageProps = NativeStackScreenProps<
+  HskStackParamList | BookmarkStackParamList,
+  'WordPage'
+>;
 
 function WordPage({navigation, route}: WordPageProps): JSX.Element {
-  const {goBack} = navigation;
-  const {level, category} = route.params;
+  const {goBack, navigate} = navigation;
+  const {level, category, fromBookmark} = route.params;
 
   const words = useQuery<Voca>('Voca', vocas => {
-    return vocas.filtered('level == $0 && theme == $1', level, category);
+    return fromBookmark
+      ? level === 0
+        ? vocas.filtered('bookmarked == $0', true)
+        : vocas.filtered('level == $0 && bookmarked == $1', level, true)
+      : vocas.filtered('level == $0 && theme == $1', level, category);
   });
+
+  const moveToDetailPage = (id: number) => {
+    navigate('WordDetailPage', {id});
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -26,7 +38,9 @@ function WordPage({navigation, route}: WordPageProps): JSX.Element {
       <FlatList
         style={styles.flatlist}
         data={words}
-        renderItem={({item}) => <WordCard wordData={item} />}
+        renderItem={({item}) => (
+          <WordCard navigate={moveToDetailPage} wordData={item} />
+        )}
         keyExtractor={({_id}) => _id.toString()}
       />
     </SafeAreaView>

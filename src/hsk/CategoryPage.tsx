@@ -24,8 +24,6 @@ function CategoryPage({navigation, route}: CategoryPageProps): JSX.Element {
   });
   const filteredTheme = filtered.map(voca => voca.theme);
 
-  console.log(filteredTheme);
-
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar

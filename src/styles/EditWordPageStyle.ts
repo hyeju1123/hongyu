@@ -1,4 +1,4 @@
-import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle, ImageStyle} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
 import {fonts} from './fonts';
@@ -6,9 +6,9 @@ import {fonts} from './fonts';
 type Style = {
   container: ViewStyle;
   scrollView: ViewStyle;
-  text: TextStyle;
-  bottomText: TextStyle;
-  bottomRedText: TextStyle;
+  textInput: TextStyle;
+  rowWrapper: ViewStyle;
+  wordclassImg: ImageStyle;
 };
 
 const commonPart: Style = {
@@ -20,21 +20,29 @@ const commonPart: Style = {
     marginHorizontal: 20,
     marginVertical: 5,
   },
-  text: {
-    fontFamily: fonts.mainBold,
-    color: lightTheme.black,
-    fontSize: 25,
-    marginVertical: 10,
-    alignSelf: 'center',
+  textInput: {
+    borderRadius: 10,
+    backgroundColor: lightTheme.white,
+    padding: 20,
+    marginTop: 20,
+    fontFamily: fonts.hanzi,
+    fontSize: 20,
   },
-  bottomText: {
-    fontFamily: fonts.mainBold,
-    color: lightTheme.shadowGray,
-    fontSize: 13,
-    alignSelf: 'center',
+  rowWrapper: {
+    borderRadius: 10,
+    backgroundColor: lightTheme.white,
+    padding: 20,
+    marginTop: 20,
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
   },
-  bottomRedText: {
-    color: lightTheme.red,
+  wordclassImg: {
+    resizeMode: 'stretch',
+    width: 65,
+    height: 35,
+    marginRight: 10,
+    marginVertical: 1,
   },
 };
 

@@ -36,12 +36,16 @@ function VocaSection({navigation}: VocaSectionProps) {
           </TouchableOpacity>
         ))}
       </View>
-      <Card>
-        <View style={styles.scrap}>
-          <Text style={styles.scrapText}>내 단어장</Text>
-          <Image style={styles.scrapImg} source={lanternOn} />
-        </View>
-      </Card>
+      <TouchableOpacity
+        onPress={() => navigation.navigate('BookmarkNavigation')}
+        activeOpacity={0.7}>
+        <Card>
+          <View style={styles.scrap}>
+            <Text style={styles.scrapText}>내 단어장</Text>
+            <Image style={styles.scrapImg} source={lanternOn} />
+          </View>
+        </Card>
+      </TouchableOpacity>
     </View>
   );
 }

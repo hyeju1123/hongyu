@@ -5,23 +5,23 @@ import {fonts} from '../styles/fonts';
 import Voca from '../model/Voca';
 import {useRealm} from '../context/RealmConfigContext';
 import images from '../styles/images';
+import {updateBookmark} from '../service/updateData';
 
 type WordCardProps = PropsWithChildren<{
   wordData: Voca;
   marginVertical?: number;
+  navigate: (level: number) => void;
 }>;
 
-function WordCard({wordData, marginVertical = 7}: WordCardProps): JSX.Element {
+function WordCard({
+  wordData,
+  marginVertical = 7,
+  navigate,
+}: WordCardProps): JSX.Element {
   const realm = useRealm();
   const [touched, setTouched] = useState(false);
-  const {word, meaning, intonation, bookmarked} = wordData;
-  const {sound, lanternOff, lanternOn, edit} = images.module;
-
-  const handleBookmark = (wordToChange: Voca, bookmark: boolean) => {
-    realm.write(() => {
-      wordToChange.bookmarked = bookmark;
-    });
-  };
+  const {_id, word, meaning, intonation, bookmarked} = wordData;
+  const {sound, lanternOff, lanternOn, search} = images.module;
 
   return (
     <View style={[styles.container, {marginVertical}]}>
@@ -32,7 +32,7 @@ function WordCard({wordData, marginVertical = 7}: WordCardProps): JSX.Element {
         <Text style={styles.hanzi}>{word}</Text>
         <TouchableOpacity
           activeOpacity={0.7}
-          onPress={() => handleBookmark(wordData, !bookmarked)}>
+          onPress={() => updateBookmark(realm, _id, !bookmarked)}>
           <Image
             style={styles.img}
             source={bookmarked ? lanternOn : lanternOff}
@@ -50,11 +50,19 @@ function WordCard({wordData, marginVertical = 7}: WordCardProps): JSX.Element {
         onPress={() => setTouched(!touched)}>
         {touched ? (
           <>
-            <TouchableOpacity activeOpacity={0.7} style={styles.editBtn}>
-              <Image style={styles.editImg} source={edit} />
+            <TouchableOpacity
+              onPress={() => navigate(_id)}
+              activeOpacity={0.7}
+              style={styles.searchBtn}>
+              <Image style={styles.searchImg} source={search} />
             </TouchableOpacity>
             <Text style={styles.pinyin}>{intonation}</Text>
-            <Text style={styles.meaning}>{meaning}</Text>
+            <Text
+              textBreakStrategy="balanced"
+              lineBreakStrategyIOS="hangul-word"
+              style={styles.meaning}>
+              {meaning}
+            </Text>
           </>
         ) : (
           <Text style={styles.tmoneyText}>touch</Text>
@@ -107,17 +115,18 @@ const styles = StyleSheet.create({
     fontSize: 15,
     textAlign: 'center',
     color: lightTheme.black,
+    lineHeight: 27,
     marginTop: 5,
     marginBottom: -3,
   },
-  editBtn: {
+  searchBtn: {
     position: 'absolute',
-    top: 5,
-    right: 5,
+    top: 8,
+    right: 8,
   },
-  editImg: {
-    width: 20,
-    height: 20,
+  searchImg: {
+    width: 15,
+    height: 15,
   },
 });
 

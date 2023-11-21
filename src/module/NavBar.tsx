@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, ReactElement} from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {lightTheme} from '../styles/colors';
 import {fonts} from '../styles/fonts';
@@ -8,9 +8,10 @@ type NavBarProps = PropsWithChildren<{
   goBack: () => void;
   title: string;
   theme: string;
+  rightButton?: ReactElement;
 }>;
 
-function NavBar({goBack, title, theme}: NavBarProps): JSX.Element {
+function NavBar({goBack, title, theme, rightButton}: NavBarProps): JSX.Element {
   const {arrow} = images.module;
 
   return (
@@ -19,6 +20,7 @@ function NavBar({goBack, title, theme}: NavBarProps): JSX.Element {
         <Image style={styles.arrow} source={arrow} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
+      {rightButton}
     </View>
   );
 }
