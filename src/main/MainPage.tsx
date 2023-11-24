@@ -1,12 +1,12 @@
 import React from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, StatusBar} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
+import {RootStackParamList} from '../navigation/RootNavigation';
 import Header from './Header';
 import VocaSection from './VocaSection';
-import styles from '../styles/MainPageStyle';
 import ServiceSection from './ServiceSection';
-import {RootStackParamList} from '../navigation/RootNavigation';
+import styles from '../styles/MainPageStyle';
 
 type MainPageProps = NativeStackScreenProps<RootStackParamList, 'MainPage'>;
 

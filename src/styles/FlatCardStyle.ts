@@ -1,4 +1,10 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {
+  Dimensions,
+  ImageStyle,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
 import {fonts} from './fonts';
@@ -10,6 +16,8 @@ type Style = {
   title: TextStyle;
   desc: TextStyle;
 };
+
+const width = Dimensions.get('screen').width;
 
 const handleStyles = () => {
   const commonPart: Style = {
@@ -23,8 +31,8 @@ const handleStyles = () => {
       marginVertical: 5,
     },
     img: {
-      width: 150,
-      height: 90,
+      width: width * 0.4,
+      height: width * 0.24,
     },
     textWrapper: {
       flex: 1,
@@ -32,13 +40,13 @@ const handleStyles = () => {
     title: {
       color: lightTheme.white,
       fontFamily: fonts.mainBold,
-      fontSize: 20,
+      fontSize: width * 0.045,
       alignSelf: 'flex-end',
     },
     desc: {
       color: lightTheme.white,
       fontFamily: fonts.main,
-      fontSize: 10,
+      fontSize: width * 0.023,
       alignSelf: 'flex-end',
       marginTop: 5,
     },

@@ -14,7 +14,7 @@ import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import {useRealm} from '../context/RealmConfigContext';
 import {useIsFocused} from '@react-navigation/native';
-import {useSetRecoilState} from 'recoil';
+import {useRecoilState, useSetRecoilState} from 'recoil';
 import {toastState} from '../recoil/ToastState';
 import useDebounce from '../hooks/debounce';
 import useDidMountEffect from '../hooks/didMount';
@@ -47,32 +47,35 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
     }
     return getDefaultWord();
   }, [realm, id, isFocused]);
-  const [exToChage, setExToChange] = useState(wordData?.explanation || '');
+  const [exToChange, setExToChange] = useState(wordData?.explanation || '');
   const [bookmark, setBookmark] = useState(wordData?.bookmarked);
-  const debouncedEx = useDebounce(exToChage, 1000);
-  const handleToastState = useSetRecoilState(toastState);
+  const debouncedEx = useDebounce(exToChange, 1000);
+  const [toastData, handleToastState] = useRecoilState(toastState);
 
-  console.log('wordData: ', wordData);
-
-  useDidMountEffect(
-    () => {
-      console.log('hello');
+  useDidMountEffect(() => {
+    if (wordData.explanation !== exToChange) {
       updateExplanation(realm, id, debouncedEx);
 
-      handleToastState({text: '메모가 저장되었습니다!', status: true});
+      handleToastState({
+        text: '메모가 저장되었습니다',
+        status: true,
+        icon: 'checkedGreen',
+      });
       setTimeout(() => {
         handleToastState(prev => ({...prev, status: false}));
       }, 3000);
-    },
-    [debouncedEx, id, realm],
-    () => {
-      console.log('bye');
-    },
-  );
+    }
+  }, [debouncedEx, id, realm]);
+
+  useDidMountEffect(() => {
+    if (isFocused) {
+      setExToChange(wordData.explanation || '');
+    }
+  }, [wordData, isFocused]);
 
   const {
     wordClass,
-    module: {lanternOffWhite, lanternOn},
+    module: {lanternOffWhite, lanternOn, sound},
   } = images;
   const {word, intonation, wordclass, meaning, bookmarked} = wordData;
 
@@ -96,8 +99,13 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
             theme={lightTheme.red}
             rightButton={<EditWordButton navigation={navigation} id={id} />}
           />
-          <ScrollView style={styles.scrollView}>
+          <ScrollView
+            contentContainerStyle={styles.scrollViewContent}
+            style={styles.scrollView}>
             <InfoCard>
+              <TouchableOpacity style={styles.soundButton}>
+                <Image style={styles.sound} source={sound} />
+              </TouchableOpacity>
               <Text style={styles.word}>{word}</Text>
               <Text style={styles.intonation}>{intonation}</Text>
             </InfoCard>
@@ -118,7 +126,7 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
             <InfoCard>
               <TextInput
                 style={styles.meaning}
-                value={exToChage}
+                value={exToChange}
                 onChangeText={setExToChange}
                 placeholder="# 메모를 남겨보세요."
               />

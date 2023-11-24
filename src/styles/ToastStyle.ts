@@ -1,14 +1,22 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {
+  Dimensions,
+  ImageStyle,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
   container: ViewStyle;
-  checkedImage: ImageStyle;
+  icon: ImageStyle;
   closeImage: ImageStyle;
   text: TextStyle;
 };
+
+const width = Dimensions.get('screen').width;
 
 const commonPart: Style = {
   container: {
@@ -18,8 +26,8 @@ const commonPart: Style = {
     backgroundColor: lightTheme.white,
     alignSelf: 'center',
     minWidth: '65%',
-    paddingVertical: 8,
-    paddingHorizontal: 10,
+    paddingVertical: width * 0.025,
+    paddingHorizontal: width * 0.028,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -33,19 +41,21 @@ const commonPart: Style = {
 
     elevation: 10,
   },
-  checkedImage: {
-    width: 13,
-    height: 13,
+  icon: {
+    width: width * 0.04,
+    height: width * 0.04,
   },
   closeImage: {
-    width: 8,
-    height: 8,
+    width: width * 0.025,
+    height: width * 0.025,
   },
   text: {
     flex: 1,
-    marginHorizontal: 5,
-    fontFamily: fonts.mainBold,
-    fontSize: 10,
+    flexWrap: 'wrap',
+    marginHorizontal: width * 0.02,
+    marginBottom: width * -1 * 0.015,
+    fontFamily: fonts.main,
+    fontSize: width * 0.03,
     color: lightTheme.black,
   },
 };
@@ -55,6 +65,25 @@ const handleStyles = () => {
     ? StyleSheet.create({...commonPart})
     : StyleSheet.create({
         ...commonPart,
+        container: {
+          ...commonPart.container,
+          paddingVertical: width * 0.015,
+          paddingHorizontal: width * 0.02,
+        },
+        icon: {
+          width: width * 0.025,
+          height: width * 0.025,
+        },
+        closeImage: {
+          width: width * 0.015,
+          height: width * 0.015,
+        },
+        text: {
+          ...commonPart.text,
+          fontSize: width * 0.016,
+          marginHorizontal: width * 0.015,
+          marginBottom: width * -1 * 0.01,
+        },
       });
 };
 

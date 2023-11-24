@@ -36,7 +36,6 @@ function CategoryPage({navigation, route}: CategoryPageProps): JSX.Element {
         {filteredTheme.map((category, idx) => (
           <TouchableOpacity
             onPress={() => navigate('WordPage', {level, category})}
-            activeOpacity={0.7}
             key={idx}>
             <Card marginVertical={10} theme="white">
               <Text style={styles.text}>{category}</Text>

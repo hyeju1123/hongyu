@@ -10,7 +10,7 @@ function Header(): JSX.Element {
 
   return (
     <View style={styles.headerBox}>
-      <TouchableOpacity activeOpacity={0.7}>
+      <TouchableOpacity>
         <Image style={styles.logoImg} source={mainLantern} />
       </TouchableOpacity>
       <View style={styles.inputSection}>

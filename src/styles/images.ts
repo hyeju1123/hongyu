@@ -16,6 +16,8 @@ const images = {
     checked: require('../../images/checked.png'),
     checkedGreen: require('../../images/checkedGreen.png'),
     closed: require('../../images/closed.png'),
+    warning: require('../../images/warning.png'),
+    book: require('../../images/book.png'),
   },
   wordClass: {
     명사: require('../../images/wordClass/noun.png'),
@@ -32,6 +34,22 @@ const images = {
     성어: require('../../images/wordClass/idiom.png'),
     수사: require('../../images/wordClass/numeral.png'),
     기타: require('../../images/wordClass/other.png'),
+  },
+  deleteWordClass: {
+    명사: require('../../images/deletedWordClass/noun_delete.png'),
+    대명사: require('../../images/deletedWordClass/pro_delete.png'),
+    동사: require('../../images/deletedWordClass/verb_delete.png'),
+    형용사: require('../../images/deletedWordClass/adj_delete.png'),
+    부사: require('../../images/deletedWordClass/adv_delete.png'),
+    개사: require('../../images/deletedWordClass/pre_delete.png'),
+    접속사: require('../../images/deletedWordClass/con_delete.png'),
+    양사: require('../../images/deletedWordClass/quan_delete.png'),
+    조사: require('../../images/deletedWordClass/post_delete.png'),
+    조동사: require('../../images/deletedWordClass/aux_delete.png'),
+    감탄사: require('../../images/deletedWordClass/ex_delete.png'),
+    성어: require('../../images/deletedWordClass/idi_delete.png'),
+    수사: require('../../images/deletedWordClass/num_delete.png'),
+    기타: require('../../images/deletedWordClass/other_delete.png'),
   },
 } as {[key: string]: any};
 

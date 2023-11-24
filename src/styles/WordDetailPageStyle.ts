@@ -1,4 +1,10 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {
+  Dimensions,
+  ImageStyle,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
 import {fonts} from './fonts';
@@ -6,8 +12,11 @@ import {fonts} from './fonts';
 type Style = {
   container: ViewStyle;
   scrollView: ViewStyle;
+  scrollViewContent: ViewStyle;
   word: TextStyle;
   intonation: TextStyle;
+  soundButton: ViewStyle;
+  sound: ImageStyle;
   rowWrapper: ViewStyle;
   wordclassImg: ImageStyle;
   meaning: TextStyle;
@@ -16,6 +25,8 @@ type Style = {
   bookmarkBtn: ViewStyle;
   bookmarkImg: ImageStyle;
 };
+
+const width = Dimensions.get('screen').width;
 
 const commonPart: Style = {
   container: {
@@ -26,11 +37,16 @@ const commonPart: Style = {
     marginHorizontal: 20,
     marginVertical: 5,
   },
+  scrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
   word: {
     fontFamily: fonts.hanzi,
     fontSize: 75,
     color: lightTheme.black,
     textAlign: 'center',
+    marginTop: 15,
   },
   intonation: {
     fontFamily: fonts.pinyin,
@@ -38,6 +54,16 @@ const commonPart: Style = {
     color: lightTheme.red,
     textAlign: 'center',
     marginTop: 20,
+  },
+  soundButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
+  },
+  sound: {
+    width: 25,
+    height: 25,
+    transform: [{rotate: '180deg'}],
   },
   rowWrapper: {
     display: 'flex',
@@ -63,15 +89,16 @@ const commonPart: Style = {
     right: 20,
   },
   editImg: {
-    width: 25,
-    height: 25,
+    width: width * 0.045,
+    height: width * 0.045,
   },
   bookmarkBtn: {
-    marginTop: 85,
-    marginBottom: 30,
-    alignSelf: 'center',
+    flex: 1,
     display: 'flex',
+    alignSelf: 'center',
+    justifyContent: 'center',
     alignItems: 'center',
+    paddingVertical: 20,
   },
   bookmarkImg: {
     width: 50,

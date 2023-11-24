@@ -7,7 +7,7 @@ import images from '../styles/images';
 
 function Toast(): JSX.Element {
   const [toastData, setToastData] = useRecoilState(toastState);
-  const {status, text} = toastData;
+  const {status, text, icon} = toastData;
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
@@ -31,17 +31,15 @@ function Toast(): JSX.Element {
     status ? fadeIn() : fadeOut();
   }, [status, fadeIn, fadeOut]);
 
-  const {
-    module: {checkedGreen, closed},
-  } = images;
+  const {module} = images;
 
   return (
     <Animated.View style={[styles.container, {opacity: fadeAnim}]}>
-      <Image style={styles.checkedImage} source={checkedGreen} />
+      <Image style={styles.icon} source={module[icon]} />
       <Text style={styles.text}>{text}</Text>
       <TouchableOpacity
         onPress={() => setToastData(prev => ({...prev, status: false}))}>
-        <Image style={styles.closeImage} source={closed} />
+        <Image style={styles.closeImage} source={module.closed} />
       </TouchableOpacity>
     </Animated.View>
   );

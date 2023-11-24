@@ -21,26 +21,32 @@ function WordCard({
   const realm = useRealm();
   const [touched, setTouched] = useState(false);
   const {_id, word, meaning, intonation, bookmarked} = wordData;
-  const {sound, lanternOff, lanternOn, search} = images.module;
+  const {sound, lanternOff, lanternOn, book} = images.module;
 
   return (
     <View style={[styles.container, {marginVertical}]}>
       <View style={styles.preview}>
-        <TouchableOpacity activeOpacity={0.7}>
+        <TouchableOpacity style={styles.imgWrapper}>
           <Image style={styles.img} source={sound} />
         </TouchableOpacity>
         <Text style={styles.hanzi}>{word}</Text>
-        <TouchableOpacity
-          activeOpacity={0.7}
-          onPress={() => updateBookmark(realm, _id, !bookmarked)}>
-          <Image
-            style={styles.img}
-            source={bookmarked ? lanternOn : lanternOff}
-          />
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity
+            onPress={() => navigate(_id)}
+            style={styles.imgWrapper}>
+            <Image style={styles.img} source={book} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.imgWrapper}
+            onPress={() => updateBookmark(realm, _id, !bookmarked)}>
+            <Image
+              style={styles.img}
+              source={bookmarked ? lanternOn : lanternOff}
+            />
+          </TouchableOpacity>
+        </View>
       </View>
       <TouchableOpacity
-        activeOpacity={0.7}
         style={[
           styles.button,
           touched
@@ -50,12 +56,6 @@ function WordCard({
         onPress={() => setTouched(!touched)}>
         {touched ? (
           <>
-            <TouchableOpacity
-              onPress={() => navigate(_id)}
-              activeOpacity={0.7}
-              style={styles.searchBtn}>
-              <Image style={styles.searchImg} source={search} />
-            </TouchableOpacity>
             <Text style={styles.pinyin}>{intonation}</Text>
             <Text
               textBreakStrategy="balanced"
@@ -83,6 +83,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
+  imgWrapper: {
+    padding: 5,
+    alignSelf: 'flex-start',
+  },
   img: {
     width: 23,
     height: 23,
@@ -91,7 +95,6 @@ const styles = StyleSheet.create({
     fontFamily: fonts.hanzi,
     fontSize: 45,
     color: lightTheme.black,
-    top: -5,
   },
   button: {
     borderRadius: 8,
@@ -118,15 +121,6 @@ const styles = StyleSheet.create({
     lineHeight: 27,
     marginTop: 5,
     marginBottom: -3,
-  },
-  searchBtn: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-  },
-  searchImg: {
-    width: 15,
-    height: 15,
   },
 });
 

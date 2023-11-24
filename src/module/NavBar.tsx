@@ -16,7 +16,7 @@ function NavBar({goBack, title, theme, rightButton}: NavBarProps): JSX.Element {
 
   return (
     <View style={[styles.container, {backgroundColor: theme}]}>
-      <TouchableOpacity onPress={() => goBack()}>
+      <TouchableOpacity style={styles.arrowWrapper} onPress={() => goBack()}>
         <Image style={styles.arrow} source={arrow} />
       </TouchableOpacity>
       <Text style={styles.title}>{title}</Text>
@@ -29,7 +29,8 @@ const styles = StyleSheet.create({
   container: {
     display: 'flex',
     justifyContent: 'center',
-    padding: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 7,
   },
   title: {
     position: 'absolute',
@@ -38,9 +39,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: lightTheme.white,
   },
+  arrowWrapper: {
+    alignSelf: 'flex-start',
+    padding: 5,
+  },
   arrow: {
     width: 20,
     height: 10,
+    padding: 10,
   },
 });
 export default NavBar;

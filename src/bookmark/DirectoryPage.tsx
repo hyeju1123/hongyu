@@ -34,7 +34,6 @@ function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
   const injectContent = (title: string, count: number, key: string) => (
     <TouchableOpacity
       key={key}
-      activeOpacity={0.7}
       onPress={() =>
         navigate('WordPage', {
           level: Number(key),

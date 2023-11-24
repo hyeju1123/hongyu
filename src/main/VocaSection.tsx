@@ -25,7 +25,6 @@ function VocaSection({navigation}: VocaSectionProps) {
         {levels.map(level => (
           <TouchableOpacity
             onPress={() => navigation.navigate('HskNavigation', {level})}
-            activeOpacity={0.7}
             key={level}>
             <Card>
               <View style={styles.contents}>
@@ -37,8 +36,7 @@ function VocaSection({navigation}: VocaSectionProps) {
         ))}
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate('BookmarkNavigation')}
-        activeOpacity={0.7}>
+        onPress={() => navigation.navigate('BookmarkNavigation')}>
         <Card>
           <View style={styles.scrap}>
             <Text style={styles.scrapText}>내 단어장</Text>
