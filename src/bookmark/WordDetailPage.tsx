@@ -14,8 +14,7 @@ import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import {useRealm} from '../context/RealmConfigContext';
 import {useIsFocused} from '@react-navigation/native';
-import {useRecoilState, useSetRecoilState} from 'recoil';
-import {toastState} from '../recoil/ToastState';
+import useToast from '../hooks/toast';
 import useDebounce from '../hooks/debounce';
 import useDidMountEffect from '../hooks/didMount';
 import {selectWord, getDefaultWord} from '../service/selectData';
@@ -27,6 +26,7 @@ import images from '../styles/images';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/WordDetailPageStyle';
 import LoadingPage from '../module/LoadingPage';
+import {limitTextLength} from '../service/util';
 
 type WordDetailPageProps = NativeStackScreenProps<
   HskStackParamList | BookmarkStackParamList,
@@ -39,7 +39,6 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
   const realm = useRealm();
 
   const isFocused = useIsFocused();
-  console.log('isFocused: ', isFocused);
 
   const wordData = useMemo(() => {
     if (isFocused) {
@@ -50,20 +49,18 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
   const [exToChange, setExToChange] = useState(wordData?.explanation || '');
   const [bookmark, setBookmark] = useState(wordData?.bookmarked);
   const debouncedEx = useDebounce(exToChange, 1000);
-  const [toastData, handleToastState] = useRecoilState(toastState);
+  const {fireToast} = useToast();
 
   useDidMountEffect(() => {
     if (wordData.explanation !== exToChange) {
-      updateExplanation(realm, id, debouncedEx);
-
-      handleToastState({
-        text: '메모가 저장되었습니다',
-        status: true,
-        icon: 'checkedGreen',
-      });
-      setTimeout(() => {
-        handleToastState(prev => ({...prev, status: false}));
-      }, 3000);
+      if (!limitTextLength(debouncedEx, fireToast)) {
+        updateExplanation(realm, id, debouncedEx);
+        fireToast({
+          text: '메모가 저장되었습니다',
+          icon: 'checkedGreen',
+          remove: true,
+        });
+      }
     }
   }, [debouncedEx, id, realm]);
 
@@ -125,11 +122,14 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
             </InfoCard>
             <InfoCard>
               <TextInput
+                multiline
                 style={styles.meaning}
                 value={exToChange}
                 onChangeText={setExToChange}
                 placeholder="# 메모를 남겨보세요."
+                placeholderTextColor={lightTheme.gray}
               />
+              <Text style={styles.limitText}>{exToChange.length} / 250</Text>
             </InfoCard>
             <TouchableOpacity
               onPress={handleBookmark}

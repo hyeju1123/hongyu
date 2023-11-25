@@ -24,6 +24,7 @@ type Style = {
   editImg: ImageStyle;
   bookmarkBtn: ViewStyle;
   bookmarkImg: ImageStyle;
+  limitText: TextStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -103,6 +104,13 @@ const commonPart: Style = {
   bookmarkImg: {
     width: 50,
     height: 50,
+  },
+  limitText: {
+    alignSelf: 'flex-end',
+    fontFamily: fonts.main,
+    fontSize: width * 0.03,
+    marginTop: 5,
+    marginBottom: -1 * width * 0.03,
   },
 };
 

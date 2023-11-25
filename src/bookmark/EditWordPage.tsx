@@ -1,5 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useMemo, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   Image,
   ScrollView,
@@ -9,18 +10,15 @@ import {
 } from 'react-native';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {useRealm} from '../context/RealmConfigContext';
-
-import {SafeAreaView} from 'react-native-safe-area-context';
-import styles from '../styles/EditWordPageStyle';
+import useToast from '../hooks/toast';
 import NavBar from '../module/NavBar';
-import {lightTheme} from '../styles/colors';
-import {selectWord} from '../service/selectData';
-import images from '../styles/images';
 import CompleteButton from '../module/CompleteButton';
-import {getWCLabels} from '../service/util';
-import {toastState} from '../recoil/ToastState';
-import {useRecoilState} from 'recoil';
+import {selectWord} from '../service/selectData';
+import {getWCLabels, limitTextLength} from '../service/util';
 import {VocaContentType, updateVcoa} from '../service/updateData';
+import styles from '../styles/EditWordPageStyle';
+import {lightTheme} from '../styles/colors';
+import images from '../styles/images';
 
 type EditWordPageProps = NativeStackScreenProps<
   HskStackParamList,
@@ -37,7 +35,7 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
   } = images;
   const wordData = useMemo(() => selectWord(realm, id), [realm, id]);
   const {word, intonation, wordclass, meaning, explanation} = wordData;
-  const [toastData, handleToastState] = useRecoilState(toastState);
+  const {fireToast} = useToast();
 
   const [textVal, setTextVal] = useState({
     word,
@@ -49,16 +47,8 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
   const [showWCTemplate, setShowWCTemplate] = useState(false);
 
   const handleChangeVal = (name: string, value: string) => {
-    if (value.length > 250) {
-      handleToastState({
-        text: '250자를 초과하지 말아주세요',
-        status: true,
-        icon: 'warning',
-      });
-    } else {
-      toastData.status && handleToastState(prev => ({...prev, status: false}));
+    !limitTextLength(value, fireToast) &&
       setTextVal(prev => ({...prev, [name]: value}));
-    }
   };
 
   const getFilteredWC = () => {
@@ -74,15 +64,11 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
     };
     updateVcoa(realm, id, vocaData);
 
-    handleToastState({
+    fireToast({
       text: '단어를 수정하였습니다!',
-      status: true,
       icon: 'checkedGreen',
+      remove: true,
     });
-
-    setTimeout(() => {
-      handleToastState(prev => ({...prev, status: false}));
-    }, 2000);
     goBack();
   };
 
