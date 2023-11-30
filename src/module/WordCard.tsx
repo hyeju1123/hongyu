@@ -9,12 +9,14 @@ import {updateBookmark} from '../service/updateData';
 
 type WordCardProps = PropsWithChildren<{
   wordData: Voca;
+  handleSoundToggle: (word: string) => void;
   marginVertical?: number;
   navigate: (level: number) => void;
 }>;
 
 function WordCard({
   wordData,
+  handleSoundToggle,
   marginVertical = 7,
   navigate,
 }: WordCardProps): JSX.Element {
@@ -26,7 +28,9 @@ function WordCard({
   return (
     <View style={[styles.container, {marginVertical}]}>
       <View style={styles.preview}>
-        <TouchableOpacity style={styles.imgWrapper}>
+        <TouchableOpacity
+          onPress={() => handleSoundToggle(word)}
+          style={styles.imgWrapper}>
           <Image style={styles.img} source={sound} />
         </TouchableOpacity>
         <Text style={styles.hanzi}>{word}</Text>

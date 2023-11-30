@@ -48,7 +48,7 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
   }, [realm, id, isFocused]);
   const [exToChange, setExToChange] = useState(wordData?.explanation || '');
   const [bookmark, setBookmark] = useState(wordData?.bookmarked);
-  const debouncedEx = useDebounce(exToChange, 1000);
+  const debouncedEx: string = useDebounce(exToChange, 1000);
   const {fireToast} = useToast();
 
   useDidMountEffect(() => {
