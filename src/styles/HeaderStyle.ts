@@ -7,8 +7,7 @@ type Style = {
   headerBox: ViewStyle;
   logoImg: ImageStyle;
   inputSection: ViewStyle;
-  input: TextStyle;
-  pencilWithZhImgWrapper: ViewStyle;
+  text: TextStyle;
   pencilWithZhImg: ImageStyle;
 };
 
@@ -24,21 +23,18 @@ const handleStyles = () => {
     },
     inputSection: {
       width: '100%',
-      justifyContent: 'center',
-    },
-    input: {
-      fontFamily: fonts.mainBold,
-      color: lightTheme.gray,
-      paddingLeft: 20,
-      paddingRight: 55,
-      paddingVertical: 5,
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      flexDirection: 'row',
       borderWidth: 1,
       borderColor: lightTheme.red,
       borderRadius: 25,
+      paddingVertical: 5,
+      paddingHorizontal: 15,
     },
-    pencilWithZhImgWrapper: {
-      position: 'absolute',
-      right: 20,
+    text: {
+      fontFamily: fonts.mainBold,
+      color: lightTheme.ligthGray,
     },
     pencilWithZhImg: {
       width: 20,
@@ -54,16 +50,12 @@ const handleStyles = () => {
           width: 100,
           height: 145,
         },
-        input: {
-          ...commonPart.input,
+        text: {
+          ...commonPart.text,
           fontSize: 20,
           paddingLeft: 30,
           paddingRight: 65,
           paddingVertical: 10,
-        },
-        pencilWithZhImgWrapper: {
-          ...commonPart.pencilWithZhImgWrapper,
-          right: 30,
         },
         pencilWithZhImg: {
           width: 25,

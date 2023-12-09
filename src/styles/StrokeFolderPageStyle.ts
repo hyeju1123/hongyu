@@ -1,7 +1,7 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
-import {fonts} from './fonts';
+import {commonPart as CategoryStyle} from './CategoryPageStyle';
 
 type Style = {
   container: ViewStyle;
@@ -11,30 +11,15 @@ type Style = {
   bottomRedText: TextStyle;
 };
 
-export const commonPart: Style = {
+const commonPart: Style = {
+  ...CategoryStyle,
   container: {
-    flex: 1,
-    backgroundColor: lightTheme.red,
-  },
-  scrollView: {
-    marginHorizontal: 20,
-    marginVertical: 5,
-  },
-  text: {
-    fontFamily: fonts.mainBold,
-    color: lightTheme.black,
-    fontSize: 25,
-    marginVertical: 10,
-    alignSelf: 'center',
-  },
-  bottomText: {
-    fontFamily: fonts.mainBold,
-    color: lightTheme.shadowGray,
-    fontSize: 13,
-    alignSelf: 'center',
+    ...CategoryStyle.container,
+    backgroundColor: lightTheme.darkRed,
   },
   bottomRedText: {
-    color: lightTheme.red,
+    ...CategoryStyle.bottomRedText,
+    color: lightTheme.darkRed,
   },
 };
 

@@ -5,10 +5,11 @@ import images from '../styles/images';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
+import {RootStackParamList} from '../navigation/RootNavigation';
 
 type EditWordButtonProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
-    HskStackParamList | BookmarkStackParamList,
+    RootStackParamList | HskStackParamList | BookmarkStackParamList,
     'WordDetailPage'
   >;
   id: number;

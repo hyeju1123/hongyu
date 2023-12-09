@@ -1,11 +1,20 @@
-import React, {useState} from 'react';
-import {View, Image, TouchableOpacity, TextInput} from 'react-native';
-import {lightTheme} from '../styles/colors';
+import React, {PropsWithChildren} from 'react';
+import {View, Image, TouchableOpacity, Text} from 'react-native';
 import styles from '../styles/HeaderStyle';
 import images from '../styles/images';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../navigation/RootNavigation';
 
-function Header(): JSX.Element {
-  const [text, setText] = useState('');
+type HeaderProps = PropsWithChildren<{
+  navigation: NativeStackNavigationProp<
+    RootStackParamList,
+    'MainPage',
+    undefined
+  >;
+}>;
+
+function Header({navigation}: HeaderProps): JSX.Element {
+  const {navigate} = navigation;
   const {mainLantern, pencilWithZh} = images.module;
 
   return (
@@ -13,18 +22,12 @@ function Header(): JSX.Element {
       <TouchableOpacity>
         <Image style={styles.logoImg} source={mainLantern} />
       </TouchableOpacity>
-      <View style={styles.inputSection}>
-        <TextInput
-          style={styles.input}
-          onChangeText={setText}
-          value={text}
-          placeholder="단어를 검색해보세요!"
-          placeholderTextColor={lightTheme.ligthGray}
-        />
-        <TouchableOpacity style={styles.pencilWithZhImgWrapper}>
-          <Image style={styles.pencilWithZhImg} source={pencilWithZh} />
-        </TouchableOpacity>
-      </View>
+      <TouchableOpacity
+        onPress={() => navigate('SearchPage')}
+        style={styles.inputSection}>
+        <Text style={styles.text}>단어를 검색해보세요!</Text>
+        <Image style={styles.pencilWithZhImg} source={pencilWithZh} />
+      </TouchableOpacity>
     </View>
   );
 }

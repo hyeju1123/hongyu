@@ -1,20 +1,18 @@
 import {StyleSheet, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
 import {isPhone} from './screen';
+import {commonPart as WordDetailStyle} from './WordPageStyle';
 
 type Style = {
   container: ViewStyle;
   flatlist: ViewStyle;
 };
 
-export const commonPart: Style = {
+const commonPart: Style = {
+  ...WordDetailStyle,
   container: {
-    flex: 1,
-    backgroundColor: lightTheme.red,
-  },
-  flatlist: {
-    marginHorizontal: 20,
-    marginVertical: 5,
+    ...WordDetailStyle.container,
+    backgroundColor: lightTheme.darkRed,
   },
 };
 

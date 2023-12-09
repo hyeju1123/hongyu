@@ -1,11 +1,12 @@
 import Realm from 'realm';
 import {createRealmContext} from '@realm/react';
 import Voca from '../model/Voca';
+import Busu from '../model/Busu';
 
 Realm.copyBundledRealmFiles();
 
 const realmConfig: Realm.Configuration = {
-  schema: [Voca],
+  schema: [Voca, Busu],
   path: 'bundle.realm',
 };
 

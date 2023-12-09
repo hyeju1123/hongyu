@@ -10,10 +10,12 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {RootStackParamList} from '../navigation/RootNavigation';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import {useRealm} from '../context/RealmConfigContext';
 import {useIsFocused} from '@react-navigation/native';
+import usePolly from '../hooks/polly';
 import useToast from '../hooks/toast';
 import useDebounce from '../hooks/debounce';
 import useDidMountEffect from '../hooks/didMount';
@@ -29,7 +31,7 @@ import LoadingPage from '../module/LoadingPage';
 import {limitTextLength} from '../service/util';
 
 type WordDetailPageProps = NativeStackScreenProps<
-  HskStackParamList | BookmarkStackParamList,
+  RootStackParamList | HskStackParamList | BookmarkStackParamList,
   'WordDetailPage'
 >;
 
@@ -49,7 +51,14 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
   const [exToChange, setExToChange] = useState(wordData?.explanation || '');
   const [bookmark, setBookmark] = useState(wordData?.bookmarked);
   const debouncedEx: string = useDebounce(exToChange, 1000);
+  const [soundToggle, setSoundToggle] = useState({
+    word: '',
+    level: 0,
+    value: 0,
+  });
+  const debouncedToggle = useDebounce(soundToggle, 300);
   const {fireToast} = useToast();
+  const {fetchPolly} = usePolly();
 
   useDidMountEffect(() => {
     if (wordData.explanation !== exToChange) {
@@ -70,15 +79,29 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
     }
   }, [wordData, isFocused]);
 
+  useDidMountEffect(() => {
+    fetchPolly(level, soundToggle.word);
+  }, [debouncedToggle]);
+
   const {
     wordClass,
     module: {lanternOffWhite, lanternOn, sound},
   } = images;
-  const {word, intonation, wordclass, meaning, bookmarked} = wordData;
+  const {word, intonation, wordclass, meaning, bookmarked, level} = wordData;
 
   const handleBookmark = () => {
     setBookmark(!bookmark);
     updateBookmark(realm, id, !bookmarked);
+    const status = bookmark ? '삭제' : '저장';
+    fireToast({
+      text: `'내 단어장'에 ${status}되었습니다.`,
+      icon: 'checkedGreen',
+      remove: true,
+    });
+  };
+
+  const handleSoundToggle = () => {
+    setSoundToggle(prev => ({word, level, value: prev.value + 1}));
   };
 
   return (
@@ -100,7 +123,9 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
             contentContainerStyle={styles.scrollViewContent}
             style={styles.scrollView}>
             <InfoCard>
-              <TouchableOpacity style={styles.soundButton}>
+              <TouchableOpacity
+                onPress={handleSoundToggle}
+                style={styles.soundButton}>
                 <Image style={styles.sound} source={sound} />
               </TouchableOpacity>
               <Text style={styles.word}>{word}</Text>

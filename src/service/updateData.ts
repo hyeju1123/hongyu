@@ -1,5 +1,5 @@
 import Realm from 'realm';
-import {selectWord} from './selectData';
+import {selectBusu, selectWord} from './selectData';
 
 export type VocaContentType = {
   word: string;
@@ -13,6 +13,17 @@ export const updateBookmark = (realm: Realm, id: number, bookmark: boolean) => {
   const voca = selectWord(realm, id);
   realm.write(() => {
     voca.bookmarked = bookmark;
+  });
+};
+
+export const updateBusuBookmark = (
+  realm: Realm,
+  id: number,
+  bookmark: boolean,
+) => {
+  const busu = selectBusu(realm, id);
+  realm.write(() => {
+    busu.bookmarked = bookmark;
   });
 };
 

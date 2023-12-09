@@ -29,7 +29,7 @@ type Style = {
 
 const width = Dimensions.get('screen').width;
 
-const commonPart: Style = {
+export const commonPart: Style = {
   container: {
     flex: 1,
     backgroundColor: lightTheme.red,
@@ -44,14 +44,14 @@ const commonPart: Style = {
   },
   word: {
     fontFamily: fonts.hanzi,
-    fontSize: 75,
+    fontSize: width * 0.15,
     color: lightTheme.black,
     textAlign: 'center',
     marginTop: 15,
   },
   intonation: {
     fontFamily: fonts.pinyin,
-    fontSize: 25,
+    fontSize: width * 0.05,
     color: lightTheme.red,
     textAlign: 'center',
     marginTop: 20,

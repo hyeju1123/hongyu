@@ -12,6 +12,7 @@ import {fonts} from './fonts';
 type Style = {
   card: ViewStyle;
   img: ImageStyle;
+  arrow: ImageStyle;
   textWrapper: ViewStyle;
   title: TextStyle;
   desc: TextStyle;
@@ -36,6 +37,13 @@ const handleStyles = () => {
     },
     textWrapper: {
       flex: 1,
+    },
+    arrow: {
+      width: width * 0.04,
+      height: width * 0.02,
+      alignSelf: 'flex-end',
+      transform: [{rotate: '180deg'}],
+      marginBottom: width * 0.045,
     },
     title: {
       color: lightTheme.white,

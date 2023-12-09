@@ -11,7 +11,7 @@ type WordCardProps = PropsWithChildren<{
   wordData: Voca;
   handleSoundToggle: (word: string) => void;
   marginVertical?: number;
-  navigate: (level: number) => void;
+  navigate: (_id: number) => void;
 }>;
 
 function WordCard({

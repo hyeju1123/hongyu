@@ -21,9 +21,9 @@ function MainPage({navigation}: MainPageProps): JSX.Element {
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         style={styles.scrollView}>
-        <Header />
+        <Header navigation={navigation} />
         <VocaSection navigation={navigation} />
-        <ServiceSection />
+        <ServiceSection navigation={navigation} />
       </ScrollView>
     </SafeAreaView>
   );

@@ -10,12 +10,34 @@ export default function Polly() {
   const {fireToast} = useToast();
 
   useEffect(() => {
+    const documentDir = RNFetchBlob.fs.dirs.DocumentDir;
+    RNFetchBlob.fs
+      .ls(documentDir)
+      .then(files => {
+        const mp3Files = files.filter(file => file.endsWith('.mp3'));
+
+        mp3Files.forEach(async mp3File => {
+          try {
+            const filePath = `${documentDir}/${mp3File}`;
+            await RNFetchBlob.fs.unlink(filePath);
+          } catch (e) {
+            console.log(`Error deleting file ${mp3File}: ${e}`);
+          }
+        });
+
+        console.log(files);
+      })
+      .catch(e => {
+        console.log('Error reading files: ', e);
+      });
+
     return () => {
       RNFetchBlob.session('polly').dispose();
     };
   }, []);
 
   const fetchPolly = async (level: number, hanzi: string) => {
+    const start = new Date();
     try {
       const url = await fetchPollyUrl(level, hanzi);
       const filePath = await fetchPollyAudio(url, hanzi);
@@ -32,6 +54,8 @@ export default function Polly() {
         icon: 'warning',
         remove: true,
       });
+    } finally {
+      console.log('end:: ', new Date() - start);
     }
   };
 

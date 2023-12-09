@@ -5,9 +5,11 @@ import {lightTheme} from '../styles/colors';
 type CardProps = PropsWithChildren<{
   marginVertical?: number;
   theme?: string;
+  noShadow?: boolean;
 }>;
 
 function Card({
+  noShadow = false,
   children,
   marginVertical = 5,
   theme = 'red',
@@ -16,6 +18,7 @@ function Card({
     <View
       style={[
         theme === 'red' ? styles.shdaow : styles.whiteShdaow,
+        noShadow && styles.noShadow,
         {marginVertical},
       ]}>
       <View style={theme === 'red' ? styles.card : styles.whiteCard}>
@@ -37,6 +40,9 @@ const styles = StyleSheet.create({
     backgroundColor: lightTheme.darkRed,
     borderRadius: 8,
     paddingBottom: 3,
+  },
+  noShadow: {
+    backgroundColor: 'rgba(0,0,0,0)',
   },
   whiteCard: {
     display: 'flex',

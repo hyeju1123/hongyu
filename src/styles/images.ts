@@ -1,6 +1,7 @@
 const images = {
   module: {
     arrow: require('../../images/arrow.png'),
+    redArrow: require('../../images/redArrow.png'),
     edit: require('../../images/edit.png'),
     editWhite: require('../../images/editWhite.png'),
     lanternOff: require('../../images/lanternOff.png'),
