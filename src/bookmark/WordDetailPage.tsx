@@ -13,7 +13,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
-import {useRealm} from '../context/RealmConfigContext';
+import {useRealm} from '../../RealmConfigContext';
 import {useIsFocused} from '@react-navigation/native';
 import usePolly from '../hooks/polly';
 import useToast from '../hooks/toast';

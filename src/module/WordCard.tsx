@@ -3,7 +3,7 @@ import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {lightTheme} from '../styles/colors';
 import {fonts} from '../styles/fonts';
 import Voca from '../model/Voca';
-import {useRealm} from '../context/RealmConfigContext';
+import {useRealm} from '../../RealmConfigContext';
 import images from '../styles/images';
 import {updateBookmark} from '../service/updateData';
 

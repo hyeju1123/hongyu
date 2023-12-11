@@ -1,7 +1,7 @@
 import Realm from 'realm';
 import {createRealmContext} from '@realm/react';
-import Voca from '../model/Voca';
-import Busu from '../model/Busu';
+import Voca from './src/model/Voca';
+import Busu from './src/model/Busu';
 
 Realm.copyBundledRealmFiles();
 

@@ -7,7 +7,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import NavBar from '../module/NavBar';
 import {lightTheme} from '../styles/colors';
-import {useQuery} from '../context/RealmConfigContext';
+import {useQuery} from '../../RealmConfigContext';
 import Voca from '../model/Voca';
 
 type CategoryPageProps = NativeStackScreenProps<

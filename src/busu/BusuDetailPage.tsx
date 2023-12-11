@@ -16,7 +16,7 @@ import {BusuStackParamList} from '../navigation/BusuNavigation';
 import InfoCard from '../module/InfoCard';
 import images from '../styles/images';
 import {updateBusuBookmark} from '../service/updateData';
-import {useRealm} from '../context/RealmConfigContext';
+import {useRealm} from '../../RealmConfigContext';
 import useToast from '../hooks/toast';
 
 type BusuDetailPageProps = NativeStackScreenProps<

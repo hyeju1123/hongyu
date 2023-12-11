@@ -9,7 +9,7 @@ import {
   View,
 } from 'react-native';
 import {HskStackParamList} from '../navigation/HskNavigation';
-import {useRealm} from '../context/RealmConfigContext';
+import {useRealm} from '../../RealmConfigContext';
 import useToast from '../hooks/toast';
 import NavBar from '../module/NavBar';
 import CompleteButton from '../module/CompleteButton';

@@ -6,7 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import NavBar from '../module/NavBar';
 import {lightTheme} from '../styles/colors';
-import {useQuery} from '../context/RealmConfigContext';
+import {useQuery} from '../../RealmConfigContext';
 import Voca from '../model/Voca';
 import Card from '../module/Card';
 

@@ -7,7 +7,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import WordCard from '../module/WordCard';
 import {FlatList} from 'react-native';
-import {useQuery} from '../context/RealmConfigContext';
+import {useQuery} from '../../RealmConfigContext';
 import Voca from '../model/Voca';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import useDebounce from '../hooks/debounce';

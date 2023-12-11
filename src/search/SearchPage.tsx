@@ -16,7 +16,7 @@ import {RootStackParamList} from '../navigation/RootNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useDebounce from '../hooks/debounce';
 import useDidMountEffect from '../hooks/didMount';
-import {useRealm} from '../context/RealmConfigContext';
+import {useRealm} from '../../RealmConfigContext';
 import {searchWord} from '../service/selectData';
 import Voca from '../model/Voca';
 

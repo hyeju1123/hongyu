@@ -6,7 +6,7 @@ import {lightTheme} from '../styles/colors';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import {useQuery, useRealm} from '../context/RealmConfigContext';
+import {useQuery, useRealm} from '../../RealmConfigContext';
 
 import {BusuStackParamList} from '../navigation/BusuNavigation';
 import Busu from '../model/Busu';

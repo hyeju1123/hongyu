@@ -5,7 +5,7 @@ import Card from '../module/Card';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import NavBar from '../module/NavBar';
 import {lightTheme} from '../styles/colors';
-import {useRealm} from '../context/RealmConfigContext';
+import {useRealm} from '../../RealmConfigContext';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
 import styles from '../styles/StrokeFolderPageStyle';
 import {countBusuByStroke} from '../service/selectData';
