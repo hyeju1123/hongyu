@@ -14,7 +14,7 @@ import useToast from '../hooks/toast';
 import NavBar from '../module/NavBar';
 import CompleteButton from '../module/CompleteButton';
 import {selectWord} from '../service/selectData';
-import {getWCLabels, limitTextLength} from '../service/util';
+import useUtil from '../hooks/util';
 import {VocaContentType, updateVcoa} from '../service/updateData';
 import styles from '../styles/EditWordPageStyle';
 import {lightTheme} from '../styles/colors';
@@ -36,6 +36,7 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
   const wordData = useMemo(() => selectWord(realm, id), [realm, id]);
   const {word, intonation, wordclass, meaning, explanation} = wordData;
   const {fireToast} = useToast();
+  const {getWCLabels, limitTextLength} = useUtil();
 
   const [textVal, setTextVal] = useState({
     word,
@@ -47,8 +48,7 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
   const [showWCTemplate, setShowWCTemplate] = useState(false);
 
   const handleChangeVal = (name: string, value: string) => {
-    !limitTextLength(value, fireToast) &&
-      setTextVal(prev => ({...prev, [name]: value}));
+    !limitTextLength(value) && setTextVal(prev => ({...prev, [name]: value}));
   };
 
   const getFilteredWC = () => {

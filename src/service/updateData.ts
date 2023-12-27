@@ -9,10 +9,10 @@ export type VocaContentType = {
   explanation: string | undefined;
 };
 
-export const updateBookmark = (realm: Realm, id: number, bookmark: boolean) => {
+export const updateBookmark = (realm: Realm, id: number) => {
   const voca = selectWord(realm, id);
   realm.write(() => {
-    voca.bookmarked = bookmark;
+    voca.bookmarked = !voca.bookmarked;
   });
 };
 

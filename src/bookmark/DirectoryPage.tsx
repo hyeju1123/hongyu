@@ -1,14 +1,17 @@
-import React from 'react';
-import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
+import React, {useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import styles from '../styles/CategoryPageStyle';
+import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import NavBar from '../module/NavBar';
-import {lightTheme} from '../styles/colors';
-import {useQuery} from '../../RealmConfigContext';
-import Voca from '../model/Voca';
 import Card from '../module/Card';
+
+import {useVoca} from '../providers/VocaProvider';
+import useDidMountEffect from '../hooks/didMount';
+import {useIsFocused} from '@react-navigation/native';
+
+import styles from '../styles/CategoryPageStyle';
+import {lightTheme} from '../styles/colors';
 
 type DirectoryPageProps = NativeStackScreenProps<
   BookmarkStackParamList,
@@ -21,9 +24,12 @@ type CountObject = {
 
 function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
   const {goBack, navigate} = navigation;
-  const bookmarked = useQuery<Voca>('Voca', vocas => {
-    return vocas.filtered('bookmarked == $0', true);
-  });
+  const isFocused = useIsFocused();
+  const {getBookmarkedVocas, getBookmarkedBusues} = useVoca();
+  const [bookmarked, setBookmarked] = useState(getBookmarkedVocas(0));
+  const [bookmarkedBusues, setBookmarkedBusues] = useState(
+    getBookmarkedBusues(),
+  );
 
   const levelCounts = bookmarked.reduce((counts: CountObject, item) => {
     const level = item.level;
@@ -31,24 +37,45 @@ function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
     return counts;
   }, {});
 
-  const injectContent = (title: string, count: number, key: string) => (
-    <TouchableOpacity
-      key={key}
-      onPress={() =>
+  const handlePage = (busu: boolean, title: string, key: string) => {
+    if (busu) {
+      return () => {
+        navigate('BusuPage', {stroke: 0, fromBookmark: true});
+      };
+    } else {
+      return () => {
         navigate('WordPage', {
           level: Number(key),
           category: title,
           fromBookmark: true,
-        })
-      }>
-      <Card marginVertical={10} theme="white">
-        <Text style={styles.text}>{title}</Text>
-        <Text style={styles.bottomText}>
-          단어 {<Text style={styles.bottomRedText}>{count}</Text>}개
-        </Text>
-      </Card>
-    </TouchableOpacity>
-  );
+        });
+      };
+    }
+  };
+
+  const injectContent = (
+    title: string,
+    count: number,
+    key: string,
+    busu: boolean = false,
+  ) => {
+    return (
+      <TouchableOpacity key={key} onPress={handlePage(busu, title, key)}>
+        <Card marginVertical={10} theme="white">
+          <Text style={styles.text}>{title}</Text>
+          <Text style={styles.bottomText}>
+            {busu ? '부수' : '단어'}{' '}
+            {<Text style={styles.bottomRedText}>{count}</Text>}개
+          </Text>
+        </Card>
+      </TouchableOpacity>
+    );
+  };
+
+  useDidMountEffect(() => {
+    setBookmarked(getBookmarkedVocas(0));
+    setBookmarkedBusues(getBookmarkedBusues());
+  }, [isFocused]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -59,9 +86,10 @@ function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
       />
       <NavBar goBack={goBack} title="내 단어장" theme={lightTheme.red} />
       <ScrollView style={styles.scrollView}>
-        {injectContent('모든 단어', bookmarked.length, '0')}
+        {injectContent('부수', bookmarkedBusues.length, '-1', true)}
+        {injectContent('HSK 모든 단어', bookmarked.length, '0')}
         {Object.entries(levelCounts).map(([key, value]) =>
-          injectContent(`${key}급`, value, key),
+          injectContent(`HSK ${key}급`, value, key),
         )}
       </ScrollView>
     </SafeAreaView>

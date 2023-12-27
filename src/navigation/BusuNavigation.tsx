@@ -11,7 +11,7 @@ import Busu from '../model/Busu';
 
 export type BusuStackParamList = {
   StrokeFolderPage: undefined;
-  BusuPage: {stroke: number};
+  BusuPage: {stroke: number; fromBookmark?: boolean};
   BusuDetailPage: {busuData: Busu};
 };
 

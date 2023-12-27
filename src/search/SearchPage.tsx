@@ -4,37 +4,70 @@ import {
   ScrollView,
   StatusBar,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import styles from '../styles/SearchPageStyle';
-import images from '../styles/images';
-import {lightTheme} from '../styles/colors';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import useDebounce from '../hooks/debounce';
-import useDidMountEffect from '../hooks/didMount';
-import {useRealm} from '../../RealmConfigContext';
-import {searchWord} from '../service/selectData';
+import {useVoca} from '../providers/VocaProvider';
 import Voca from '../model/Voca';
+import Busu from '../model/Busu';
+import DebouncedTextInput from '../module/DebouncedTextInput';
+
+import images from '../styles/images';
+import styles from '../styles/SearchPageStyle';
 
 type SearchPageProps = NativeStackScreenProps<RootStackParamList, 'SearchPage'>;
 
 function SearchPage({navigation}: SearchPageProps): JSX.Element {
-  const {redArrow, pencilWithZh} = images.module;
+  const {getVocasBySearch} = useVoca();
   const {goBack, navigate} = navigation;
-  const realm = useRealm();
-  const [input, setInput] = useState('');
-  const [searchedWords, setSearchedWords] = useState<Voca[]>([]);
-  const debouncedInput = useDebounce(input, 500);
+  const {redArrow, pencilWithZh} = images.module;
+  const [searchedWords, setSearchedWords] = useState<(Busu | Voca)[]>([]);
 
-  useDidMountEffect(() => {
-    console.log('input:: ', input);
-    const result = searchWord(realm, input);
+  const handleSearch = (val: string) => {
+    const result = getVocasBySearch(val);
     setSearchedWords([...result]);
-  }, [debouncedInput]);
+  };
+
+  const handleData = (item: Busu | Voca) => {
+    if (item instanceof Voca) {
+      return (
+        <TouchableOpacity
+          onPress={() => navigate('WordDetailPage', {id: item._id})}
+          style={styles.resultBar}
+          key={item._id}>
+          <Text style={styles.text}>{item.word}</Text>
+          <Text style={styles.text}>{item.intonation}</Text>
+          <Text
+            style={styles.meaningText}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {item.meaning}
+          </Text>
+          <Text style={styles.levelText}>{item.level}급</Text>
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          onPress={() => navigate('BusuDetailPage', {busuData: item})}
+          style={styles.resultBar}
+          key={item._id}>
+          <Text style={styles.text}>{item.busu}</Text>
+          <Text style={styles.text}>[{item.yin}]</Text>
+          <Text
+            style={styles.meaningText}
+            numberOfLines={1}
+            ellipsizeMode="tail">
+            {item.xunyin}
+          </Text>
+          <Text style={styles.levelText}>{item.stroke}획</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -47,33 +80,17 @@ function SearchPage({navigation}: SearchPageProps): JSX.Element {
         <TouchableOpacity onPress={() => goBack()}>
           <Image style={styles.pencilWithZhImg} source={redArrow} />
         </TouchableOpacity>
-        <TextInput
-          value={input}
-          onChangeText={setInput}
-          autoFocus
-          placeholder="단어를 검색해보세요!"
-          placeholderTextColor={lightTheme.ligthGray}
+        <DebouncedTextInput
+          textVal={''}
+          forSearch={true}
           style={styles.input}
+          updateFn={handleSearch}
+          placeholder="단어를 검색해보세요."
         />
         <Image style={styles.pencilWithZhImg} source={pencilWithZh} />
       </View>
       <ScrollView style={styles.scrollView}>
-        {searchedWords.map(({_id, word, intonation, meaning, level}) => (
-          <TouchableOpacity
-            onPress={() => navigate('WordDetailPage', {id: _id})}
-            style={styles.resultBar}
-            key={_id}>
-            <Text style={styles.text}>{word}</Text>
-            <Text style={styles.text}>{intonation}</Text>
-            <Text
-              style={styles.meaningText}
-              numberOfLines={1}
-              ellipsizeMode="tail">
-              {meaning}
-            </Text>
-            <Text style={styles.levelText}>{level}급</Text>
-          </TouchableOpacity>
-        ))}
+        {searchedWords.map(handleData)}
       </ScrollView>
     </SafeAreaView>
   );

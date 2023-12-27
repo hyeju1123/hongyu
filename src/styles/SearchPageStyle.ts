@@ -22,6 +22,7 @@ export const commonPart: Style = {
   scrollView: {
     ...mainCommonPart.scrollView,
     paddingVertical: 15,
+    marginBottom: 10,
   },
   inputWrapper: {
     display: 'flex',

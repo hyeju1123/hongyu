@@ -14,6 +14,7 @@ type Style = {
   scrollView: ViewStyle;
   scrollViewContent: ViewStyle;
   word: TextStyle;
+  longWord: TextStyle;
   intonation: TextStyle;
   soundButton: ViewStyle;
   sound: ImageStyle;
@@ -45,6 +46,13 @@ export const commonPart: Style = {
   word: {
     fontFamily: fonts.hanzi,
     fontSize: width * 0.15,
+    color: lightTheme.black,
+    textAlign: 'center',
+    marginTop: 15,
+  },
+  longWord: {
+    fontFamily: fonts.hanzi,
+    fontSize: width * 0.12,
     color: lightTheme.black,
     textAlign: 'center',
     marginTop: 15,

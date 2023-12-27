@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
+import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import Card from '../module/Card';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import NavBar from '../module/NavBar';
-import {lightTheme} from '../styles/colors';
-import {useRealm} from '../../RealmConfigContext';
+import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
+
+import Card from '../module/Card';
+import NavBar from '../module/NavBar';
+import {useVoca} from '../providers/VocaProvider';
+
+import {lightTheme} from '../styles/colors';
 import styles from '../styles/StrokeFolderPageStyle';
-import {countBusuByStroke} from '../service/selectData';
 
 type StrokeFolderPageProps = NativeStackScreenProps<
   BusuStackParamList,
@@ -17,14 +18,8 @@ type StrokeFolderPageProps = NativeStackScreenProps<
 
 function StrokeFolderPage({navigation}: StrokeFolderPageProps): JSX.Element {
   const {goBack, navigate} = navigation;
-  const realm = useRealm();
-  const [strokeInfo, setStrokeInfo] = useState({});
-
-  useEffect(() => {
-    const result = countBusuByStroke(realm);
-    console.log(result);
-    setStrokeInfo(result);
-  }, [realm]);
+  const {countBusuByStroke} = useVoca();
+  const strokeInfo = countBusuByStroke();
 
   const showData = (data: Object) => {
     return Object.entries(data).map(([key, value]) => {

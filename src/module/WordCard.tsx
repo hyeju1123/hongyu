@@ -1,51 +1,68 @@
 import React, {PropsWithChildren, useState} from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {lightTheme} from '../styles/colors';
-import {fonts} from '../styles/fonts';
+import {Image, Text, TouchableOpacity, View} from 'react-native';
 import Voca from '../model/Voca';
-import {useRealm} from '../../RealmConfigContext';
+
+import useUtil from '../hooks/util';
+import usePolly from '../hooks/polly';
+import useDidMountEffect from '../hooks/didMount';
+import {useIsFocused} from '@react-navigation/native';
+
 import images from '../styles/images';
-import {updateBookmark} from '../service/updateData';
+import styles from '../styles/WordCardStyle';
+import {lightTheme} from '../styles/colors';
 
 type WordCardProps = PropsWithChildren<{
   wordData: Voca;
-  handleSoundToggle: (word: string) => void;
   marginVertical?: number;
-  navigate: (_id: number) => void;
+  moveToDetailPage: (_id: number) => void;
 }>;
 
 function WordCard({
   wordData,
-  handleSoundToggle,
   marginVertical = 7,
-  navigate,
+  moveToDetailPage,
 }: WordCardProps): JSX.Element {
-  const realm = useRealm();
-  const [touched, setTouched] = useState(false);
-  const {_id, word, meaning, intonation, bookmarked} = wordData;
   const {sound, lanternOff, lanternOn, book} = images.module;
+  const {_id, word, meaning, intonation, bookmarked, level} = wordData;
+
+  const {setToggle} = usePolly();
+  const isFocused = useIsFocused();
+  const {handleBookmark} = useUtil();
+  const [touched, setTouched] = useState(false);
+  const [bookmark, setBookmark] = useState(bookmarked);
+
+  useDidMountEffect(() => {
+    if (isFocused) {
+      bookmark !== bookmarked && setBookmark(bookmarked);
+    }
+  }, [isFocused]);
 
   return (
-    <View style={[styles.container, {marginVertical}]}>
+    <TouchableOpacity
+      onPress={() => moveToDetailPage(_id)}
+      activeOpacity={0.7}
+      style={[styles.container, {marginVertical}]}>
       <View style={styles.preview}>
         <TouchableOpacity
-          onPress={() => handleSoundToggle(word)}
+          onPress={() => setToggle({word, level})}
           style={styles.imgWrapper}>
           <Image style={styles.img} source={sound} />
         </TouchableOpacity>
-        <Text style={styles.hanzi}>{word}</Text>
+        <Text style={word.length > 4 ? styles.longHanzi : styles.hanzi}>
+          {word}
+        </Text>
         <View>
           <TouchableOpacity
-            onPress={() => navigate(_id)}
+            onPress={() => moveToDetailPage(_id)}
             style={styles.imgWrapper}>
             <Image style={styles.img} source={book} />
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.imgWrapper}
-            onPress={() => updateBookmark(realm, _id, !bookmarked)}>
+            onPress={() => handleBookmark({setBookmark, _id, word, bookmark})}>
             <Image
               style={styles.img}
-              source={bookmarked ? lanternOn : lanternOff}
+              source={bookmark ? lanternOn : lanternOff}
             />
           </TouchableOpacity>
         </View>
@@ -72,60 +89,8 @@ function WordCard({
           <Text style={styles.tmoneyText}>touch</Text>
         )}
       </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    padding: 15,
-    backgroundColor: lightTheme.white,
-    borderRadius: 10,
-  },
-  preview: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  imgWrapper: {
-    padding: 5,
-    alignSelf: 'flex-start',
-  },
-  img: {
-    width: 23,
-    height: 23,
-  },
-  hanzi: {
-    fontFamily: fonts.hanzi,
-    fontSize: 45,
-    color: lightTheme.black,
-  },
-  button: {
-    borderRadius: 8,
-    display: 'flex',
-    alignItems: 'center',
-    padding: 5,
-    marginTop: 10,
-  },
-  tmoneyText: {
-    fontFamily: fonts.pinyin,
-    fontSize: 20,
-    color: lightTheme.white,
-  },
-  pinyin: {
-    fontFamily: fonts.pinyin,
-    fontSize: 15,
-    color: lightTheme.gray,
-  },
-  meaning: {
-    fontFamily: fonts.main,
-    fontSize: 15,
-    textAlign: 'center',
-    color: lightTheme.black,
-    lineHeight: 27,
-    marginTop: 5,
-    marginBottom: -3,
-  },
-});
 
 export default WordCard;

@@ -14,7 +14,7 @@ type VocaSectionProps = PropsWithChildren<{
   >;
 }>;
 
-function VocaSection({navigation}: VocaSectionProps) {
+function VocaSection({navigation: {navigate}}: VocaSectionProps) {
   const {lanternOn} = images.module;
   const levels = [1, 2, 3, 4, 5, 6];
 
@@ -24,7 +24,7 @@ function VocaSection({navigation}: VocaSectionProps) {
       <View style={styles.cardsWrapper}>
         {levels.map(level => (
           <TouchableOpacity
-            onPress={() => navigation.navigate('HskNavigation', {level})}
+            onPress={() => navigate('HskNavigation', {level})}
             key={level}>
             <Card>
               <View style={styles.contents}>
@@ -35,8 +35,7 @@ function VocaSection({navigation}: VocaSectionProps) {
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity
-        onPress={() => navigation.navigate('BookmarkNavigation')}>
+      <TouchableOpacity onPress={() => navigate('BookmarkNavigation')}>
         <Card>
           <View style={styles.scrap}>
             <Text style={styles.scrapText}>내 단어장</Text>

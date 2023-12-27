@@ -1,15 +1,50 @@
-import {useEffect} from 'react';
+import {useCallback, useState} from 'react';
 import Sound from 'react-native-sound';
 import RNFetchBlob from 'rn-fetch-blob';
 import Config from 'react-native-config';
 import useToast from './toast';
+import useDebounce from './debounce';
+import useDidMountEffect from './didMount';
 
 const apiUrl = Config.POLLY_API_URL;
 
 export default function Polly() {
   const {fireToast} = useToast();
 
-  useEffect(() => {
+  const [toggle, setToggle] = useState({word: '', level: 1});
+  const debouncedSoundToggle = useDebounce(toggle, 300);
+
+  useDidMountEffect(() => {
+    fetchPolly(toggle.level, toggle.word);
+  }, [debouncedSoundToggle]);
+
+  const fetchPolly = useCallback(
+    async (level: number, hanzi: string) => {
+      const start = new Date();
+      try {
+        const url = await fetchPollyUrl(level, hanzi);
+        const filePath = await fetchPollyAudio(url, hanzi);
+        playAudio(filePath, error => {
+          fireToast({
+            text: error,
+            icon: 'warning',
+            remove: true,
+          });
+        });
+      } catch (e) {
+        fireToast({
+          text: '재시도해주세요!',
+          icon: 'warning',
+          remove: true,
+        });
+      } finally {
+        console.log('end:: ', new Date() - start);
+      }
+    },
+    [fireToast],
+  );
+
+  const clearMp3File = useCallback(() => {
     const documentDir = RNFetchBlob.fs.dirs.DocumentDir;
     RNFetchBlob.fs
       .ls(documentDir)
@@ -30,34 +65,7 @@ export default function Polly() {
       .catch(e => {
         console.log('Error reading files: ', e);
       });
-
-    return () => {
-      RNFetchBlob.session('polly').dispose();
-    };
   }, []);
-
-  const fetchPolly = async (level: number, hanzi: string) => {
-    const start = new Date();
-    try {
-      const url = await fetchPollyUrl(level, hanzi);
-      const filePath = await fetchPollyAudio(url, hanzi);
-      playAudio(filePath, error => {
-        fireToast({
-          text: error,
-          icon: 'warning',
-          remove: true,
-        });
-      });
-    } catch (e) {
-      fireToast({
-        text: '재시도해주세요!',
-        icon: 'warning',
-        remove: true,
-      });
-    } finally {
-      console.log('end:: ', new Date() - start);
-    }
-  };
 
   const fetchPollyUrl = async (level: number, hanzi: string) => {
     const res = await fetch(`${apiUrl}/${level}/${hanzi}`);
@@ -86,18 +94,18 @@ export default function Polly() {
   const playAudio = (path: string, errorCallback: (e: string) => void) => {
     const sound = new Sound(path, Sound.DOCUMENT, error => {
       if (error) {
-        errorCallback('음성 초기화 실패{"\n"} 재시도해주세요!');
+        errorCallback('음성 초기화 실패\n 재시도해주세요!');
       } else {
         sound.play(success => {
           sound.release();
 
           if (!success) {
-            errorCallback('디코딩 실패{"\n"} 재시도해주세요!');
+            errorCallback('디코딩 실패\n 재시도해주세요!');
           }
         });
       }
     });
   };
 
-  return {fetchPolly};
+  return {setToggle, clearMp3File};
 }

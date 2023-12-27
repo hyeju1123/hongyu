@@ -7,7 +7,8 @@ export default class Busu extends Realm.Object<Busu> {
   yin!: string;
   xunyin!: string;
   sample!: string;
-  explanation!: string;
+  info!: string;
+  explanation?: string;
   bookmarked!: boolean;
 
   static schema: ObjectSchema = {
@@ -19,6 +20,7 @@ export default class Busu extends Realm.Object<Busu> {
       yin: 'string',
       xunyin: 'string',
       sample: 'string',
+      info: 'string',
       explanation: 'string',
       bookmarked: 'bool',
     },

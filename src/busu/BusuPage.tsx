@@ -1,69 +1,57 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import styles from '../styles/BusuPageStyle';
-import NavBar from '../module/NavBar';
-import {lightTheme} from '../styles/colors';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-
-import {FlatList, Image, Text, TouchableOpacity, View} from 'react-native';
-import {useQuery, useRealm} from '../../RealmConfigContext';
-
+import {FlatList} from 'react-native';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
-import Busu from '../model/Busu';
-import Card from '../module/Card';
-import cardStyles from '../styles/BusuCardStyle';
-import images from '../styles/images';
-import {updateBusuBookmark} from '../service/updateData';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 
-type BusuPageProps = NativeStackScreenProps<BusuStackParamList, 'BusuPage'>;
+import NavBar from '../module/NavBar';
+import BusuCard from './BusuCard';
+import Busu from '../model/Busu';
+
+import useUtil from '../hooks/util';
+import {useVoca} from '../providers/VocaProvider';
+
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/BusuPageStyle';
+
+type BusuPageProps = NativeStackScreenProps<
+  BusuStackParamList | BookmarkStackParamList,
+  'BusuPage'
+>;
 
 function BusuPage({navigation, route}: BusuPageProps): JSX.Element {
+  const {stroke, fromBookmark} = route.params;
   const {goBack, navigate} = navigation;
-  const {stroke} = route.params;
+  const {getBusuesByStroke, getBookmarkedBusues} = useVoca();
+  const busues = fromBookmark
+    ? getBookmarkedBusues()
+    : getBusuesByStroke(stroke);
+  const {items, loadData} = useUtil(busues);
 
-  const realm = useRealm();
-
-  const busues = useQuery<Busu>('Busu', data => {
-    return data.filtered('stroke == $0', stroke);
-  });
-  const {book, lanternOff, lanternOn} = images.module;
+  const moveToDetailPage = (item: Busu) => {
+    navigate('BusuDetailPage', {busuData: item});
+  };
 
   return (
     <SafeAreaView style={styles.container}>
       <NavBar
         goBack={goBack}
-        title={`부수 ${stroke}획`}
+        title={`부수 ${stroke !== 0 ? stroke + '획' : ''}`}
         theme={lightTheme.darkRed}
       />
       <FlatList
         style={styles.flatlist}
-        data={busues}
-        renderItem={({item, item: {_id, busu, yin, xunyin, bookmarked}}) => (
-          <TouchableOpacity
-            onPress={() => navigate('BusuDetailPage', {busuData: item})}
-            activeOpacity={0.7}
-            key={_id}>
-            <Card noShadow={true} marginVertical={10} theme="white">
-              <View style={cardStyles.imgWrapper}>
-                <TouchableOpacity
-                  onPress={() => navigate('BusuDetailPage', {busuData: item})}>
-                  <Image style={cardStyles.img} source={book} />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  onPress={() => updateBusuBookmark(realm, _id, !bookmarked)}>
-                  <Image
-                    style={cardStyles.img}
-                    source={bookmarked ? lanternOn : lanternOff}
-                  />
-                </TouchableOpacity>
-              </View>
-              <Text style={cardStyles.busu}>{busu}</Text>
-              <Text style={cardStyles.xunyin}>{xunyin}</Text>
-              <Text style={cardStyles.yin}>[{yin}]</Text>
-            </Card>
-          </TouchableOpacity>
+        data={items}
+        renderItem={({item}) => (
+          <BusuCard
+            key={item._id}
+            busuData={item}
+            moveToDetailPage={moveToDetailPage}
+          />
         )}
-        keyExtractor={({_id}) => _id.toString()}
+        onEndReached={loadData}
+        onEndReachedThreshold={0.8}
       />
     </SafeAreaView>
   );

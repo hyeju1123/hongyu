@@ -4,20 +4,20 @@ import {
   ScrollView,
   StatusBar,
   Text,
-  TextInput,
   TouchableOpacity,
 } from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import NavBar from '../module/NavBar';
-import {lightTheme} from '../styles/colors';
-import styles from '../styles/BusuDetailPageStyle';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
+import NavBar from '../module/NavBar';
 import InfoCard from '../module/InfoCard';
+import useUtil from '../hooks/util';
+import {useVoca} from '../providers/VocaProvider';
+
 import images from '../styles/images';
-import {updateBusuBookmark} from '../service/updateData';
-import {useRealm} from '../../RealmConfigContext';
-import useToast from '../hooks/toast';
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/BusuDetailPageStyle';
+import DebouncedTextInput from '../module/DebouncedTextInput';
 
 type BusuDetailPageProps = NativeStackScreenProps<
   BusuStackParamList,
@@ -26,24 +26,13 @@ type BusuDetailPageProps = NativeStackScreenProps<
 
 function BusuDetailPage({navigation, route}: BusuDetailPageProps): JSX.Element {
   const {goBack} = navigation;
-  const realm = useRealm();
   const {
-    busuData: {_id, busu, xunyin, yin, explanation, sample, bookmarked},
+    busuData: {_id, busu, xunyin, yin, info, explanation, sample, bookmarked},
   } = route.params;
   const {lanternOn, lanternOffWhite} = images.module;
+  const {handleBookmark} = useUtil();
+  const {updateBusuExplanation} = useVoca();
   const [bookmark, setBookmark] = useState(bookmarked);
-  const {fireToast} = useToast();
-
-  const handleBusuBookmark = () => {
-    setBookmark(!bookmark);
-    updateBusuBookmark(realm, _id, !bookmark);
-    const status = bookmark ? '삭제' : '저장';
-    fireToast({
-      text: `'내 단어장'에 ${status}되었습니다.`,
-      icon: 'checkedGreen',
-      remove: true,
-    });
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -57,28 +46,32 @@ function BusuDetailPage({navigation, route}: BusuDetailPageProps): JSX.Element {
         contentContainerStyle={styles.scrollViewContent}
         style={styles.scrollView}>
         <InfoCard>
-          <Text style={styles.word}>{busu}</Text>
+          <Text style={busu.length > 4 ? styles.longWord : styles.word}>
+            {busu}
+          </Text>
           <Text style={styles.xunyin}>{xunyin}</Text>
           <Text style={styles.intonation}>[{yin}]</Text>
         </InfoCard>
         <InfoCard>
           <Text style={styles.infoTitleText}># 부수 정보</Text>
-          <Text style={styles.infoText}>{explanation}</Text>
+          <Text style={styles.infoText}>{info}</Text>
         </InfoCard>
         <InfoCard>
           <Text style={styles.infoTitleText}># 예시</Text>
           <Text style={styles.infoText}>{sample}</Text>
         </InfoCard>
         <InfoCard>
-          <TextInput
-            multiline
+          <DebouncedTextInput
             style={styles.infoText}
+            textVal={explanation || ''}
             placeholder="# 메모를 남겨보세요."
-            placeholderTextColor={lightTheme.gray}
+            updateFn={val => updateBusuExplanation(_id, val)}
           />
         </InfoCard>
         <TouchableOpacity
-          onPress={handleBusuBookmark}
+          onPress={() =>
+            handleBookmark({setBookmark, _id, word: busu, bookmark, busu: true})
+          }
           style={styles.bookmarkBtn}>
           <Image
             style={styles.bookmarkImg}

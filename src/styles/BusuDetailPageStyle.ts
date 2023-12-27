@@ -15,6 +15,7 @@ type Style = {
   scrollView: ViewStyle;
   scrollViewContent: ViewStyle;
   word: TextStyle;
+  longWord: TextStyle;
   xunyin: TextStyle;
   intonation: TextStyle;
   infoTitleText: TextStyle;
@@ -41,6 +42,11 @@ export const commonPart: Style = {
   },
   word: {
     ...WordDetailPageStyle.word,
+    marginTop: 0,
+  },
+  longWord: {
+    ...WordDetailPageStyle.word,
+    fontSize: width * 0.1,
     marginTop: 0,
   },
   xunyin: {
