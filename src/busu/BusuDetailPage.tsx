@@ -9,13 +9,11 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
-import NavBar from '../module/NavBar';
 import InfoCard from '../module/InfoCard';
 import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
 
 import images from '../styles/images';
-import {lightTheme} from '../styles/colors';
 import styles from '../styles/BusuDetailPageStyle';
 import DebouncedTextInput from '../module/DebouncedTextInput';
 
@@ -24,8 +22,7 @@ type BusuDetailPageProps = NativeStackScreenProps<
   'BusuDetailPage'
 >;
 
-function BusuDetailPage({navigation, route}: BusuDetailPageProps): JSX.Element {
-  const {goBack} = navigation;
+function BusuDetailPage({route}: BusuDetailPageProps): JSX.Element {
   const {
     busuData: {_id, busu, xunyin, yin, info, explanation, sample, bookmarked},
   } = route.params;
@@ -41,7 +38,6 @@ function BusuDetailPage({navigation, route}: BusuDetailPageProps): JSX.Element {
         backgroundColor="transparent"
         translucent={true}
       />
-      <NavBar goBack={goBack} title={'상세보기'} theme={lightTheme.darkRed} />
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         style={styles.scrollView}>

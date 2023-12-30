@@ -3,7 +3,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
-import NavBar from '../module/NavBar';
 import Card from '../module/Card';
 
 import {useVoca} from '../providers/VocaProvider';
@@ -11,7 +10,6 @@ import useDidMountEffect from '../hooks/didMount';
 import {useIsFocused} from '@react-navigation/native';
 
 import styles from '../styles/CategoryPageStyle';
-import {lightTheme} from '../styles/colors';
 
 type DirectoryPageProps = NativeStackScreenProps<
   BookmarkStackParamList,
@@ -23,7 +21,7 @@ type CountObject = {
 };
 
 function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
-  const {goBack, navigate} = navigation;
+  const {navigate} = navigation;
   const isFocused = useIsFocused();
   const {getBookmarkedVocas, getBookmarkedBusues} = useVoca();
   const [bookmarked, setBookmarked] = useState(getBookmarkedVocas(0));
@@ -78,13 +76,12 @@ function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
   }, [isFocused]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent={true}
       />
-      <NavBar goBack={goBack} title="내 단어장" theme={lightTheme.red} />
       <ScrollView style={styles.scrollView}>
         {injectContent('부수', bookmarkedBusues.length, '-1', true)}
         {injectContent('HSK 모든 단어', bookmarked.length, '0')}

@@ -39,9 +39,9 @@ function DebouncedTextInput({
 
   useDidMountEffect(() => {
     // prevent duplicate update after EditWordPage.
-    if (text === textVal) {
-      return;
-    }
+    // if (text === textVal) {
+    //   return;
+    // }
 
     if (!limitTextLength(debounced)) {
       updateFn(debounced);

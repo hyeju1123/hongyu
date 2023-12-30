@@ -21,7 +21,6 @@ type Style = {
   rowWrapper: ViewStyle;
   wordclassImg: ImageStyle;
   meaning: TextStyle;
-  editBtn: ViewStyle;
   editImg: ImageStyle;
   bookmarkBtn: ViewStyle;
   bookmarkImg: ImageStyle;
@@ -92,10 +91,6 @@ export const commonPart: Style = {
     color: lightTheme.black,
     lineHeight: 28,
     padding: 0,
-  },
-  editBtn: {
-    position: 'absolute',
-    right: 20,
   },
   editImg: {
     width: width * 0.045,

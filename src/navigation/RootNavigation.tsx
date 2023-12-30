@@ -8,6 +8,7 @@ import WordDetailPage from '../bookmark/WordDetailPage';
 import EditWordPage from '../bookmark/EditWordPage';
 import HskNavigation from './HskNavigation';
 import BookmarkNavigation from './BookmarkNavigation';
+import QuizNavigation from './QuizNavigation';
 import BusuNavigation from './BusuNavigation';
 import Busu from '../model/Busu';
 import BusuDetailPage from '../busu/BusuDetailPage';
@@ -19,6 +20,7 @@ export type RootStackParamList = {
   EditWordPage: {id: number};
   HskNavigation: {level: number};
   BookmarkNavigation: undefined;
+  QuizNavigation: undefined;
   BusuNavigation: undefined;
   BusuDetailPage: {busuData: Busu};
 };
@@ -38,6 +40,7 @@ function RootNavigation(): JSX.Element {
           name="BookmarkNavigation"
           component={BookmarkNavigation}
         />
+        <Stack.Screen name="QuizNavigation" component={QuizNavigation} />
         <Stack.Screen name="BusuNavigation" component={BusuNavigation} />
         <Stack.Screen name="BusuDetailPage" component={BusuDetailPage} />
       </Stack.Navigator>

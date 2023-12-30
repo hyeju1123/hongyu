@@ -14,7 +14,6 @@ export const commonPart: Style = {
   },
   flatlist: {
     marginHorizontal: 20,
-    marginVertical: 5,
   },
 };
 

@@ -22,7 +22,9 @@ function ServiceSection({navigation}: ServiceSectionProps) {
     <View>
       <Text style={styles.sectionText}>학습 도구</Text>
       <FlatCard
-        navFn={() => {}}
+        navFn={() => {
+          navigate('QuizNavigation');
+        }}
         imgSrc={vocatest}
         title="단어 암기 시험"
         desc="다양한 시험을 통해 암기 학습을 해보세요."

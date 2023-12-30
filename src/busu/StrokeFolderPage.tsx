@@ -5,10 +5,8 @@ import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
 
 import Card from '../module/Card';
-import NavBar from '../module/NavBar';
 import {useVoca} from '../providers/VocaProvider';
 
-import {lightTheme} from '../styles/colors';
 import styles from '../styles/StrokeFolderPageStyle';
 
 type StrokeFolderPageProps = NativeStackScreenProps<
@@ -17,7 +15,7 @@ type StrokeFolderPageProps = NativeStackScreenProps<
 >;
 
 function StrokeFolderPage({navigation}: StrokeFolderPageProps): JSX.Element {
-  const {goBack, navigate} = navigation;
+  const {navigate} = navigation;
   const {countBusuByStroke} = useVoca();
   const strokeInfo = countBusuByStroke();
 
@@ -42,13 +40,12 @@ function StrokeFolderPage({navigation}: StrokeFolderPageProps): JSX.Element {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent={true}
       />
-      <NavBar goBack={goBack} title={'부수 사전'} theme={lightTheme.darkRed} />
       <ScrollView style={styles.scrollView}>{showData(strokeInfo)}</ScrollView>
     </SafeAreaView>
   );

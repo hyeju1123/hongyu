@@ -4,7 +4,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
-import NavBar from '../module/NavBar';
 import WordCard from '../module/WordCard';
 
 import uesUtil from '../hooks/util';
@@ -12,7 +11,6 @@ import usePolly from '../hooks/polly';
 import {useVoca} from '../providers/VocaProvider';
 
 import styles from '../styles/WordPageStyle';
-import {lightTheme} from '../styles/colors';
 
 type WordPageProps = NativeStackScreenProps<
   HskStackParamList | BookmarkStackParamList,
@@ -20,7 +18,7 @@ type WordPageProps = NativeStackScreenProps<
 >;
 
 function WordPage({navigation, route}: WordPageProps): JSX.Element {
-  const {goBack, navigate} = navigation;
+  const {navigate} = navigation;
   const {level, category, fromBookmark} = route.params;
   const {clearMp3File} = usePolly();
   const {getVocasByCategory, getBookmarkedVocas} = useVoca();
@@ -34,14 +32,14 @@ function WordPage({navigation, route}: WordPageProps): JSX.Element {
   };
 
   useEffect(() => {
+    navigation.setOptions({headerTitle: category});
     return () => {
       clearMp3File();
     };
-  }, [clearMp3File]);
+  }, [clearMp3File, navigation, category]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavBar goBack={goBack} title={category} theme={lightTheme.red} />
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <FlatList
         style={styles.flatlist}
         data={items}

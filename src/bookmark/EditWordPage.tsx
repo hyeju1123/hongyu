@@ -4,6 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   Image,
   ScrollView,
+  Text,
   TextInput,
   TouchableOpacity,
   View,
@@ -11,13 +12,10 @@ import {
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {useRealm} from '../../RealmConfigContext';
 import useToast from '../hooks/toast';
-import NavBar from '../module/NavBar';
-import CompleteButton from '../module/CompleteButton';
 import {selectWord} from '../service/selectData';
 import useUtil from '../hooks/util';
 import {VocaContentType, updateVcoa} from '../service/updateData';
 import styles from '../styles/EditWordPageStyle';
-import {lightTheme} from '../styles/colors';
 import images from '../styles/images';
 
 type EditWordPageProps = NativeStackScreenProps<
@@ -25,8 +23,9 @@ type EditWordPageProps = NativeStackScreenProps<
   'EditWordPage'
 >;
 
-function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
+function EditWordPage({navigation, route}: EditWordPageProps) {
   const {id} = route.params;
+  const {goBack} = navigation;
   const realm = useRealm();
   const {
     wordClass,
@@ -37,6 +36,7 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
   const {word, intonation, wordclass, meaning, explanation} = wordData;
   const {fireToast} = useToast();
   const {getWCLabels, limitTextLength} = useUtil();
+  const {checkedGreen} = images.module;
 
   const [textVal, setTextVal] = useState({
     word,
@@ -73,13 +73,7 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
-      <NavBar
-        goBack={goBack}
-        title="단어 수정"
-        theme={lightTheme.red}
-        rightButton={<CompleteButton updateFn={doUpdateWord} />}
-      />
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <ScrollView style={styles.scrollView}>
         <TextInput
           style={styles.textInput}
@@ -124,6 +118,10 @@ function EditWordPage({navigation: {goBack}, route}: EditWordPageProps) {
           placeholder="메모를 입력하세요"
           onFocus={() => setShowWCTemplate(false)}
         />
+        <TouchableOpacity onPress={doUpdateWord} style={styles.completeButton}>
+          <Image source={checkedGreen} style={styles.completeImg} />
+          <Text style={styles.completeText}>수정하기</Text>
+        </TouchableOpacity>
       </ScrollView>
       <View
         style={showWCTemplate ? styles.wordclassBox : styles.wordclassBoxNone}>

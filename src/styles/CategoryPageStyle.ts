@@ -17,8 +17,8 @@ export const commonPart: Style = {
     backgroundColor: lightTheme.red,
   },
   scrollView: {
+    flex: 1,
     marginHorizontal: 20,
-    marginVertical: 5,
   },
   text: {
     fontFamily: fonts.mainBold,

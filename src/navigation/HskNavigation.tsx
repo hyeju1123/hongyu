@@ -9,9 +9,11 @@ import {RootStackParamList} from './RootNavigation';
 import WordPage from '../hsk/WordPage';
 import WordDetailPage from '../bookmark/WordDetailPage';
 import EditWordPage from '../bookmark/EditWordPage';
+import {lightTheme} from '../styles/colors';
+import {fonts} from '../styles/fonts';
 
 export type HskStackParamList = {
-  CategoryPage: {level: number};
+  CategoryPage: {level: number; forQuiz: boolean};
   WordPage: {level: number; category: string; fromBookmark?: boolean};
   WordDetailPage: {id: number};
   EditWordPage: {id: number};
@@ -28,15 +30,30 @@ function HskNavigation({route}: HskNavigationProps): JSX.Element {
   const {level} = route.params;
 
   return (
-    <Stack.Navigator screenOptions={{headerShown: false}}>
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleAlign: 'center',
+        headerTintColor: lightTheme.white,
+        headerShadowVisible: false,
+        headerTitleStyle: {fontFamily: fonts.mainBold},
+        headerStyle: {backgroundColor: lightTheme.red},
+      }}>
       <Stack.Screen
         name="CategoryPage"
         component={CategoryPage}
         initialParams={{level}}
       />
       <Stack.Screen name="WordPage" component={WordPage} />
-      <Stack.Screen name="WordDetailPage" component={WordDetailPage} />
-      <Stack.Screen name="EditWordPage" component={EditWordPage} />
+      <Stack.Screen
+        options={{headerTitle: '상세보기'}}
+        name="WordDetailPage"
+        component={WordDetailPage}
+      />
+      <Stack.Screen
+        options={{headerTitle: '단어 수정'}}
+        name="EditWordPage"
+        component={EditWordPage}
+      />
     </Stack.Navigator>
   );
 }

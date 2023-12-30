@@ -21,9 +21,7 @@ function EditWordButton({navigation: {navigate}, id}: EditWordButtonProps) {
   } = images;
 
   return (
-    <TouchableOpacity
-      onPress={() => navigate('EditWordPage', {id})}
-      style={styles.editBtn}>
+    <TouchableOpacity onPress={() => navigate('EditWordPage', {id})}>
       <Image style={styles.editImg} source={editWhite} />
     </TouchableOpacity>
   );

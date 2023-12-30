@@ -17,6 +17,9 @@ type Style = {
   wordclassImg: ImageStyle;
   wordclassBox: ViewStyle;
   wordclassBoxNone: ViewStyle;
+  completeButton: ViewStyle;
+  completeText: TextStyle;
+  completeImg: ImageStyle;
   wcButton: ViewStyle;
   closeButton: ViewStyle;
   closeImage: ImageStyle;
@@ -71,6 +74,34 @@ const commonPart: Style = {
   },
   wordclassBoxNone: {
     display: 'none',
+  },
+  completeButton: {
+    borderRadius: 8,
+    padding: 10,
+    marginVertical: 30,
+    backgroundColor: lightTheme.white,
+    alignSelf: 'flex-end',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+    elevation: 8,
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  completeText: {
+    fontFamily: fonts.mainBold,
+    fontSize: width * 0.035,
+    color: lightTheme.black,
+  },
+  completeImg: {
+    width: width * 0.035,
+    height: width * 0.035,
+    marginRight: width * 0.01,
   },
   wcButton: {
     margin: 8,

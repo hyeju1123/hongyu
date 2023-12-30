@@ -19,6 +19,12 @@ const images = {
     closed: require('../../images/closed.png'),
     warning: require('../../images/warning.png'),
     book: require('../../images/book.png'),
+    matching: require('../../images/matching.png'),
+    picking: require('../../images/picking.png'),
+    listening: require('../../images/listening.png'),
+    writing: require('../../images/writing.png'),
+    fourIdiom: require('../../images/fourIdiom.png'),
+    lineArrow: require('../../images/lineArrow.png'),
   },
   wordClass: {
     명사: require('../../images/wordClass/noun.png'),
@@ -51,6 +57,14 @@ const images = {
     성어: require('../../images/deletedWordClass/idi_delete.png'),
     수사: require('../../images/deletedWordClass/num_delete.png'),
     기타: require('../../images/deletedWordClass/other_delete.png'),
+  },
+  number: {
+    1: require('../../images/number/circle-1.png'),
+    2: require('../../images/number/circle-2.png'),
+    3: require('../../images/number/circle-3.png'),
+    4: require('../../images/number/circle-4.png'),
+    5: require('../../images/number/circle-5.png'),
+    6: require('../../images/number/circle-6.png'),
   },
 } as {[key: string]: any};
 

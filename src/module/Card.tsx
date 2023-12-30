@@ -6,11 +6,13 @@ type CardProps = PropsWithChildren<{
   marginVertical?: number;
   theme?: string;
   noShadow?: boolean;
+  dirRow?: boolean;
 }>;
 
 function Card({
   noShadow = false,
   children,
+  dirRow = false,
   marginVertical = 5,
   theme = 'red',
 }: CardProps): JSX.Element {
@@ -21,7 +23,11 @@ function Card({
         noShadow && styles.noShadow,
         {marginVertical},
       ]}>
-      <View style={theme === 'red' ? styles.card : styles.whiteCard}>
+      <View
+        style={[
+          theme === 'red' ? styles.card : styles.whiteCard,
+          dirRow && styles.flexRow,
+        ]}>
         {children}
       </View>
     </View>
@@ -43,6 +49,9 @@ const styles = StyleSheet.create({
   },
   noShadow: {
     backgroundColor: 'rgba(0,0,0,0)',
+  },
+  flexRow: {
+    flexDirection: 'row',
   },
   whiteCard: {
     display: 'flex',

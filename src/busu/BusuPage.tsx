@@ -1,18 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FlatList} from 'react-native';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 
-import NavBar from '../module/NavBar';
 import BusuCard from './BusuCard';
 import Busu from '../model/Busu';
 
 import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
 
-import {lightTheme} from '../styles/colors';
 import styles from '../styles/BusuPageStyle';
 
 type BusuPageProps = NativeStackScreenProps<
@@ -22,7 +20,7 @@ type BusuPageProps = NativeStackScreenProps<
 
 function BusuPage({navigation, route}: BusuPageProps): JSX.Element {
   const {stroke, fromBookmark} = route.params;
-  const {goBack, navigate} = navigation;
+  const {navigate} = navigation;
   const {getBusuesByStroke, getBookmarkedBusues} = useVoca();
   const busues = fromBookmark
     ? getBookmarkedBusues()
@@ -33,13 +31,14 @@ function BusuPage({navigation, route}: BusuPageProps): JSX.Element {
     navigate('BusuDetailPage', {busuData: item});
   };
 
+  useEffect(() => {
+    navigation.setOptions({
+      headerTitle: `부수 ${stroke !== 0 ? stroke + '획' : ''}`,
+    });
+  }, [navigation, stroke]);
+
   return (
-    <SafeAreaView style={styles.container}>
-      <NavBar
-        goBack={goBack}
-        title={`부수 ${stroke !== 0 ? stroke + '획' : ''}`}
-        theme={lightTheme.darkRed}
-      />
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <FlatList
         style={styles.flatlist}
         data={items}

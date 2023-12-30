@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   Image,
   ScrollView,
@@ -13,7 +13,6 @@ import {RootStackParamList} from '../navigation/RootNavigation';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import Voca from '../model/Voca';
-import NavBar from '../module/NavBar';
 import InfoCard from '../module/InfoCard';
 import EditWordButton from '../module/EditWordButton';
 import DebouncedTextInput from '../module/DebouncedTextInput';
@@ -25,7 +24,6 @@ import useDidMountEffect from '../hooks/didMount';
 import {useIsFocused} from '@react-navigation/native';
 
 import images from '../styles/images';
-import {lightTheme} from '../styles/colors';
 import styles from '../styles/WordDetailPageStyle';
 
 type WordDetailPageProps = NativeStackScreenProps<
@@ -35,7 +33,6 @@ type WordDetailPageProps = NativeStackScreenProps<
 
 function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
   const {id} = route.params;
-  const {goBack} = navigation;
 
   const {setToggle} = usePolly();
   const isFocused = useIsFocused();
@@ -51,6 +48,16 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
     module: {lanternOffWhite, lanternOn, sound},
   } = images;
 
+  useEffect(() => {
+    const getEditButton = () => {
+      return <EditWordButton navigation={navigation} id={id} />;
+    };
+
+    navigation.setOptions({
+      headerRight: getEditButton,
+    });
+  }, [navigation, id]);
+
   useDidMountEffect(() => {
     if (isFocused) {
       const newData = getVoca(id);
@@ -59,17 +66,11 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
   }, [isFocused, getVoca, id]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
         barStyle="light-content"
         backgroundColor="transparent"
         translucent={true}
-      />
-      <NavBar
-        goBack={goBack}
-        title={'상세보기'}
-        theme={lightTheme.red}
-        rightButton={<EditWordButton navigation={navigation} id={id} />}
       />
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
