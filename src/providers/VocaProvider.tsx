@@ -14,6 +14,7 @@ type VocaContexttype = {
   getVocasByLevel: (level: number) => Voca[];
   getVocasBySearch: (input: string) => (Busu | Voca)[];
   getVocasByCategory: (level: number, category: string) => Voca[];
+  getVocasByMultipleCategory: (level: number, categories: string[]) => Voca[];
   getBookmarkedVocas: (level: number) => Voca[];
   getBusu: (_id: number) => Busu;
   getBusuesByStroke: (stroke: number) => Busu[];
@@ -64,6 +65,9 @@ const VocaContext = createContext<VocaContexttype>({
     return [];
   },
   getVocasByCategory: () => {
+    return [];
+  },
+  getVocasByMultipleCategory: () => {
     return [];
   },
   getBookmarkedVocas: () => {
@@ -118,6 +122,16 @@ export function VocaProvider({children}: PropsWithChildren) {
       return realm
         .objects<Voca>('Voca')
         .filtered('level == $0 && theme == $1', level, category)
+        .slice();
+    },
+    [realm],
+  );
+
+  const getVocasByMultipleCategory = useCallback(
+    (level: number, categories: string[]) => {
+      return realm
+        .objects<Voca>('Voca')
+        .filtered('level == $0 && theme IN $1', level, categories)
         .slice();
     },
     [realm],
@@ -254,6 +268,7 @@ export function VocaProvider({children}: PropsWithChildren) {
     getVocasByLevel,
     getVocasBySearch,
     getVocasByCategory,
+    getVocasByMultipleCategory,
     getBookmarkedVocas,
     getBusu,
     getBusuesByStroke,

@@ -7,4 +7,8 @@ export const lightTheme = {
   ligthGray: '#E4E4E4',
   gray: '#8E8E8E',
   black: '#655858',
+  mint: '#E8FAEA',
+  salmon: '#FED3C1',
+  transparent: 'transparent',
+  transWhite: 'rgba(255,255,255,0.5)',
 };

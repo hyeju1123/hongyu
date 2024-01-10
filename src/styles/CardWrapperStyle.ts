@@ -10,7 +10,6 @@ const commonPart: Style = {
     width: '100%',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    // borderColor: 'transparent',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -21,7 +20,8 @@ const commonPart: Style = {
     elevation: 10,
     flex: 1,
     top: 20,
-    padding: 20,
+    paddingTop: 20,
+    paddingHorizontal: 20,
   },
 };
 

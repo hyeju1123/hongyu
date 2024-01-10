@@ -1,6 +1,7 @@
 import React, {PropsWithChildren, useState} from 'react';
 import {
   Animated,
+  DimensionValue,
   Dimensions,
   FlatList,
   ImageSourcePropType,
@@ -20,14 +21,18 @@ type InfoType = {
 
 type CategoryCardWrapperProps = PropsWithChildren<{
   theme?: string;
+  topPanelHeight?: DimensionValue;
   infos: InfoType[];
   nav: (param: string) => void;
+  loadData?: () => void;
 }>;
 
 function CategoryCardWrapper({
   nav,
   theme = lightTheme.red,
   infos,
+  loadData = () => {},
+  topPanelHeight = 0,
 }: CategoryCardWrapperProps) {
   const [scrollY] = useState(new Animated.Value(0));
 
@@ -38,7 +43,7 @@ function CategoryCardWrapper({
 
   const translateY = scrollY.interpolate({
     inputRange: [0, 100],
-    outputRange: [0, -50],
+    outputRange: [0, topPanelHeight ? -20 : -50],
     extrapolate: 'clamp',
   });
 
@@ -50,7 +55,7 @@ function CategoryCardWrapper({
       style={[
         styles.cardWrapper,
         {
-          minHeight: height - headerHeight,
+          minHeight: height - headerHeight - 15 - topPanelHeight * 2,
           backgroundColor: theme,
           transform: [{translateY}],
         },
@@ -63,6 +68,8 @@ function CategoryCardWrapper({
           </TouchableOpacity>
         )}
         onScroll={handleScroll}
+        onEndReached={loadData}
+        onEndReachedThreshold={0.8}
       />
     </Animated.View>
   );

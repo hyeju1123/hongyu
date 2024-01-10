@@ -13,7 +13,7 @@ import {lightTheme} from '../styles/colors';
 import {fonts} from '../styles/fonts';
 
 export type HskStackParamList = {
-  CategoryPage: {level: number; forQuiz: boolean};
+  CategoryPage: {level: number};
   WordPage: {level: number; category: string; fromBookmark?: boolean};
   WordDetailPage: {id: number};
   EditWordPage: {id: number};

@@ -5,7 +5,6 @@ import styles from '../styles/VocaSectionStyle';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import images from '../styles/images';
-import {lightTheme} from '../styles/colors';
 
 type VocaSectionProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -13,47 +12,37 @@ type VocaSectionProps = PropsWithChildren<{
     'MainPage',
     undefined
   >;
-  forQuiz?: boolean;
 }>;
 
-function VocaSection({
-  navigation: {navigate},
-  forQuiz = false,
-}: VocaSectionProps) {
+function VocaSection({navigation: {navigate}}: VocaSectionProps) {
   const {lanternOn} = images.module;
   const levels = [1, 2, 3, 4, 5, 6];
 
   return (
     <View>
-      {!forQuiz && <Text style={styles.sectionText}>HSK 단어</Text>}
+      <Text style={styles.sectionText}>HSK 단어</Text>
       <View style={styles.cardsWrapper}>
         {levels.map(level => (
           <TouchableOpacity
             onPress={() => navigate('HskNavigation', {level})}
             key={level}>
-            <Card theme={forQuiz ? 'white' : 'red'}>
+            <Card>
               <View style={styles.contents}>
                 <View style={styles.whiteDot} />
-                <Text
-                  style={[
-                    styles.levelText,
-                    forQuiz && {color: lightTheme.black},
-                  ]}>{`${level} 급`}</Text>
+                <Text style={[styles.levelText]}>{`${level} 급`}</Text>
               </View>
             </Card>
           </TouchableOpacity>
         ))}
       </View>
-      {!forQuiz && (
-        <TouchableOpacity onPress={() => navigate('BookmarkNavigation')}>
-          <Card>
-            <View style={styles.scrap}>
-              <Text style={styles.scrapText}>내 단어장</Text>
-              <Image style={styles.scrapImg} source={lanternOn} />
-            </View>
-          </Card>
-        </TouchableOpacity>
-      )}
+      <TouchableOpacity onPress={() => navigate('BookmarkNavigation')}>
+        <Card>
+          <View style={styles.scrap}>
+            <Text style={styles.scrapText}>내 단어장</Text>
+            <Image style={styles.scrapImg} source={lanternOn} />
+          </View>
+        </Card>
+      </TouchableOpacity>
     </View>
   );
 }

@@ -7,17 +7,20 @@ import {
 import {RootStackParamList} from './RootNavigation';
 import QuizTypePage from '../quiz/QuizTypePage';
 import PickLevelPage from '../quiz/PickLevelPage';
-import CategoryPage from '../hsk/CategoryPage';
+import PickCategoryPage from '../quiz/PickCategoryPage';
+import MatchingQuizPage, {WordStateProps} from '../quiz/MatchingQuizPage';
 
 import {lightTheme} from '../styles/colors';
 import {fonts} from '../styles/fonts';
-import MatchingQuizPage from '../quiz/MatchingQuizPage';
+import QuizResultPage from '../quiz/QuizResultPage';
+import Voca from '../model/Voca';
 
 export type QuizStackParamList = {
   QuizTypePage: undefined;
   PickLevelPage: undefined;
-  CategoryPage: {level: number; forQuiz: boolean};
-  MatchingQuizPage: {level: number; category: string};
+  PickCategoryPage: {level: number};
+  MatchingQuizPage: {level: number; categories: string[]};
+  QuizResultPage: {words: Voca[]; corrected: number[]};
 };
 
 const Stack = createNativeStackNavigator<QuizStackParamList>();
@@ -48,11 +51,24 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
         name="PickLevelPage"
         component={PickLevelPage}
         options={{
-          headerTitle: '급수',
+          headerTitle: '',
         }}
       />
-      <Stack.Screen name="CategoryPage" component={CategoryPage} />
-      <Stack.Screen name="MatchingQuizPage" component={MatchingQuizPage} />
+      <Stack.Screen
+        name="PickCategoryPage"
+        component={PickCategoryPage}
+        options={{
+          headerTitle: '',
+        }}
+      />
+      <Stack.Screen
+        name="MatchingQuizPage"
+        component={MatchingQuizPage}
+        options={{
+          headerTitle: '',
+        }}
+      />
+      <Stack.Screen name="QuizResultPage" component={QuizResultPage} />
     </Stack.Navigator>
   );
 }

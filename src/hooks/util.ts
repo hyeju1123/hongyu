@@ -82,5 +82,29 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
     }));
   }, [longData]);
 
-  return {getWCLabels, limitTextLength, handleBookmark, items, loadData};
+  const shuffleArray = useCallback((array: any[]) => {
+    let currentIndex = array.length,
+      randomIndex;
+
+    while (currentIndex > 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex],
+        array[currentIndex],
+      ];
+    }
+
+    return array;
+  }, []);
+
+  return {
+    getWCLabels,
+    limitTextLength,
+    handleBookmark,
+    items,
+    loadData,
+    shuffleArray,
+  };
 }

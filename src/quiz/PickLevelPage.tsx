@@ -19,13 +19,13 @@ function PickLevelPage({navigation}: PickLevelPageProps): JSX.Element {
 
   const levelData = levels.map(level => ({
     title: `HSK ${level}급`,
-    desc: '',
+    desc: `${level}급 시험보기`,
     icon: images.number[level],
     navData: level.toString(),
   }));
 
   const moveToCategory = (level: string) => {
-    navigate('CategoryPage', {level: Number(level), forQuiz: true});
+    navigate('PickCategoryPage', {level: Number(level)});
   };
 
   return (
