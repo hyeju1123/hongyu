@@ -36,7 +36,7 @@ function PickCategoryPage({
   const categoryData = items.map(({theme}) => ({
     title: theme,
     desc: '단어 20개',
-    icon: images.module.matching,
+    icon: 'Matching',
     navData: theme,
   }));
 

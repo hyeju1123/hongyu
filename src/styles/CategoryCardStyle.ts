@@ -21,6 +21,9 @@ type Style = {
 const width = Dimensions.get('screen').width;
 
 const commonPart: Style = {
+  typeButton: {
+    width: '100%',
+  },
   typeTextWrapper: {
     flex: 1,
     margin: 15,
@@ -29,9 +32,6 @@ const commonPart: Style = {
   },
   justifyContent: {
     justifyContent: 'center',
-  },
-  typeButton: {
-    width: '100%',
   },
   icon: {
     width: width * 0.1,
@@ -43,6 +43,7 @@ const commonPart: Style = {
     fontFamily: fonts.mainBold,
     color: lightTheme.black,
     fontSize: width * 0.035,
+    marginBottom: 3,
   },
   desc: {
     fontFamily: fonts.pinyin,

@@ -53,6 +53,7 @@ const handleStyles = () => {
     },
     scrap: {
       display: 'flex',
+      width: '100%',
       flexDirection: 'row',
       justifyContent: 'flex-end',
       alignItems: 'center',

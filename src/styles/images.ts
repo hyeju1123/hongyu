@@ -65,6 +65,7 @@ const images = {
     4: require('../../images/number/circle-4.png'),
     5: require('../../images/number/circle-5.png'),
     6: require('../../images/number/circle-6.png'),
+    seven: '../../images/number/circle-7.svg',
   },
 } as {[key: string]: any};
 

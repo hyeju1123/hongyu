@@ -3,6 +3,7 @@ import {isPhone} from './screen';
 
 type Style = {
   cardWrapper: ViewStyle;
+  flatlistContent: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -19,9 +20,14 @@ const commonPart: Style = {
     shadowRadius: 6.27,
     elevation: 10,
     flex: 1,
-    top: 20,
-    paddingTop: 20,
+    top: 10,
+    paddingTop: 10,
     paddingHorizontal: 20,
+  },
+  flatlistContent: {
+    paddingBottom: 10,
+    flexGrow: 1,
+    justifyContent: 'center',
   },
 };
 

@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
-import images from '../styles/images';
+
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/QuizTypePageStyle';
 
@@ -20,7 +20,7 @@ function PickLevelPage({navigation}: PickLevelPageProps): JSX.Element {
   const levelData = levels.map(level => ({
     title: `HSK ${level}급`,
     desc: `${level}급 시험보기`,
-    icon: images.number[level],
+    icon: `Circle${level}`,
     navData: level.toString(),
   }));
 

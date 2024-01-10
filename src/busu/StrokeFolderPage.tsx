@@ -1,13 +1,14 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
+import {StatusBar} from 'react-native';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
 
-import Card from '../module/Card';
 import {useVoca} from '../providers/VocaProvider';
 
 import styles from '../styles/StrokeFolderPageStyle';
+import CategoryCardWrapper from '../module/CategoryCardWrapper';
+import {lightTheme} from '../styles/colors';
 
 type StrokeFolderPageProps = NativeStackScreenProps<
   BusuStackParamList,
@@ -17,26 +18,18 @@ type StrokeFolderPageProps = NativeStackScreenProps<
 function StrokeFolderPage({navigation}: StrokeFolderPageProps): JSX.Element {
   const {navigate} = navigation;
   const {countBusuByStroke} = useVoca();
-  const strokeInfo = countBusuByStroke();
+  const infos = Object.entries(countBusuByStroke()).map(([key, value]) => {
+    const stroke = Number(key) + 1;
+    return {
+      title: `${stroke}획 ${stroke === 10 ? '이상' : ''}`,
+      desc: `부수 ${value}개`,
+      icon: `Circle${stroke}`,
+      navData: `${stroke}`,
+    };
+  });
 
-  const showData = (data: Object) => {
-    return Object.entries(data).map(([key, value]) => {
-      const stroke = Number(key) + 1;
-      return (
-        <TouchableOpacity
-          key={stroke}
-          onPress={() => navigate('BusuPage', {stroke})}>
-          <Card marginVertical={10} theme="white">
-            <Text style={styles.text}>
-              {stroke}획 {stroke === 10 && '이상'}
-            </Text>
-            <Text style={styles.bottomText}>
-              부수 {<Text style={styles.bottomRedText}>{value}</Text>}개
-            </Text>
-          </Card>
-        </TouchableOpacity>
-      );
-    });
+  const moveToBusuPage = (stroke: string) => {
+    navigate('BusuPage', {stroke: Number(stroke)});
   };
 
   return (
@@ -46,7 +39,11 @@ function StrokeFolderPage({navigation}: StrokeFolderPageProps): JSX.Element {
         backgroundColor="transparent"
         translucent={true}
       />
-      <ScrollView style={styles.scrollView}>{showData(strokeInfo)}</ScrollView>
+      <CategoryCardWrapper
+        nav={moveToBusuPage}
+        infos={infos}
+        theme={lightTheme.darkRed}
+      />
     </SafeAreaView>
   );
 }

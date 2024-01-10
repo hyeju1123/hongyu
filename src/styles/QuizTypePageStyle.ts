@@ -30,8 +30,9 @@ const commonPart: Style = {
     backgroundColor: lightTheme.darkRed,
   },
   guideText: {
-    paddingHorizontal: 20,
-    paddingTop: 50,
+    marginHorizontal: width * 0.05,
+    marginTop: width * 0.15,
+    marginBottom: width * 0.02,
     fontFamily: fonts.mainBold,
     fontSize: width * 0.05,
     color: lightTheme.white,

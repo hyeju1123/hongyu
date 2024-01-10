@@ -3,6 +3,7 @@ import {StyleSheet, View} from 'react-native';
 import {lightTheme} from '../styles/colors';
 
 type CardProps = PropsWithChildren<{
+  paddingHorizontal?: number;
   marginVertical?: number;
   theme?: string;
   noShadow?: boolean;
@@ -14,19 +15,23 @@ function Card({
   children,
   dirRow = false,
   marginVertical = 5,
+  paddingHorizontal = 10,
   theme = 'red',
 }: CardProps): JSX.Element {
   return (
     <View
       style={[
-        theme === 'red' ? styles.shdaow : styles.whiteShdaow,
+        styles.shdaow,
+        theme === 'red' && styles.shadowForRed,
         noShadow && styles.noShadow,
         {marginVertical},
       ]}>
       <View
         style={[
-          theme === 'red' ? styles.card : styles.whiteCard,
+          styles.card,
+          theme === 'red' && styles.backgroundRed,
           dirRow && styles.flexRow,
+          {paddingHorizontal},
         ]}>
         {children}
       </View>
@@ -37,13 +42,15 @@ function Card({
 const styles = StyleSheet.create({
   card: {
     display: 'flex',
+    width: '100%',
     justifyContent: 'center',
-    backgroundColor: lightTheme.red,
+    alignItems: 'center',
+    backgroundColor: lightTheme.white,
     borderRadius: 8,
     padding: 10,
   },
   shdaow: {
-    backgroundColor: lightTheme.darkRed,
+    backgroundColor: lightTheme.shadowGray,
     borderRadius: 8,
     paddingBottom: 3,
   },
@@ -53,17 +60,11 @@ const styles = StyleSheet.create({
   flexRow: {
     flexDirection: 'row',
   },
-  whiteCard: {
-    display: 'flex',
-    justifyContent: 'center',
-    backgroundColor: lightTheme.white,
-    borderRadius: 8,
-    padding: 10,
+  backgroundRed: {
+    backgroundColor: lightTheme.red,
   },
-  whiteShdaow: {
-    backgroundColor: lightTheme.shadowGray,
-    borderRadius: 8,
-    paddingBottom: 3,
+  shadowForRed: {
+    backgroundColor: lightTheme.darkRed,
   },
 });
 
