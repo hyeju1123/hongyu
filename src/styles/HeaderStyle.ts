@@ -1,7 +1,15 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {
+  Dimensions,
+  ImageStyle,
+  StyleSheet,
+  TextStyle,
+  ViewStyle,
+} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {getDisplaySize, DisplaySize} from './screen';
 import {fonts} from './fonts';
+
+const width = Dimensions.get('screen').width;
 
 type Style = {
   headerBox: ViewStyle;
@@ -41,27 +49,54 @@ const handleStyles = () => {
       height: 23,
     },
   };
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        logoImg: {
-          ...commonPart.logoImg,
-          width: 100,
-          height: 145,
-        },
-        text: {
-          ...commonPart.text,
-          fontSize: 20,
-          paddingLeft: 30,
-          paddingRight: 65,
-          paddingVertical: 10,
-        },
-        pencilWithZhImg: {
-          width: 25,
-          height: 31,
-        },
-      });
+
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      logoImg: {
+        width: 40,
+        height: 60,
+      },
+      inputSection: {
+        ...commonPart.inputSection,
+        paddingVertical: 3,
+      },
+      text: {
+        ...commonPart.text,
+        fontSize: width * 0.03,
+      },
+      pencilWithZhImg: {
+        width: 15,
+        height: 18,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      logoImg: {
+        ...commonPart.logoImg,
+        width: width * 0.1,
+        height: width * 0.15,
+      },
+      inputSection: {
+        ...commonPart.inputSection,
+        borderWidth: 1.5,
+        paddingVertical: 3,
+      },
+      text: {
+        ...commonPart.text,
+        fontSize: 13,
+      },
+      pencilWithZhImg: {
+        width: width * 0.02,
+        height: width * 0.024,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

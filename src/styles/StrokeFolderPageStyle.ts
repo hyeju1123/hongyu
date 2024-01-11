@@ -1,7 +1,7 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
-import {commonPart as CategoryStyle} from './CategoryPageStyle';
+import {DisplaySize, getDisplaySize} from './screen';
+import {handleStyles as CategoryStyleHandler} from './CategoryPageStyle';
 
 type Style = {
   container: ViewStyle;
@@ -10,6 +10,8 @@ type Style = {
   bottomText: TextStyle;
   bottomRedText: TextStyle;
 };
+
+const CategoryStyle = CategoryStyleHandler();
 
 const commonPart: Style = {
   ...CategoryStyle,
@@ -24,15 +26,16 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        scrollView: {
-          ...commonPart.scrollView,
-          marginHorizontal: 35,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      scrollView: {
+        ...commonPart.scrollView,
+        marginHorizontal: 35,
+      },
+    });
+  }
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

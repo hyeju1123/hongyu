@@ -1,6 +1,6 @@
 import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -13,7 +13,6 @@ const width = Dimensions.get('screen').width;
 
 const commonPart: Style = {
   cardWrapper: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -38,14 +37,37 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        scrollView: {
-          marginHorizontal: 35,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      card: {
+        ...commonPart.card,
+        borderRadius: 5,
+      },
+      cardText: {
+        ...commonPart.cardText,
+        fontSize: 10,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      card: {
+        ...commonPart.card,
+        width: (width - 120) / 2,
+        margin: width * 0.01,
+        padding: width * 0.015,
+      },
+      cardText: {
+        ...commonPart.cardText,
+        fontSize: width * 0.025,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -19,7 +19,6 @@ type Style = {
   smallText: TextStyle;
   dumplingIcon: ImageStyle;
   timerWrapper: ViewStyle;
-  guideText: TextStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -33,6 +32,7 @@ const commonPart: Style = {
     marginHorizontal: 20,
   },
   scrollViewContent: {
+    display: 'flex',
     flexGrow: 1,
     justifyContent: 'center',
   },
@@ -66,24 +66,18 @@ const commonPart: Style = {
     borderWidth: 1,
     borderColor: 'white',
   },
-  guideText: {
-    textAlign: 'center',
-    fontFamily: fonts.main,
-    fontSize: width * 0.05,
-    color: lightTheme.white,
-    marginVertical: 20,
-  },
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        scrollView: {
-          marginHorizontal: 35,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      scrollView: {
+        marginHorizontal: 35,
+      },
+    });
+  }
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

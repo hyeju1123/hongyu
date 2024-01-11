@@ -45,7 +45,7 @@ function BusuCard({
           style={styles.imgWrapper}>
           <Image style={styles.img} source={book} />
         </TouchableOpacity>
-        <Text style={busu.length > 4 ? styles.longHanzi : styles.hanzi}>
+        <Text style={busu.length > 3 ? styles.longHanzi : styles.hanzi}>
           {busu}
         </Text>
         <View>

@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {getDisplaySize, DisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -56,32 +56,55 @@ const handleStyles = () => {
       fontFamily: fonts.main,
       fontSize: width * 0.023,
       alignSelf: 'flex-end',
+      textAlign: 'right',
       marginTop: 5,
     },
   };
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        card: {
-          ...commonPart.card,
-          padding: 20,
-          marginVertical: 7,
-        },
-        img: {
-          width: 200,
-          height: 120,
-        },
-        title: {
-          ...commonPart.title,
-          fontSize: 30,
-        },
-        desc: {
-          ...commonPart.desc,
-          fontSize: 15,
-          marginTop: 10,
-        },
-      });
+
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      title: {
+        ...commonPart.title,
+        fontSize: 12,
+      },
+      desc: {
+        ...commonPart.desc,
+        fontSize: 6,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      card: {
+        ...commonPart.card,
+        padding: 15,
+        marginVertical: 7,
+        borderRadius: 10,
+      },
+      img: {
+        width: width * 0.2,
+        height: width * 0.12,
+      },
+      title: {
+        ...commonPart.title,
+        fontSize: width * 0.03,
+      },
+      desc: {
+        ...commonPart.desc,
+        fontSize: width * 0.015,
+        marginTop: 5,
+      },
+      arrow: {
+        ...commonPart.arrow,
+        width: width * 0.03,
+        height: width * 0.015,
+      },
+    });
+  }
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

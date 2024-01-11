@@ -6,7 +6,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -119,15 +119,47 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        scrollView: {
-          ...commonPart.scrollView,
-          marginHorizontal: 35,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      textInput: {
+        ...commonPart.textInput,
+        padding: 12,
+        fontSize: 15,
+      },
+      wordclassImg: {
+        ...commonPart.wordclassImg,
+        width: 50,
+        height: 27,
+        marginRight: 5,
+      },
+      wordclassBox: {
+        ...commonPart.wordclassBox,
+        padding: 10,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      scrollView: {
+        ...commonPart.scrollView,
+        marginHorizontal: 35,
+      },
+      completeText: {
+        ...commonPart.completeText,
+        fontSize: width * 0.02,
+      },
+      completeImg: {
+        width: width * 0.02,
+        height: width * 0.02,
+        marginRight: 5,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -60,30 +60,38 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        container: {
-          ...commonPart.container,
-          paddingVertical: width * 0.015,
-          paddingHorizontal: width * 0.02,
-        },
-        icon: {
-          width: width * 0.025,
-          height: width * 0.025,
-        },
-        closeImage: {
-          width: width * 0.015,
-          height: width * 0.015,
-        },
-        text: {
-          ...commonPart.text,
-          fontSize: width * 0.016,
-          marginHorizontal: width * 0.015,
-          marginBottom: width * -1 * 0.01,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      container: {
+        ...commonPart.container,
+        marginTop: width * 0.2,
+        paddingVertical: width * 0.01,
+        borderRadius: 10,
+      },
+      text: {
+        ...commonPart.text,
+        fontSize: width * 0.018,
+        color: lightTheme.black,
+      },
+      icon: {
+        width: width * 0.02,
+        height: width * 0.02,
+      },
+      closeImage: {
+        width: width * 0.01,
+        height: width * 0.01,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

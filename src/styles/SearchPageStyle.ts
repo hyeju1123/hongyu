@@ -1,6 +1,6 @@
 import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {commonPart as mainCommonPart} from './MainPageStyle';
 import {fonts} from './fonts';
 
@@ -71,15 +71,16 @@ export const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        scrollView: {
-          ...commonPart.scrollView,
-          marginHorizontal: 35,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      scrollView: {
+        ...commonPart.scrollView,
+        marginHorizontal: 35,
+      },
+    });
+  }
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

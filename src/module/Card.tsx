@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {lightTheme} from '../styles/colors';
+import {View} from 'react-native';
+import styles from '../styles/CardStyle';
 
 type CardProps = PropsWithChildren<{
   paddingHorizontal?: number;
@@ -38,34 +38,5 @@ function Card({
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  card: {
-    display: 'flex',
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: lightTheme.white,
-    borderRadius: 8,
-    padding: 10,
-  },
-  shdaow: {
-    backgroundColor: lightTheme.shadowGray,
-    borderRadius: 8,
-    paddingBottom: 3,
-  },
-  noShadow: {
-    backgroundColor: 'rgba(0,0,0,0)',
-  },
-  flexRow: {
-    flexDirection: 'row',
-  },
-  backgroundRed: {
-    backgroundColor: lightTheme.red,
-  },
-  shadowForRed: {
-    backgroundColor: lightTheme.darkRed,
-  },
-});
 
 export default Card;

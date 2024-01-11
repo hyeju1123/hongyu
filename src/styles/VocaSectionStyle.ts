@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import {lightTheme} from './colors';
 import {fonts} from './fonts';
-import {isPhone} from './screen';
+import {getDisplaySize, DisplaySize} from './screen';
 
 const width = Dimensions.get('screen').width;
 
@@ -36,7 +36,7 @@ const handleStyles = () => {
       justifyContent: 'space-between',
     },
     contents: {
-      width: width * 0.385,
+      width: (width - 40) / 2 - width * 0.065,
     },
     whiteDot: {
       backgroundColor: lightTheme.white,
@@ -69,45 +69,67 @@ const handleStyles = () => {
       marginLeft: 10,
     },
   };
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        sectionText: {
-          ...commonPart.sectionText,
-          fontSize: 25,
-          marginTop: 20,
-          marginBottom: 5,
-        },
-        contents: {
-          ...commonPart.contents,
-          width: width * 0.275,
-        },
-        whiteDot: {
-          ...commonPart.whiteDot,
-          width: 8,
-          height: 8,
-          borderRadius: 4,
-        },
-        levelText: {
-          ...commonPart.levelText,
-          fontSize: 30,
-          marginVertical: 20,
-        },
-        scrap: {
-          ...commonPart.scrap,
-          paddingVertical: 5,
-        },
-        scrapText: {
-          ...commonPart.scrapText,
-          fontSize: 23,
-        },
-        scrapImg: {
-          width: 40,
-          height: 40,
-          marginLeft: 15,
-        },
-      });
+
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      contents: {
+        width: (width - 40) / 2 - width * 0.075,
+      },
+      levelText: {
+        ...commonPart.levelText,
+        fontSize: 15,
+      },
+      scrapText: {
+        ...commonPart.scrapText,
+        fontSize: 13,
+      },
+      scrapImg: {
+        width: 20,
+        height: 20,
+        marginLeft: 8,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      sectionText: {
+        ...commonPart.sectionText,
+        fontSize: width * 0.03,
+        marginTop: 20,
+        marginBottom: 5,
+      },
+      contents: {
+        ...commonPart.contents,
+        width: (width - 120) / 4 + width * 0.05,
+      },
+      whiteDot: {
+        ...commonPart.whiteDot,
+        width: width * 0.008,
+        height: width * 0.008,
+        borderRadius: (width * 0.008) / 2,
+      },
+      levelText: {
+        ...commonPart.levelText,
+        fontSize: width * 0.03,
+        marginVertical: width * 0.02,
+      },
+      scrapText: {
+        ...commonPart.scrapText,
+        fontSize: width * 0.025,
+        paddingVertical: 5,
+      },
+      scrapImg: {
+        width: width * 0.035,
+        height: width * 0.035,
+        marginLeft: 10,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

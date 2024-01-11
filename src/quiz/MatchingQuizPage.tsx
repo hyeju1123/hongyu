@@ -17,7 +17,7 @@ type MatchingQuizPageProps = NativeStackScreenProps<
 >;
 
 const TIMEOUT = 15000;
-const PAGE_TRANSITION_DELAY = 1000;
+const PAGE_TRANSITION_DELAY = 2000;
 
 function MatchingQuizPage({
   route,
@@ -101,13 +101,8 @@ function MatchingQuizPage({
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
-        <View style={styles.timerWrapper}>
-          <CircularTimer />
-        </View>
-        <Text style={styles.guideText}>
-          {currentPage}/{pageLength}
-        </Text>
-        <Text style={styles.guideText}>알맞은 짝을 고르세요</Text>
+        <CircularTimer currentPage={currentPage} />
+
         <MatchingQuizGrid
           handleAllClear={handleAllClear}
           correctedIds={correctedIds}

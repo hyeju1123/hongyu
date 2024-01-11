@@ -37,7 +37,7 @@ function MatchingQuizGrid({
       setWordList(prev =>
         prev.map(value => (pair.includes(value) ? '  ' : value)),
       );
-      checkAllClear();
+      correctedNum.current === words.length && handleAllClear();
     }, MARKED_DURATION);
   };
 
@@ -46,13 +46,6 @@ function MatchingQuizGrid({
     setTimeout(() => {
       setWrongPair([]);
     }, MARKED_DURATION);
-  };
-
-  const checkAllClear = () => {
-    if (correctedNum.current === 5) {
-      correctedNum.current = 0;
-      handleAllClear();
-    }
   };
 
   const checkMatching = (pair: string[]) => {
@@ -92,6 +85,7 @@ function MatchingQuizGrid({
   };
 
   useDidMountEffect(() => {
+    correctedNum.current = 0;
     setWordList(getWordList(words));
   }, [words, getWordList]);
 

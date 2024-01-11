@@ -1,6 +1,6 @@
 import {StyleSheet, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 
 type Style = {
   container: ViewStyle;
@@ -17,12 +17,16 @@ export const commonPart: Style = {
   },
 };
 
-const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+export const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      flatlist: {
+        marginHorizontal: 35,
+      },
+    });
+  }
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

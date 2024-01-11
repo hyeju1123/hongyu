@@ -4,7 +4,7 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
-import images from '../styles/images';
+
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/QuizTypePageStyle';
 
@@ -15,7 +15,6 @@ type QuizTypePageProps = NativeStackScreenProps<
 
 function QuizTypePage({navigation}: QuizTypePageProps): JSX.Element {
   const {navigate} = navigation;
-  const {matching, picking, listening, writing, fourIdiom} = images.module;
 
   const quizTypeData = [
     {title: '짝 맞추기', desc: '단어와 뜻을 짝 맞춰보세요.', icon: 'Matching'},

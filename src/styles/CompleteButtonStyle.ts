@@ -1,7 +1,5 @@
 import {Dimensions, ImageStyle, StyleSheet, ViewStyle} from 'react-native';
 
-import {isPhone} from './screen';
-
 type Style = {
   completeBtn: ViewStyle;
   completeImg: ImageStyle;
@@ -20,11 +18,7 @@ const handleStyles = () => {
       height: width * 0.035,
     },
   };
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

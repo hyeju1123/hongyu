@@ -4,32 +4,38 @@ import {DisplaySize, getDisplaySize} from './screen';
 
 type Style = {
   container: ViewStyle;
-  scrollView: ViewStyle;
-  scrollViewContent: ViewStyle;
 };
-
 export const commonPart: Style = {
   container: {
-    flex: 1,
     backgroundColor: lightTheme.white,
-  },
-  scrollView: {
-    marginHorizontal: 20,
-  },
-  scrollViewContent: {
-    flexGrow: 1,
-    justifyContent: 'center',
+    padding: 20,
+    borderRadius: 10,
+    marginVertical: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 };
 
 const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      container: {
+        ...commonPart.container,
+        padding: 13,
+        marginVertical: 10,
+      },
+    });
+  }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
-      scrollView: {
-        ...commonPart.scrollView,
-        marginHorizontal: 35,
-      },
     });
   }
 

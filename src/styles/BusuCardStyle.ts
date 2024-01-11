@@ -6,7 +6,6 @@ import {
   ViewStyle,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -55,11 +54,7 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

@@ -1,6 +1,6 @@
 import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -76,11 +76,43 @@ export const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      container: {
+        ...commonPart.container,
+        padding: 7,
+      },
+      img: {
+        width: 18,
+        height: 18,
+      },
+      hanzi: {
+        ...commonPart.hanzi,
+        fontSize: 35,
+        marginBottom: 5,
+      },
+      longHanzi: {
+        ...commonPart.longHanzi,
+        fontSize: 30,
+      },
+      button: {
+        ...commonPart.button,
+        padding: 3,
+        marginTop: 5,
+      },
+      pinyin: {
+        ...commonPart.pinyin,
+        fontSize: 13,
+      },
+      meaning: {
+        ...commonPart.meaning,
+        fontSize: 13,
+        marginTop: 3,
+      },
+    });
+  }
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

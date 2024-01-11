@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -87,7 +87,7 @@ export const commonPart: Style = {
   },
   meaning: {
     fontFamily: fonts.mainBold,
-    fontSize: 20,
+    fontSize: 17,
     color: lightTheme.black,
     lineHeight: 28,
     padding: 0,
@@ -117,12 +117,80 @@ export const commonPart: Style = {
   },
 };
 
-const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+export const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      word: {
+        ...commonPart.word,
+        fontSize: 35,
+      },
+      intonation: {
+        ...commonPart.intonation,
+        fontSize: 13,
+      },
+      sound: {
+        ...commonPart.sound,
+        width: 20,
+        height: 20,
+      },
+      wordclassImg: {
+        ...commonPart.wordclassImg,
+        width: 50,
+        height: 27,
+      },
+      meaning: {
+        ...commonPart.meaning,
+        fontSize: 13,
+      },
+      bookmarkImg: {
+        width: 40,
+        height: 40,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      scrollView: {
+        ...commonPart.scrollView,
+        marginHorizontal: 35,
+      },
+      word: {
+        ...commonPart.word,
+        fontSize: width * 0.1,
+      },
+      intonation: {
+        ...commonPart.intonation,
+        fontSize: width * 0.03,
+      },
+      soundButton: {
+        ...commonPart.soundButton,
+        top: width * 0.02,
+        right: width * 0.025,
+      },
+      sound: {
+        ...commonPart.sound,
+        width: width * 0.04,
+        height: width * 0.04,
+      },
+      meaning: {
+        ...commonPart.meaning,
+        fontSize: width * 0.03,
+      },
+      bookmarkImg: {
+        width: width * 0.08,
+        height: width * 0.08,
+      },
+      editImg: {
+        width: width * 0.03,
+        height: width * 0.03,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

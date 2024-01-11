@@ -5,6 +5,7 @@ import styles from '../styles/CategoryCardStyle';
 import SvgIcon from '../module/SvgIcon';
 import {lightTheme} from '../styles/colors';
 import * as Icons from '../styles/svgIndex';
+import {DisplaySize, getDisplaySize} from '../styles/screen';
 
 type CategoryCardProps = PropsWithChildren<{
   title: string;
@@ -17,7 +18,7 @@ function CategoryCard({title, desc, icon}: CategoryCardProps): JSX.Element {
   return (
     <Card
       paddingHorizontal={15}
-      marginVertical={10}
+      marginVertical={getDisplaySize() === DisplaySize.Large ? 12 : 8}
       theme="white"
       dirRow={true}>
       <SvgIcon name={icon} fill={lightTheme.darkRed} />
@@ -26,7 +27,7 @@ function CategoryCard({title, desc, icon}: CategoryCardProps): JSX.Element {
         <Text style={styles.title}>{title}</Text>
         {desc !== '' && <Text style={styles.desc}>{desc}</Text>}
       </View>
-      <SvgIcon size={25} name="LineArrow" fill={lightTheme.darkRed} />
+      <SvgIcon name="LineArrow" fill={lightTheme.darkRed} />
     </Card>
   );
 }

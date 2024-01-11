@@ -1,18 +1,10 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {getDisplaySize, DisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
-  icon: ImageStyle;
   typeTextWrapper: ViewStyle;
-  typeButton: ViewStyle;
   justifyContent: ViewStyle;
   title: TextStyle;
   desc: TextStyle;
@@ -21,9 +13,6 @@ type Style = {
 const width = Dimensions.get('screen').width;
 
 const commonPart: Style = {
-  typeButton: {
-    width: '100%',
-  },
   typeTextWrapper: {
     flex: 1,
     margin: 15,
@@ -32,12 +21,6 @@ const commonPart: Style = {
   },
   justifyContent: {
     justifyContent: 'center',
-  },
-  icon: {
-    width: width * 0.1,
-    height: width * 0.1,
-    marginHorizontal: 10,
-    marginVertical: 15,
   },
   title: {
     fontFamily: fonts.mainBold,
@@ -53,14 +36,46 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        scrollView: {
-          marginHorizontal: 35,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      typeTextWrapper: {
+        ...commonPart.typeTextWrapper,
+        marginVertical: 10,
+      },
+      title: {
+        ...commonPart.title,
+        fontSize: 10,
+      },
+      desc: {
+        ...commonPart.desc,
+        fontSize: 7,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      scrollView: {
+        marginHorizontal: 35,
+      },
+      typeTextWrapper: {
+        ...commonPart.typeTextWrapper,
+        marginHorizontal: 20,
+      },
+      title: {
+        ...commonPart.title,
+        fontSize: width * 0.03,
+      },
+      desc: {
+        ...commonPart.desc,
+        fontSize: width * 0.02,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

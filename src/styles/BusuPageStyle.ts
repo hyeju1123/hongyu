@@ -1,12 +1,13 @@
 import {StyleSheet, ViewStyle} from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
-import {commonPart as WordDetailStyle} from './WordPageStyle';
+import {handleStyles as WordDetailStyleHandler} from './WordPageStyle';
 
 type Style = {
   container: ViewStyle;
   flatlist: ViewStyle;
 };
+
+const WordDetailStyle = WordDetailStyleHandler();
 
 const commonPart: Style = {
   ...WordDetailStyle,
@@ -17,11 +18,7 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

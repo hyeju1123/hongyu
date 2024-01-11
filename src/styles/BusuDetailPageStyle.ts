@@ -6,9 +6,9 @@ import {
   ViewStyle,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 import {fonts} from './fonts';
-import {commonPart as WordDetailPageStyle} from './WordDetailPageStyle';
+import {handleStyles as WordDetailPageStyleHandler} from './WordDetailPageStyle';
 
 type Style = {
   container: ViewStyle;
@@ -25,7 +25,6 @@ type Style = {
   rowWrapper: ViewStyle;
   wordclassImg: ImageStyle;
   meaning: TextStyle;
-  editBtn: ViewStyle;
   editImg: ImageStyle;
   bookmarkBtn: ViewStyle;
   bookmarkImg: ImageStyle;
@@ -33,6 +32,7 @@ type Style = {
 };
 
 const width = Dimensions.get('screen').width;
+const WordDetailPageStyle = WordDetailPageStyleHandler();
 
 export const commonPart: Style = {
   ...WordDetailPageStyle,
@@ -77,11 +77,21 @@ export const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      infoTitleText: {
+        ...commonPart.infoTitleText,
+        fontSize: width * 0.03,
+      },
+      infoText: {
+        ...commonPart.infoText,
+        fontSize: width * 0.03,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

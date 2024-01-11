@@ -6,7 +6,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {lightTheme} from './colors';
-import {isPhone} from './screen';
+import {getDisplaySize, DisplaySize} from './screen';
 import {fonts} from './fonts';
 
 type Style = {
@@ -85,14 +85,65 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-        scrollView: {
-          marginHorizontal: 35,
-        },
-      });
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      guideText: {
+        ...commonPart.guideText,
+        marginTop: 20,
+        fontSize: 13,
+      },
+      themePanelText: {
+        ...commonPart.themePanelText,
+        fontSize: 13,
+      },
+      labelButton: {
+        ...commonPart.labelButton,
+        paddingHorizontal: 4,
+        paddingVertical: 2,
+      },
+      label: {
+        ...commonPart.label,
+        fontSize: 11,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      scrollView: {
+        marginHorizontal: 35,
+      },
+      guideText: {
+        ...commonPart.guideText,
+        fontSize: width * 0.04,
+      },
+      themePanelText: {
+        ...commonPart.themePanelText,
+        fontSize: width * 0.04,
+        padding: 10,
+      },
+      labelButton: {
+        ...commonPart.labelButton,
+        paddingHorizontal: width * 0.01,
+        marginHorizontal: width * 0.01,
+        paddingVertical: 3,
+        alignSelf: 'center',
+        borderRadius: 8,
+      },
+      label: {
+        ...commonPart.label,
+        fontSize: width * 0.03,
+      },
+      closeImage: {
+        marginLeft: 5,
+        width: width * 0.013,
+        height: width * 0.013,
+      },
+    });
+  }
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();

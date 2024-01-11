@@ -1,5 +1,5 @@
 import {StyleSheet, ViewStyle} from 'react-native';
-import {isPhone} from './screen';
+import {DisplaySize, getDisplaySize} from './screen';
 
 type Style = {
   cardWrapper: ViewStyle;
@@ -32,11 +32,28 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
-  return isPhone()
-    ? StyleSheet.create({...commonPart})
-    : StyleSheet.create({
-        ...commonPart,
-      });
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      cardWrapper: {
+        ...commonPart.cardWrapper,
+        top: 3,
+      },
+    });
+  }
+
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      ...commonPart,
+      cardWrapper: {
+        ...commonPart.cardWrapper,
+        paddingTop: 30,
+        paddingHorizontal: 30,
+      },
+    });
+  }
+
+  return StyleSheet.create({...commonPart});
 };
 
 const styles = handleStyles();
