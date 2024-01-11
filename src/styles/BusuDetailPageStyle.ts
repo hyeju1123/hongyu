@@ -18,17 +18,10 @@ type Style = {
   longWord: TextStyle;
   xunyin: TextStyle;
   intonation: TextStyle;
-  infoTitleText: TextStyle;
-  infoText: TextStyle;
-  soundButton: ViewStyle;
-  sound: ImageStyle;
-  rowWrapper: ViewStyle;
-  wordclassImg: ImageStyle;
   meaning: TextStyle;
-  editImg: ImageStyle;
+  infoTitleText: TextStyle;
   bookmarkBtn: ViewStyle;
   bookmarkImg: ImageStyle;
-  limitText: TextStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -46,7 +39,6 @@ export const commonPart: Style = {
   },
   longWord: {
     ...WordDetailPageStyle.word,
-    fontSize: width * 0.1,
     marginTop: 0,
   },
   xunyin: {
@@ -58,7 +50,6 @@ export const commonPart: Style = {
   },
   intonation: {
     ...WordDetailPageStyle.intonation,
-    fontSize: width * 0.04,
     color: lightTheme.darkRed,
     marginTop: 0,
   },
@@ -67,12 +58,7 @@ export const commonPart: Style = {
     fontSize: width * 0.04,
     color: lightTheme.darkRed,
     marginBottom: width * 0.02,
-  },
-  infoText: {
-    fontFamily: fonts.mainBold,
-    fontSize: width * 0.04,
-    color: lightTheme.black,
-    lineHeight: width * 0.055,
+    alignSelf: 'flex-start',
   },
 };
 
@@ -82,10 +68,6 @@ const handleStyles = () => {
       ...commonPart,
       infoTitleText: {
         ...commonPart.infoTitleText,
-        fontSize: width * 0.03,
-      },
-      infoText: {
-        ...commonPart.infoText,
         fontSize: width * 0.03,
       },
     });

@@ -38,11 +38,6 @@ function DebouncedTextInput({
   }, [isFocused, textVal]);
 
   useDidMountEffect(() => {
-    // prevent duplicate update after EditWordPage.
-    // if (text === textVal) {
-    //   return;
-    // }
-
     if (!limitTextLength(debounced)) {
       updateFn(debounced);
       !forSearch &&
@@ -75,10 +70,8 @@ const width = Dimensions.get('screen').width;
 const styles = StyleSheet.create({
   limitText: {
     alignSelf: 'flex-end',
-    fontFamily: fonts.main,
+    fontFamily: fonts.pinyin,
     fontSize: width * 0.03,
-    marginTop: 5,
-    marginBottom: -1 * width * 0.03,
   },
 });
 

@@ -40,7 +40,7 @@ function CategoryPage({navigation, route}: CategoryPageProps): JSX.Element {
           <TouchableOpacity
             key={_id}
             onPress={() => navigate('WordPage', {level, category: theme})}>
-            <Card marginVertical={10} theme="white">
+            <Card marginVertical={10}>
               <Text style={styles.text}>{theme}</Text>
             </Card>
           </TouchableOpacity>

@@ -8,7 +8,7 @@ import {RootStackParamList} from './RootNavigation';
 import QuizTypePage from '../quiz/QuizTypePage';
 import PickLevelPage from '../quiz/PickLevelPage';
 import PickCategoryPage from '../quiz/PickCategoryPage';
-import MatchingQuizPage, {WordStateProps} from '../quiz/MatchingQuizPage';
+import MatchingQuizPage from '../quiz/MatchingQuizPage';
 
 import {lightTheme} from '../styles/colors';
 import {fonts} from '../styles/fonts';
@@ -68,7 +68,13 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
           headerTitle: '',
         }}
       />
-      <Stack.Screen name="QuizResultPage" component={QuizResultPage} />
+      <Stack.Screen
+        name="QuizResultPage"
+        component={QuizResultPage}
+        options={{
+          headerTitle: '',
+        }}
+      />
     </Stack.Navigator>
   );
 }

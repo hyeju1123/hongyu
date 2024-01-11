@@ -6,7 +6,7 @@ import {lightTheme} from '../styles/colors';
 import CategoryCard from './CategoryCard';
 import * as Icons from '../styles/svgIndex';
 
-type InfoType = {
+export type InfoType = {
   title: string;
   desc: string;
   icon: keyof typeof Icons;

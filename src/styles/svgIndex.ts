@@ -1,5 +1,8 @@
 // module
 export {default as LineArrow} from '../../svg/module/lineArrow.svg';
+export {default as StopWatch} from '../../svg/module/stopwatch.svg';
+export {default as Cross} from '../../svg/module/cross.svg';
+export {default as CheckCircle} from '../../svg/module/check-circle.svg';
 
 // circle number svg
 export {default as Circle1} from '../../svg/number/circle-1.svg';

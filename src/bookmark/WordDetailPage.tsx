@@ -13,7 +13,7 @@ import {RootStackParamList} from '../navigation/RootNavigation';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
 import Voca from '../model/Voca';
-import InfoCard from '../module/InfoCard';
+import Card from '../module/Card';
 import EditWordButton from '../module/EditWordButton';
 import DebouncedTextInput from '../module/DebouncedTextInput';
 
@@ -75,7 +75,12 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         style={styles.scrollView}>
-        <InfoCard>
+        <Card
+          shadow
+          underdressing={false}
+          marginVertical={8}
+          paddingVertical={15}
+          paddingHorizontal={15}>
           <TouchableOpacity
             onPress={() => setToggle({word, level})}
             style={styles.soundButton}>
@@ -85,8 +90,13 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
             {word}
           </Text>
           <Text style={styles.intonation}>{intonation}</Text>
-        </InfoCard>
-        <InfoCard>
+        </Card>
+        <Card
+          shadow
+          underdressing={false}
+          marginVertical={8}
+          paddingVertical={15}
+          paddingHorizontal={15}>
           <View style={styles.rowWrapper}>
             {wordclass.split(', ').map((wc: string) => (
               <Image
@@ -96,18 +106,27 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
               />
             ))}
           </View>
-        </InfoCard>
-        <InfoCard>
+        </Card>
+        <Card
+          shadow
+          underdressing={false}
+          marginVertical={8}
+          paddingVertical={18}
+          paddingHorizontal={15}>
           <Text style={styles.meaning}>{meaning}</Text>
-        </InfoCard>
-        <InfoCard>
+        </Card>
+        <Card
+          shadow
+          underdressing={false}
+          paddingVertical={15}
+          marginVertical={8}>
           <DebouncedTextInput
             style={styles.meaning}
             textVal={explanation || ''}
             placeholder="# 메모를 남겨보세요."
             updateFn={val => updateExplanation(id, val)}
           />
-        </InfoCard>
+        </Card>
         <TouchableOpacity
           onPress={() => handleBookmark({setBookmark, _id: id, word, bookmark})}
           style={styles.bookmarkBtn}>

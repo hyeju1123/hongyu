@@ -1,36 +1,49 @@
 import React, {PropsWithChildren} from 'react';
 import {View} from 'react-native';
 import styles from '../styles/CardStyle';
+import {lightTheme} from '../styles/colors';
+
+export enum ThemeColor {
+  Red = 'red',
+  DarkRed = 'darkRed',
+  White = 'white',
+}
 
 type CardProps = PropsWithChildren<{
+  paddingVertical?: number;
   paddingHorizontal?: number;
   marginVertical?: number;
-  theme?: string;
-  noShadow?: boolean;
+  theme?: ThemeColor;
+  shadow?: boolean;
+  underdressing?: boolean;
   dirRow?: boolean;
 }>;
 
 function Card({
-  noShadow = false,
   children,
+  underdressing = true,
+  shadow = false,
   dirRow = false,
   marginVertical = 5,
+  paddingVertical = 10,
   paddingHorizontal = 10,
-  theme = 'red',
+  theme = ThemeColor.White,
 }: CardProps): JSX.Element {
   return (
     <View
       style={[
-        styles.shdaow,
-        theme === 'red' && styles.shadowForRed,
-        noShadow && styles.noShadow,
+        styles.underdressing,
+        theme === ThemeColor.Red && styles.redUnderdressing,
+        !underdressing && styles.noUnderdressing,
+        shadow && styles.shadow,
         {marginVertical},
       ]}>
       <View
         style={[
           styles.card,
-          theme === 'red' && styles.backgroundRed,
           dirRow && styles.flexRow,
+          {backgroundColor: lightTheme[theme]},
+          {paddingVertical},
           {paddingHorizontal},
         ]}>
         {children}

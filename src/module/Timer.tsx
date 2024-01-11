@@ -1,25 +1,25 @@
-import React, {FC, useEffect, useRef, useState} from 'react';
+import React, {PropsWithChildren, useEffect, useRef} from 'react';
 import {View, StyleSheet, Animated, Dimensions} from 'react-native';
 import {lightTheme} from '../styles/colors';
 
-type CircularTimerProps = {
+type TimerProps = PropsWithChildren<{
   currentPage: number;
-};
+  duration: number;
+}>;
 
 const width = Dimensions.get('screen').width;
 
-const CircularTimer: FC<CircularTimerProps> = ({currentPage}) => {
-  const timer = useRef(new Animated.Value(width));
+function Timer({currentPage, duration}: TimerProps) {
+  const timer = useRef(new Animated.Value(width * 0.8 + 20));
 
   useEffect(() => {
-    console.log('timer:: ', timer.current);
     timer.current.setValue(width);
     Animated.timing(timer.current, {
       toValue: 0,
-      duration: 15000,
+      duration,
       useNativeDriver: true,
     }).start();
-  }, [timer, currentPage]);
+  }, [timer, currentPage, duration]);
 
   return (
     <View style={styles.container}>
@@ -29,12 +29,14 @@ const CircularTimer: FC<CircularTimerProps> = ({currentPage}) => {
       />
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
-  container: {},
+  container: {
+    marginVertical: 10,
+  },
   bottomBar: {
-    width: width,
+    width: width * 0.8,
     height: 5,
     backgroundColor: lightTheme.white,
     borderRadius: 5,
@@ -49,4 +51,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CircularTimer;
+export default Timer;

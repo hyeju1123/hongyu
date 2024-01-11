@@ -4,20 +4,22 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, Text, View, Image} from 'react-native';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import MatchingQuizGrid from '../module/MatchingQuizGrid';
-import CircularTimer from '../module/CircularTimer';
+import CircularTimer from '../module/Timer';
 import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
 
 import images from '../styles/images';
 import styles from '../styles/MatchingQuizPageStyle';
+import SvgIcon from '../module/SvgIcon';
+import {lightTheme} from '../styles/colors';
 
 type MatchingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
   'MatchingQuizPage'
 >;
 
-const TIMEOUT = 15000;
-const PAGE_TRANSITION_DELAY = 2000;
+const TIMEOUT = 1000;
+const PAGE_TRANSITION_DELAY = 1000;
 
 function MatchingQuizPage({
   route,
@@ -25,7 +27,7 @@ function MatchingQuizPage({
 }: MatchingQuizPageProps): JSX.Element {
   const {dumpling} = images.module;
   const {level, categories} = route.params;
-  const {navigate} = navigation;
+  const {navigate, setOptions} = navigation;
 
   const {shuffleArray} = useUtil();
   const correctedIds: number[] = useMemo(() => [], []);
@@ -79,11 +81,13 @@ function MatchingQuizPage({
   };
 
   useEffect(() => {
+    setOptions({headerTitle: `${currentPage} / ${pageLength}`});
     handleTimeover();
+
     return () => {
       timeoutId.current !== null && clearTimeout(timeoutId.current);
     };
-  }, [handleTimeover]);
+  }, [handleTimeover, setOptions, currentPage, pageLength]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -101,8 +105,10 @@ function MatchingQuizPage({
       <ScrollView
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
-        <CircularTimer currentPage={currentPage} />
-
+        <View style={styles.timerWrapper}>
+          <SvgIcon name="StopWatch" size={25} fill={lightTheme.white} />
+          <CircularTimer duration={TIMEOUT} currentPage={currentPage} />
+        </View>
         <MatchingQuizGrid
           handleAllClear={handleAllClear}
           correctedIds={correctedIds}

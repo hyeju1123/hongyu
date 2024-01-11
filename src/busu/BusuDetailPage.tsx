@@ -9,13 +9,13 @@ import {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BusuStackParamList} from '../navigation/BusuNavigation';
-import InfoCard from '../module/InfoCard';
+import Card from '../module/Card';
+import DebouncedTextInput from '../module/DebouncedTextInput';
 import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
 
 import images from '../styles/images';
 import styles from '../styles/BusuDetailPageStyle';
-import DebouncedTextInput from '../module/DebouncedTextInput';
 
 type BusuDetailPageProps = NativeStackScreenProps<
   BusuStackParamList,
@@ -41,29 +41,44 @@ function BusuDetailPage({route}: BusuDetailPageProps): JSX.Element {
       <ScrollView
         contentContainerStyle={styles.scrollViewContent}
         style={styles.scrollView}>
-        <InfoCard>
-          <Text style={busu.length > 4 ? styles.longWord : styles.word}>
+        <Card
+          shadow
+          underdressing={false}
+          marginVertical={8}
+          paddingVertical={15}
+          paddingHorizontal={15}>
+          <Text style={busu.length > 3 ? styles.longWord : styles.word}>
             {busu}
           </Text>
           <Text style={styles.xunyin}>{xunyin}</Text>
           <Text style={styles.intonation}>[{yin}]</Text>
-        </InfoCard>
-        <InfoCard>
+        </Card>
+        <Card
+          shadow
+          underdressing={false}
+          marginVertical={8}
+          paddingVertical={15}
+          paddingHorizontal={15}>
           <Text style={styles.infoTitleText}># 부수 정보</Text>
-          <Text style={styles.infoText}>{info}</Text>
-        </InfoCard>
-        <InfoCard>
+          <Text style={styles.meaning}>{info}</Text>
+        </Card>
+        <Card
+          shadow
+          underdressing={false}
+          marginVertical={8}
+          paddingVertical={15}
+          paddingHorizontal={15}>
           <Text style={styles.infoTitleText}># 예시</Text>
-          <Text style={styles.infoText}>{sample}</Text>
-        </InfoCard>
-        <InfoCard>
+          <Text style={styles.meaning}>{sample}</Text>
+        </Card>
+        <Card shadow underdressing={false} marginVertical={8}>
           <DebouncedTextInput
-            style={styles.infoText}
+            style={styles.meaning}
             textVal={explanation || ''}
             placeholder="# 메모를 남겨보세요."
             updateFn={val => updateBusuExplanation(_id, val)}
           />
-        </InfoCard>
+        </Card>
         <TouchableOpacity
           onPress={() =>
             handleBookmark({setBookmark, _id, word: busu, bookmark, busu: true})

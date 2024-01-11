@@ -4,12 +4,14 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
-import images from '../styles/images';
-import {lightTheme} from '../styles/colors';
-import styles from '../styles/QuizTypePageStyle';
 import {useVoca} from '../providers/VocaProvider';
 import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
+import {InfoType} from '../module/CategoryCardWrapper';
+
+import images from '../styles/images';
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/QuizTypePageStyle';
 
 type PickCategoryPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -33,7 +35,7 @@ function PickCategoryPage({
   const {items, loadData} = useUtil(filteredTheme);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
 
-  const categoryData = items.map(({theme}) => ({
+  const categoryData: InfoType[] = items.map(({theme}) => ({
     title: theme,
     desc: '단어 20개',
     icon: 'Matching',

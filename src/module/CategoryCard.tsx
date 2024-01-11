@@ -19,7 +19,6 @@ function CategoryCard({title, desc, icon}: CategoryCardProps): JSX.Element {
     <Card
       paddingHorizontal={15}
       marginVertical={getDisplaySize() === DisplaySize.Large ? 12 : 8}
-      theme="white"
       dirRow={true}>
       <SvgIcon name={icon} fill={lightTheme.darkRed} />
       <View

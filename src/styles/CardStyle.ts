@@ -4,11 +4,12 @@ import {getDisplaySize, DisplaySize} from './screen';
 
 type Style = {
   card: ViewStyle;
-  shdaow: ViewStyle;
-  noShadow: ViewStyle;
+  underdressing: ViewStyle;
+  noUnderdressing: ViewStyle;
   flexRow: ViewStyle;
   backgroundRed: ViewStyle;
-  shadowForRed: ViewStyle;
+  redUnderdressing: ViewStyle;
+  shadow: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -19,14 +20,13 @@ const commonPart: Style = {
     alignItems: 'center',
     backgroundColor: lightTheme.white,
     borderRadius: 8,
-    padding: 10,
   },
-  shdaow: {
+  underdressing: {
     backgroundColor: lightTheme.shadowGray,
     borderRadius: 8,
     paddingBottom: 3,
   },
-  noShadow: {
+  noUnderdressing: {
     backgroundColor: 'rgba(0,0,0,0)',
   },
   flexRow: {
@@ -35,8 +35,18 @@ const commonPart: Style = {
   backgroundRed: {
     backgroundColor: lightTheme.red,
   },
-  shadowForRed: {
+  redUnderdressing: {
     backgroundColor: lightTheme.darkRed,
+  },
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
 };
 

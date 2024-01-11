@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {View, Text, TouchableOpacity, Image} from 'react-native';
-import Card from '../module/Card';
+import Card, {ThemeColor} from '../module/Card';
 import styles from '../styles/VocaSectionStyle';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
@@ -26,7 +26,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
           <TouchableOpacity
             onPress={() => navigate('HskNavigation', {level})}
             key={level}>
-            <Card>
+            <Card theme={ThemeColor.Red}>
               <View style={styles.contents}>
                 <View style={styles.whiteDot} />
                 <Text style={[styles.levelText]}>{`${level} 급`}</Text>
@@ -36,7 +36,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
         ))}
       </View>
       <TouchableOpacity onPress={() => navigate('BookmarkNavigation')}>
-        <Card>
+        <Card theme={ThemeColor.Red}>
           <View style={styles.scrap}>
             <Text style={styles.scrapText}>내 단어장</Text>
             <Image style={styles.scrapImg} source={lanternOn} />

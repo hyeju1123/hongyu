@@ -35,6 +35,7 @@ const commonPart: Style = {
     display: 'flex',
     flexGrow: 1,
     justifyContent: 'center',
+    alignItems: 'center',
   },
   endQuizWrapper: {
     position: 'absolute',
@@ -62,9 +63,8 @@ const commonPart: Style = {
     height: width * 0.3,
   },
   timerWrapper: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: 'white',
+    display: 'flex',
+    alignItems: 'center',
   },
 };
 

@@ -20,6 +20,7 @@ type Style = {
   scrap: ViewStyle;
   scrapText: TextStyle;
   scrapImg: ImageStyle;
+  img: ImageStyle;
 };
 
 const handleStyles = () => {
@@ -67,6 +68,10 @@ const handleStyles = () => {
       width: 25,
       height: 25,
       marginLeft: 10,
+    },
+    img: {
+      width: width * 0.4,
+      height: width * 0.24,
     },
   };
 

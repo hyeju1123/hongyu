@@ -24,7 +24,6 @@ type Style = {
   editImg: ImageStyle;
   bookmarkBtn: ViewStyle;
   bookmarkImg: ImageStyle;
-  limitText: TextStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -44,23 +43,20 @@ export const commonPart: Style = {
   },
   word: {
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.15,
+    fontSize: width * 0.13,
     color: lightTheme.black,
-    textAlign: 'center',
     marginTop: 15,
   },
   longWord: {
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.12,
+    fontSize: width * 0.1,
     color: lightTheme.black,
-    textAlign: 'center',
     marginTop: 15,
   },
   intonation: {
     fontFamily: fonts.pinyin,
-    fontSize: width * 0.05,
+    fontSize: width * 0.04,
     color: lightTheme.red,
-    textAlign: 'center',
     marginTop: 20,
   },
   soundButton: {
@@ -74,23 +70,24 @@ export const commonPart: Style = {
     transform: [{rotate: '180deg'}],
   },
   rowWrapper: {
+    width: '100%',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   wordclassImg: {
     resizeMode: 'stretch',
-    width: 65,
-    height: 35,
+    width: 52,
+    height: 28,
     marginRight: 10,
     marginVertical: 1,
   },
   meaning: {
-    fontFamily: fonts.mainBold,
-    fontSize: 17,
+    width: '100%',
+    fontFamily: fonts.pinyin,
+    fontSize: width * 0.035,
     color: lightTheme.black,
-    lineHeight: 28,
-    padding: 0,
+    alignSelf: 'flex-start',
   },
   editImg: {
     width: width * 0.045,
@@ -107,13 +104,6 @@ export const commonPart: Style = {
   bookmarkImg: {
     width: 50,
     height: 50,
-  },
-  limitText: {
-    alignSelf: 'flex-end',
-    fontFamily: fonts.main,
-    fontSize: width * 0.03,
-    marginTop: 5,
-    marginBottom: -1 * width * 0.03,
   },
 };
 
