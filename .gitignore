@@ -66,3 +66,6 @@ yarn-error.log
 /coverage
 
 .env
+
+# DB file
+android/app/src/main/assets/bundle.realm
