@@ -5,6 +5,7 @@ import {DisplaySize, getDisplaySize} from './screen';
 type Style = {
   container: ViewStyle;
   flatlist: ViewStyle;
+  flatlistContent: ViewStyle;
 };
 
 export const commonPart: Style = {
@@ -14,6 +15,10 @@ export const commonPart: Style = {
   },
   flatlist: {
     marginHorizontal: 20,
+  },
+  flatlistContent: {
+    paddingBottom: 10,
+    flexGrow: 1,
   },
 };
 

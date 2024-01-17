@@ -10,35 +10,45 @@ import {
   View,
 } from 'react-native';
 import {HskStackParamList} from '../navigation/HskNavigation';
-import {useRealm} from '../../RealmConfigContext';
+
 import useToast from '../hooks/toast';
-import {selectWord} from '../service/selectData';
 import useUtil from '../hooks/util';
-import {VocaContentType, updateVcoa} from '../service/updateData';
 import styles from '../styles/EditWordPageStyle';
 import images from '../styles/images';
+import {useRecoilCallback, useRecoilValue} from 'recoil';
+import {wordState} from '../recoil/WordListState';
+import {UpdateVocaContent, useVoca} from '../providers/VocaProvider';
 
 type EditWordPageProps = NativeStackScreenProps<
   HskStackParamList,
   'EditWordPage'
 >;
 
+type TextValProps = {
+  word: string;
+  intonation: string;
+  meaning: string;
+  explanation: string | undefined;
+};
+
 function EditWordPage({navigation, route}: EditWordPageProps) {
   const {id} = route.params;
   const {goBack} = navigation;
-  const realm = useRealm();
+  const {updateVoca} = useVoca();
   const {
     wordClass,
     deleteWordClass,
     module: {closed},
   } = images;
-  const wordData = useMemo(() => selectWord(realm, id), [realm, id]);
-  const {word, intonation, wordclass, meaning, explanation} = wordData;
+  const wordItem = useRecoilValue(wordState(id));
+  const memoizedWordItem = useMemo(() => wordItem, [wordItem]);
+  const {word, intonation, wordclass, meaning, explanation} = memoizedWordItem;
+
   const {fireToast} = useToast();
   const {getWCLabels, limitTextLength} = useUtil();
   const {checkedGreen} = images.module;
 
-  const [textVal, setTextVal] = useState({
+  const [textVal, setTextVal] = useState<TextValProps>({
     word,
     intonation: intonation.slice(1, -1),
     meaning,
@@ -56,21 +66,27 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
     return wcLabels.filter(label => !currentWC.includes(label));
   };
 
-  const doUpdateWord = () => {
-    const vocaData: VocaContentType = {
-      ...textVal,
-      intonation: '[' + textVal.intonation + ']',
-      wordclass: currentWC.join(', '),
-    };
-    updateVcoa(realm, id, vocaData);
+  const doUpdateWord = useRecoilCallback(
+    ({set}) =>
+      (finalTextVal: TextValProps, finalWC: string[]) => {
+        const updatedVoca: UpdateVocaContent = {
+          ...finalTextVal,
+          intonation: '[' + finalTextVal.intonation + ']',
+          wordclass: finalWC.join(', '),
+        };
+        updateVoca(id, updatedVoca);
 
-    fireToast({
-      text: '단어를 수정하였습니다!',
-      icon: 'checkedGreen',
-      remove: true,
-    });
-    goBack();
-  };
+        set(wordState(id), {...wordItem, ...updatedVoca});
+
+        fireToast({
+          text: '단어를 수정하였습니다!',
+          icon: 'checkedGreen',
+          remove: true,
+        });
+        goBack();
+      },
+    [wordItem],
+  );
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -118,7 +134,9 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
           placeholder="메모를 입력하세요"
           onFocus={() => setShowWCTemplate(false)}
         />
-        <TouchableOpacity onPress={doUpdateWord} style={styles.completeButton}>
+        <TouchableOpacity
+          onPress={() => doUpdateWord(textVal, currentWC)}
+          style={styles.completeButton}>
           <Image source={checkedGreen} style={styles.completeImg} />
           <Text style={styles.completeText}>수정하기</Text>
         </TouchableOpacity>

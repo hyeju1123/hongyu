@@ -1,11 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useCallback} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FlatList, StatusBar, Text, TouchableOpacity} from 'react-native';
+import {StatusBar} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HskStackParamList} from '../navigation/HskNavigation';
-import Card from '../module/Card';
-
-import useUtil from '../hooks/util';
+import CategoryCardWrapper, {InfoType} from '../module/CategoryCardWrapper';
+import usePaginate from '../hooks/paginate';
 import {useVoca} from '../providers/VocaProvider';
 
 import styles from '../styles/CategoryPageStyle';
@@ -15,38 +14,47 @@ type CategoryPageProps = NativeStackScreenProps<
   'CategoryPage'
 >;
 
-function CategoryPage({navigation, route}: CategoryPageProps): JSX.Element {
-  const {navigate} = navigation;
-  const {level} = route.params;
-  const {getVocasByLevel} = useVoca();
-  const filteredTheme = getVocasByLevel(level);
-  const {items, loadData} = useUtil(filteredTheme);
+function CategoryPage({
+  navigation: {navigate},
+  route: {
+    params: {level},
+  },
+}: CategoryPageProps): JSX.Element {
+  const {countVocaByCategory} = useVoca();
 
-  useEffect(() => {
-    navigation.setOptions({headerTitle: `HSK ${level}급`});
-  }, [navigation, level]);
+  const themeInfos: InfoType<{level: number; category: string}>[] =
+    Object.entries(countVocaByCategory(level)).map(([key, value]) => {
+      return {
+        title: key,
+        desc: `단어 ${value}개`,
+        icon: 'CheckCircle',
+        navData: {level: level, category: key},
+      };
+    });
+
+  const {
+    loadData,
+    rendered: {items},
+  } = usePaginate(themeInfos);
+
+  const moveToWordPage = useCallback(
+    (navData: {level: number; category: string}) => {
+      navigate('WordPage', navData);
+    },
+    [navigate],
+  );
 
   return (
     <SafeAreaView edges={['bottom']} style={[styles.container]}>
       <StatusBar
+        translucent={true}
         barStyle="light-content"
         backgroundColor="transparent"
-        translucent={true}
       />
-      <FlatList
-        style={[styles.scrollView]}
-        data={items}
-        renderItem={({item: {_id, theme}}) => (
-          <TouchableOpacity
-            key={_id}
-            onPress={() => navigate('WordPage', {level, category: theme})}>
-            <Card marginVertical={10}>
-              <Text style={styles.text}>{theme}</Text>
-            </Card>
-          </TouchableOpacity>
-        )}
-        onEndReached={loadData}
-        onEndReachedThreshold={0.8}
+      <CategoryCardWrapper
+        infos={items}
+        loadData={loadData}
+        nav={moveToWordPage}
       />
     </SafeAreaView>
   );

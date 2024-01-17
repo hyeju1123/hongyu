@@ -6,27 +6,28 @@ import {lightTheme} from '../styles/colors';
 import CategoryCard from './CategoryCard';
 import * as Icons from '../styles/svgIndex';
 
-export type InfoType = {
+export type InfoType<T> = {
   title: string;
   desc: string;
   icon: keyof typeof Icons;
-  navData?: string;
+  navData: T;
 };
 
-type CategoryCardWrapperProps = PropsWithChildren<{
+type CategoryCardWrapperProps<T> = PropsWithChildren<{
   theme?: string;
   topPanelHeight?: DimensionValue;
-  infos: InfoType[];
-  nav: (param: string) => void;
-  loadData?: () => void;
+  infos: InfoType<T>[];
+  nav: (param: T) => void;
+  loadData?: (prevLength: number) => void;
 }>;
 
-function CategoryCardWrapper({
+function CategoryCardWrapper<T>({
   nav,
   theme = lightTheme.red,
   infos,
   loadData = () => {},
-}: CategoryCardWrapperProps) {
+}: CategoryCardWrapperProps<T>) {
+  console.log(infos.length);
   return (
     <View
       style={[
@@ -38,13 +39,13 @@ function CategoryCardWrapper({
       <FlatList
         contentContainerStyle={styles.flatlistContent}
         data={infos}
-        renderItem={({item: {title, desc, icon, navData = ''}}) => (
+        renderItem={({item: {title, desc, icon, navData}}) => (
           <TouchableOpacity onPress={() => nav(navData)}>
             <CategoryCard title={title} desc={desc} icon={icon} />
           </TouchableOpacity>
         )}
-        onEndReached={loadData}
-        onEndReachedThreshold={0.5}
+        onEndReached={() => loadData(infos.length)}
+        onEndReachedThreshold={0.8}
       />
     </View>
   );

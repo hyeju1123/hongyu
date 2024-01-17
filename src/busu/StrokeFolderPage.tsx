@@ -9,6 +9,7 @@ import {useVoca} from '../providers/VocaProvider';
 import styles from '../styles/StrokeFolderPageStyle';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import {lightTheme} from '../styles/colors';
+import * as Icons from '../styles/svgIndex';
 
 type StrokeFolderPageProps = NativeStackScreenProps<
   BusuStackParamList,
@@ -23,7 +24,7 @@ function StrokeFolderPage({navigation}: StrokeFolderPageProps): JSX.Element {
     return {
       title: `${stroke}획 ${stroke === 10 ? '이상' : ''}`,
       desc: `부수 ${value}개`,
-      icon: `Circle${stroke}`,
+      icon: `Circle${stroke}` as keyof typeof Icons,
       navData: `${stroke}`,
     };
   });

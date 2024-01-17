@@ -22,8 +22,7 @@ type Style = {
   wordclassImg: ImageStyle;
   meaning: TextStyle;
   editImg: ImageStyle;
-  bookmarkBtn: ViewStyle;
-  bookmarkImg: ImageStyle;
+  bookmarkButtonWrapper: ViewStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -93,17 +92,13 @@ export const commonPart: Style = {
     width: width * 0.045,
     height: width * 0.045,
   },
-  bookmarkBtn: {
+  bookmarkButtonWrapper: {
     flex: 1,
     display: 'flex',
     alignSelf: 'center',
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
-  },
-  bookmarkImg: {
-    width: 50,
-    height: 50,
   },
 };
 

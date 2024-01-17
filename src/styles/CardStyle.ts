@@ -20,6 +20,8 @@ const commonPart: Style = {
     alignItems: 'center',
     backgroundColor: lightTheme.white,
     borderRadius: 8,
+    borderWidth: 0.5,
+    borderColor: lightTheme.ligthGray,
   },
   underdressing: {
     backgroundColor: lightTheme.shadowGray,

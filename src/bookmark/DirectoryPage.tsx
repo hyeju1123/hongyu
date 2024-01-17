@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ScrollView, StatusBar, Text, TouchableOpacity} from 'react-native';
+import {ScrollView, StatusBar, TouchableOpacity} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
-import Card from '../module/Card';
 
+import CategoryCard from '../module/CategoryCard';
 import {useVoca} from '../providers/VocaProvider';
-import useDidMountEffect from '../hooks/didMount';
-import {useIsFocused} from '@react-navigation/native';
+import {useFocusEffect} from '@react-navigation/native';
 
+import * as Icons from '../styles/svgIndex';
 import styles from '../styles/CategoryPageStyle';
 
 type DirectoryPageProps = NativeStackScreenProps<
@@ -20,16 +20,14 @@ type CountObject = {
   [level: number]: number;
 };
 
-function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
-  const {navigate} = navigation;
-  const isFocused = useIsFocused();
+function DirectoryPage({
+  navigation: {navigate},
+}: DirectoryPageProps): JSX.Element {
   const {getBookmarkedVocas, getBookmarkedBusues} = useVoca();
-  const [bookmarked, setBookmarked] = useState(getBookmarkedVocas(0));
-  const [bookmarkedBusues, setBookmarkedBusues] = useState(
-    getBookmarkedBusues(),
-  );
+  const [vocas, setVocas] = useState(getBookmarkedVocas(0));
+  const [busues, setBusues] = useState(getBookmarkedBusues());
 
-  const levelCounts = bookmarked.reduce((counts: CountObject, item) => {
+  const levelCounts = vocas.reduce((counts: CountObject, item) => {
     const level = item.level;
     counts[level] = (counts[level] || 0) + 1;
     return counts;
@@ -59,21 +57,21 @@ function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
   ) => {
     return (
       <TouchableOpacity key={key} onPress={handlePage(busu, title, key)}>
-        <Card marginVertical={10} theme="white">
-          <Text style={styles.text}>{title}</Text>
-          <Text style={styles.bottomText}>
-            {busu ? '부수' : '단어'}{' '}
-            {<Text style={styles.bottomRedText}>{count}</Text>}개
-          </Text>
-        </Card>
+        <CategoryCard
+          title={title}
+          desc={busu ? `부수 ${count}개` : `단어 ${count}개`}
+          icon={`Circle${key}` as keyof typeof Icons}
+        />
       </TouchableOpacity>
     );
   };
 
-  useDidMountEffect(() => {
-    setBookmarked(getBookmarkedVocas(0));
-    setBookmarkedBusues(getBookmarkedBusues());
-  }, [isFocused]);
+  useFocusEffect(
+    useCallback(() => {
+      setVocas(getBookmarkedVocas(0));
+      setBusues(getBookmarkedBusues());
+    }, [getBookmarkedVocas, getBookmarkedBusues]),
+  );
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -83,8 +81,8 @@ function DirectoryPage({navigation}: DirectoryPageProps): JSX.Element {
         translucent={true}
       />
       <ScrollView style={styles.scrollView}>
-        {injectContent('부수', bookmarkedBusues.length, '-1', true)}
-        {injectContent('HSK 모든 단어', bookmarked.length, '0')}
+        {injectContent('부수', busues.length, 'Busu', true)}
+        {injectContent('HSK 모든 단어', vocas.length, '0')}
         {Object.entries(levelCounts).map(([key, value]) =>
           injectContent(`HSK ${key}급`, value, key),
         )}

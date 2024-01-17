@@ -44,7 +44,13 @@ function BookmarkNavigation({}: BookmarkNavigationProps): JSX.Element {
         name="DirectoryPage"
         component={DirectoryPage}
       />
-      <Stack.Screen name="WordPage" component={WordPage} />
+      <Stack.Screen
+        name="WordPage"
+        component={WordPage}
+        options={({route: {params}}) => ({
+          title: params.category,
+        })}
+      />
       <Stack.Screen
         options={{headerTitle: '상세보기'}}
         name="WordDetailPage"

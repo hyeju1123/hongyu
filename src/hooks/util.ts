@@ -67,7 +67,7 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
       setBookmark(prev => !prev);
       busu ? updateBusuBookmark(_id) : updateBookmark(_id);
       fireToast({
-        text: `'${word}'를 '내 단어장'에 ${status}했습니다.`,
+        text: `'내 단어장'에 '${word}'를 ${status}했습니다.`,
         icon: 'checkedGreen',
         remove: true,
       });
@@ -99,6 +99,32 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
     return array;
   }, []);
 
+  const convertToWord = useCallback((word: Voca | Busu) => {
+    if (word instanceof Voca) {
+      return {
+        _id: word._id,
+        word: word.word,
+        meaning: word.meaning,
+        intonation: word.intonation,
+        bookmarked: word.bookmarked,
+        wordclass: word.wordclass,
+        level: word.level,
+        explanation: word.explanation,
+      };
+    } else {
+      return {
+        _id: word._id,
+        word: word.busu,
+        meaning: word.xunyin,
+        intonation: word.yin,
+        bookmarked: word.bookmarked,
+        wordclass: '',
+        level: 0,
+        explanation: word.explanation,
+      };
+    }
+  }, []);
+
   return {
     getWCLabels,
     limitTextLength,
@@ -106,5 +132,6 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
     items,
     loadData,
     shuffleArray,
+    convertToWord,
   };
 }

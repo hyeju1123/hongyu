@@ -1,25 +1,32 @@
-import React, {createContext, useContext, useCallback, useEffect} from 'react';
+import React, {createContext, useContext, useCallback} from 'react';
 import type {PropsWithChildren} from 'react';
 import {useRealm} from '../../RealmConfigContext';
 
 import Voca from '../model/Voca';
-import {CollectionChangeCallback} from 'realm';
 
-import {useSetRecoilState} from 'recoil';
-import {realmState} from '../recoil/RealmState';
 import Busu from '../model/Busu';
 
-type VocaContexttype = {
+export type UpdateVocaContent = {
+  word: string;
+  meaning: string;
+  intonation: string;
+  wordclass: string;
+  explanation: string | undefined;
+};
+
+type VocaContextType = {
   getVoca: (_id: number) => Voca;
   getVocasByLevel: (level: number) => Voca[];
   getVocasBySearch: (input: string) => (Busu | Voca)[];
   getVocasByCategory: (level: number, category: string) => Voca[];
+  countVocaByCategory: (level: number) => {[key: string]: number};
   getVocasByMultipleCategory: (level: number, categories: string[]) => Voca[];
   getBookmarkedVocas: (level: number) => Voca[];
   getBusu: (_id: number) => Busu;
   getBusuesByStroke: (stroke: number) => Busu[];
   getBookmarkedBusues: () => Busu[];
   countBusuByStroke: () => {[key: number]: number};
+  updateVoca: (_id: number, data: UpdateVocaContent) => void;
   updateBookmark: (_id: number) => void;
   updateBusuBookmark: (_id: number) => void;
   updateExplanation: (_id: number, explanation: string) => void;
@@ -54,7 +61,7 @@ export const getDefaultBusu = () => {
   };
 };
 
-const VocaContext = createContext<VocaContexttype>({
+const VocaContext = createContext<VocaContextType>({
   getVoca: () => {
     return getDefaultWord() as Voca;
   },
@@ -66,6 +73,9 @@ const VocaContext = createContext<VocaContexttype>({
   },
   getVocasByCategory: () => {
     return [];
+  },
+  countVocaByCategory: () => {
+    return {'': 1};
   },
   getVocasByMultipleCategory: () => {
     return [];
@@ -85,6 +95,7 @@ const VocaContext = createContext<VocaContexttype>({
   countBusuByStroke: () => {
     return {1: 1};
   },
+  updateVoca: () => {},
   updateBookmark: () => {},
   updateBusuBookmark: () => {},
   updateExplanation: () => {},
@@ -93,7 +104,6 @@ const VocaContext = createContext<VocaContexttype>({
 
 export function VocaProvider({children}: PropsWithChildren) {
   const realm = useRealm();
-  const setModifyToggle = useSetRecoilState(realmState);
 
   /**
    * select Functions
@@ -113,6 +123,23 @@ export function VocaProvider({children}: PropsWithChildren) {
         .objects<Voca>('Voca')
         .filtered('level == $0 DISTINCT(theme)', level)
         .slice();
+    },
+    [realm],
+  );
+
+  const countVocaByCategory = useCallback(
+    (level: number) => {
+      const vocasInLevel = realm
+        .objects<Voca>('Voca')
+        .filtered('level == $0', level);
+      return vocasInLevel.reduce<{[key: string]: number}>(
+        (accumulator, voca) => {
+          const theme: string = voca.theme;
+          accumulator[theme] = (accumulator[theme] || 0) + 1;
+          return accumulator;
+        },
+        {},
+      );
     },
     [realm],
   );
@@ -204,6 +231,21 @@ export function VocaProvider({children}: PropsWithChildren) {
   /**
    * update Functions
    */
+  const updateVoca = useCallback(
+    (_id: number, data: UpdateVocaContent) => {
+      const voca = getVoca(_id);
+      const {word, intonation, wordclass, meaning, explanation} = data;
+      realm.write(() => {
+        voca.word = word;
+        voca.intonation = intonation;
+        voca.wordclass = wordclass;
+        voca.meaning = meaning;
+        voca.explanation = explanation;
+      });
+    },
+    [realm, getVoca],
+  );
+
   const updateBookmark = useCallback(
     (_id: number) => {
       const voca = getVoca(_id);
@@ -244,36 +286,19 @@ export function VocaProvider({children}: PropsWithChildren) {
     [realm, getBusu],
   );
 
-  useEffect(() => {
-    const handleVocasChange: CollectionChangeCallback<Voca, [number, Voca]> = (
-      _,
-      changes,
-    ) => {
-      console.log(changes);
-      setModifyToggle(prev => ({toggleByChange: !prev.toggleByChange}));
-      console.log('change!!');
-    };
-
-    const nonChangingVocasRef = realm.objects(Voca);
-    nonChangingVocasRef.addListener(handleVocasChange);
-
-    return () => {
-      console.log('bye');
-      return nonChangingVocasRef.removeListener(handleVocasChange);
-    };
-  }, [realm, setModifyToggle]);
-
   const contextValue = {
     getVoca,
     getVocasByLevel,
     getVocasBySearch,
     getVocasByCategory,
+    countVocaByCategory,
     getVocasByMultipleCategory,
     getBookmarkedVocas,
     getBusu,
     getBusuesByStroke,
     getBookmarkedBusues,
     countBusuByStroke,
+    updateVoca,
     updateBookmark,
     updateBusuBookmark,
     updateExplanation,

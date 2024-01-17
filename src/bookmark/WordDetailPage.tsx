@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {
   Image,
   ScrollView,
@@ -12,40 +12,49 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {HskStackParamList} from '../navigation/HskNavigation';
 import {BookmarkStackParamList} from '../navigation/BookmarkNavigation';
-import Voca from '../model/Voca';
+
 import Card from '../module/Card';
 import EditWordButton from '../module/EditWordButton';
 import DebouncedTextInput from '../module/DebouncedTextInput';
 
-import useUtil from '../hooks/util';
 import usePolly from '../hooks/polly';
 import {useVoca} from '../providers/VocaProvider';
-import useDidMountEffect from '../hooks/didMount';
-import {useIsFocused} from '@react-navigation/native';
 
 import images from '../styles/images';
 import styles from '../styles/WordDetailPageStyle';
+import {useRecoilCallback, useRecoilValue} from 'recoil';
+import {wordState} from '../recoil/WordListState';
+import BookmarkButton, {ButtonSize} from '../module/BookmarkButton';
 
 type WordDetailPageProps = NativeStackScreenProps<
   RootStackParamList | HskStackParamList | BookmarkStackParamList,
   'WordDetailPage'
 >;
 
-function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
-  const {id} = route.params;
-
+function WordDetailPage({
+  navigation,
+  route: {
+    params: {id},
+  },
+}: WordDetailPageProps): JSX.Element {
+  const wordItem = useRecoilValue(wordState(id));
+  const {word, intonation, bookmarked, wordclass, meaning, level, explanation} =
+    wordItem;
   const {setToggle} = usePolly();
-  const isFocused = useIsFocused();
-  const {handleBookmark} = useUtil();
-  const {getVoca, updateExplanation} = useVoca();
-  const [wordData, setWordData] = useState<Voca>(getVoca(id));
-  const [bookmark, setBookmark] = useState(wordData.bookmarked);
+  const {updateExplanation} = useVoca();
 
-  const {word, intonation, wordclass, meaning, level, explanation} = wordData;
+  const handleExplanation = useRecoilCallback(
+    ({set}) =>
+      (text: string) => {
+        updateExplanation(id, text);
+        set(wordState(id), {...wordItem, explanation: text});
+      },
+    [wordItem],
+  );
 
   const {
     wordClass,
-    module: {lanternOffWhite, lanternOn, sound},
+    module: {sound},
   } = images;
 
   useEffect(() => {
@@ -57,13 +66,6 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
       headerRight: getEditButton,
     });
   }, [navigation, id]);
-
-  useDidMountEffect(() => {
-    if (isFocused) {
-      const newData = getVoca(id);
-      setWordData(newData);
-    }
-  }, [isFocused, getVoca, id]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -124,17 +126,16 @@ function WordDetailPage({navigation, route}: WordDetailPageProps): JSX.Element {
             style={styles.meaning}
             textVal={explanation || ''}
             placeholder="# 메모를 남겨보세요."
-            updateFn={val => updateExplanation(id, val)}
+            updateFn={val => handleExplanation(val)}
           />
         </Card>
-        <TouchableOpacity
-          onPress={() => handleBookmark({setBookmark, _id: id, word, bookmark})}
-          style={styles.bookmarkBtn}>
-          <Image
-            style={styles.bookmarkImg}
-            source={bookmark ? lanternOn : lanternOffWhite}
+        <View style={styles.bookmarkButtonWrapper}>
+          <BookmarkButton
+            id={id}
+            size={ButtonSize.Large}
+            bookmarked={bookmarked}
           />
-        </TouchableOpacity>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

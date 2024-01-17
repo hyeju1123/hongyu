@@ -15,7 +15,7 @@ export default function Polly() {
   const debouncedSoundToggle = useDebounce(toggle, 300);
 
   useDidMountEffect(() => {
-    fetchPolly(toggle.level, toggle.word);
+    // fetchPolly(toggle.level, toggle.word);
   }, [debouncedSoundToggle]);
 
   const fetchPolly = useCallback(

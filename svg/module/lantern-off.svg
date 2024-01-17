@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1000 1000">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+      }
+
+      .cls-1, .cls-3 {
+        stroke: #3e3a39;
+        stroke-miterlimit: 10;
+        stroke-width: 30px;
+      }
+
+      .cls-2 {
+        clip-path: url(#clip-path);
+      }
+
+      .cls-3 {
+        fill: #fff;
+      }
+    </style>
+    <clipPath id="clip-path">
+      <ellipse class="cls-1" cx="500" cy="500" rx="443.47" ry="374.18"/>
+    </clipPath>
+  </defs>
+  <g id="Layer_2" data-name="Layer 2">
+    <g>
+      <g>
+        <g class="cls-2">
+          <path class="cls-1" d="M340,146S5.2,439.18,340,854.41"/>
+          <path class="cls-1" d="M660,145.79S994.8,439,660,854.21"/>
+        </g>
+        <ellipse class="cls-1" cx="500" cy="500" rx="443.47" ry="374.18"/>
+      </g>
+      <path class="cls-3" d="M626,845.86H331.69V947a10,10,0,0,0,10,10H658.31a10,10,0,0,0,10-10V845.86Z"/>
+      <path class="cls-3" d="M626,154.14H331.69V53a10,10,0,0,1,10-10H658.31a10,10,0,0,1,10,10V154.14Z"/>
+    </g>
+  </g>
+</svg>
