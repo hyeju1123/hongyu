@@ -1,27 +1,28 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useMemo, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
 import {
-  Image,
   ScrollView,
-  Text,
   TextInput,
   TouchableOpacity,
+  Image,
+  Text,
   View,
 } from 'react-native';
-import {HskStackParamList} from '../navigation/HskNavigation';
-
-import useToast from '../hooks/toast';
-import useUtil from '../hooks/util';
-import styles from '../styles/EditWordPageStyle';
+import {WordStackParamList} from '../navigation/WordNavigation';
+import {UpdateVocaContent, useVoca} from '../providers/VocaProvider';
 import images from '../styles/images';
 import {useRecoilCallback, useRecoilValue} from 'recoil';
 import {vocaState} from '../recoil/WordListState';
-import {UpdateVocaContent, useVoca} from '../providers/VocaProvider';
+import useToast from '../hooks/toast';
+import useUtil from '../hooks/util';
+import styles from '../styles/word/EditVocaPageStyle';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {lightTheme} from '../styles/colors';
+import SvgIcon from '../module/SvgIcon';
 
-type EditWordPageProps = NativeStackScreenProps<
-  HskStackParamList,
-  'EditWordPage'
+type EditVocaPageProps = NativeStackScreenProps<
+  WordStackParamList,
+  'EditVocaPage'
 >;
 
 type TextValProps = {
@@ -31,23 +32,19 @@ type TextValProps = {
   explanation: string | undefined;
 };
 
-function EditWordPage({navigation, route}: EditWordPageProps) {
-  const {id} = route.params;
-  const {goBack} = navigation;
+function EditVocaPage({
+  navigation: {goBack},
+  route: {
+    params: {id},
+  },
+}: EditVocaPageProps) {
   const {updateVoca} = useVoca();
-  const {
-    wordClass,
-    deleteWordClass,
-    module: {closed},
-  } = images;
-  const wordItem = useRecoilValue(vocaState(id));
-  const memoizedWordItem = useMemo(() => wordItem, [wordItem]);
-  const {word, intonation, wordclass, meaning, explanation} = memoizedWordItem;
+  const vocaItem = useRecoilValue(vocaState(id));
+  const memoizedVocaItem = useMemo(() => vocaItem, [vocaItem]);
+  const {word, intonation, wordclass, meaning, explanation} = memoizedVocaItem;
 
   const {fireToast} = useToast();
   const {getWCLabels, limitTextLength} = useUtil();
-  const {checkedGreen} = images.module;
-
   const [textVal, setTextVal] = useState<TextValProps>({
     word,
     intonation: intonation.slice(1, -1),
@@ -57,7 +54,9 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
   const [currentWC, setCurrentWC] = useState(wordclass.split(', '));
   const [showWCTemplate, setShowWCTemplate] = useState(false);
 
-  const handleChangeVal = (name: string, value: string) => {
+  const {wordClass, deleteWordClass} = images;
+
+  const handleChangeText = (name: string, value: string) => {
     !limitTextLength(value) && setTextVal(prev => ({...prev, [name]: value}));
   };
 
@@ -66,7 +65,7 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
     return wcLabels.filter(label => !currentWC.includes(label));
   };
 
-  const doUpdateWord = useRecoilCallback(
+  const handleUpdateVoca = useRecoilCallback(
     ({set}) =>
       (finalTextVal: TextValProps, finalWC: string[]) => {
         const updatedVoca: UpdateVocaContent = {
@@ -76,7 +75,7 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
         };
         updateVoca(id, updatedVoca);
 
-        set(vocaState(id), {...wordItem, ...updatedVoca});
+        set(vocaState(id), {...vocaItem, ...updatedVoca});
 
         fireToast({
           text: '단어를 수정하였습니다!',
@@ -85,29 +84,31 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
         });
         goBack();
       },
-    [wordItem],
+    [vocaItem],
   );
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <ScrollView style={styles.scrollView}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollViewContent}>
         <TextInput
           style={styles.textInput}
           value={textVal.word}
-          onChangeText={value => handleChangeVal('word', value)}
+          onChangeText={value => handleChangeText('word', value)}
           placeholder="단어를 입력하세요"
           onFocus={() => setShowWCTemplate(false)}
         />
         <TextInput
           style={styles.textInput}
           value={textVal.intonation}
-          onChangeText={value => handleChangeVal('intonation', value)}
+          onChangeText={value => handleChangeText('intonation', value)}
           placeholder="발음을 입력하세요"
           onFocus={() => setShowWCTemplate(false)}
         />
         <TouchableOpacity
           onPress={() => setShowWCTemplate(true)}
-          style={styles.rowWrapper}>
+          style={styles.flexDirRow}>
           {currentWC.map((wc: string) => (
             <TouchableOpacity
               key={wc}
@@ -122,7 +123,7 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
           multiline
           style={styles.textInput}
           value={textVal.meaning}
-          onChangeText={value => handleChangeVal('meaning', value)}
+          onChangeText={value => handleChangeText('meaning', value)}
           placeholder="뜻을 입력하세요"
           onFocus={() => setShowWCTemplate(false)}
         />
@@ -130,23 +131,25 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
           multiline
           style={styles.textInput}
           value={textVal.explanation}
-          onChangeText={value => handleChangeVal('explanation', value)}
+          onChangeText={value => handleChangeText('explanation', value)}
           placeholder="메모를 입력하세요"
+          placeholderTextColor={lightTheme.shadowGray}
           onFocus={() => setShowWCTemplate(false)}
         />
-        <TouchableOpacity
-          onPress={() => doUpdateWord(textVal, currentWC)}
-          style={styles.completeButton}>
-          <Image source={checkedGreen} style={styles.completeImg} />
-          <Text style={styles.completeText}>수정하기</Text>
-        </TouchableOpacity>
+        <View style={styles.buttonWrapper}>
+          <TouchableOpacity
+            onPress={() => handleUpdateVoca(textVal, currentWC)}
+            style={styles.completeButton}>
+            <Text style={styles.completeText}>수정하기</Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
       <View
         style={showWCTemplate ? styles.wordclassBox : styles.wordclassBoxNone}>
         <TouchableOpacity
           onPress={() => setShowWCTemplate(false)}
           style={styles.closeButton}>
-          <Image source={closed} style={styles.closeImage} />
+          <SvgIcon name="Cross" size={20} fill={lightTheme.white} />
         </TouchableOpacity>
         {getFilteredWC().map((wc: string) => (
           <TouchableOpacity
@@ -161,4 +164,4 @@ function EditWordPage({navigation, route}: EditWordPageProps) {
   );
 }
 
-export default EditWordPage;
+export default EditVocaPage;

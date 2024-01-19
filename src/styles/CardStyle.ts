@@ -21,7 +21,7 @@ const commonPart: Style = {
     backgroundColor: lightTheme.white,
     borderRadius: 8,
     borderWidth: 0.5,
-    borderColor: lightTheme.ligthGray,
+    borderColor: lightTheme.shadowGray,
   },
   underdressing: {
     backgroundColor: lightTheme.shadowGray,
@@ -41,7 +41,7 @@ const commonPart: Style = {
     backgroundColor: lightTheme.darkRed,
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: lightTheme.shadowGray,
     shadowOffset: {
       width: 0,
       height: 2,

@@ -5,6 +5,8 @@ import styles from '../styles/VocaSectionStyle';
 import images from '../styles/images';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootNavigation';
+import {useSetRecoilState} from 'recoil';
+import {WordNav, wordNavState} from '../recoil/WordNavState';
 
 type ServiceSectionProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -14,9 +16,9 @@ type ServiceSectionProps = PropsWithChildren<{
   >;
 }>;
 
-function ServiceSection({navigation}: ServiceSectionProps) {
+function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
   const {vocatest, radicalDict} = images.module;
-  const {navigate} = navigation;
+  const navTypeSetter = useSetRecoilState(wordNavState);
 
   return (
     <View>
@@ -31,7 +33,8 @@ function ServiceSection({navigation}: ServiceSectionProps) {
       />
       <FlatCard
         navFn={() => {
-          navigate('BusuNavigation');
+          navTypeSetter(prev => ({...prev, navType: WordNav.Busu}));
+          navigate('WordNavigation');
         }}
         imgSrc={radicalDict}
         title="부수 사전"

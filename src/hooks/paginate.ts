@@ -9,8 +9,8 @@ const LOAD_DATA_NUM = 20;
 
 export default function Paginate<T>(initialData: T[]) {
   const [rendered, setRendered] = useState<initialData<T>>({
-    count: 0,
-    items: [],
+    count: LOAD_DATA_NUM,
+    items: initialData.slice(0, LOAD_DATA_NUM),
   });
 
   const loadData = useCallback(

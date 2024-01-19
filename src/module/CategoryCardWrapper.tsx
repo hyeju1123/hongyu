@@ -23,7 +23,7 @@ type CategoryCardWrapperProps<T> = PropsWithChildren<{
 
 function CategoryCardWrapper<T>({
   nav,
-  theme = lightTheme.red,
+  theme = lightTheme.white,
   infos,
   loadData = () => {},
 }: CategoryCardWrapperProps<T>) {

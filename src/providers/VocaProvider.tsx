@@ -3,7 +3,6 @@ import type {PropsWithChildren} from 'react';
 import {useRealm} from '../../RealmConfigContext';
 
 import Voca from '../model/Voca';
-
 import Busu from '../model/Busu';
 
 export type UpdateVocaContent = {
@@ -222,7 +221,7 @@ export function VocaProvider({children}: PropsWithChildren) {
   const countBusuByStroke = useCallback(() => {
     const allBusu = realm.objects<Busu>('Busu');
     return allBusu.reduce<{[key: number]: number}>((accumulator, busu) => {
-      const stroke: number = busu.stroke - 1;
+      const stroke: number = busu.stroke;
       accumulator[stroke] = (accumulator[stroke] || 0) + 1;
       return accumulator;
     }, {});

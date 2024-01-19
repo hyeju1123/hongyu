@@ -23,7 +23,7 @@ import {useVoca} from '../providers/VocaProvider';
 import images from '../styles/images';
 import styles from '../styles/WordDetailPageStyle';
 import {useRecoilCallback, useRecoilValue} from 'recoil';
-import {wordState} from '../recoil/WordListState';
+import {vocaState} from '../recoil/WordListState';
 import BookmarkButton, {ButtonSize} from '../module/BookmarkButton';
 
 type WordDetailPageProps = NativeStackScreenProps<
@@ -37,7 +37,7 @@ function WordDetailPage({
     params: {id},
   },
 }: WordDetailPageProps): JSX.Element {
-  const wordItem = useRecoilValue(wordState(id));
+  const wordItem = useRecoilValue(vocaState(id));
   const {word, intonation, bookmarked, wordclass, meaning, level, explanation} =
     wordItem;
   const {setToggle} = usePolly();
@@ -47,7 +47,7 @@ function WordDetailPage({
     ({set}) =>
       (text: string) => {
         updateExplanation(id, text);
-        set(wordState(id), {...wordItem, explanation: text});
+        set(vocaState(id), {...wordItem, explanation: text});
       },
     [wordItem],
   );

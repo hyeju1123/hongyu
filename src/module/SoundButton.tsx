@@ -1,5 +1,5 @@
-import React, {PropsWithChildren} from 'react';
-import {TouchableOpacity} from 'react-native';
+import React, {PropsWithChildren, memo} from 'react';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import SvgIcon from './SvgIcon';
 import usePolly from '../hooks/polly';
 
@@ -12,10 +12,18 @@ function SoundButton({level, word}: SoundButtonProps) {
   const {setToggle} = usePolly();
 
   return (
-    <TouchableOpacity onPress={() => setToggle({word, level})}>
+    <TouchableOpacity
+      style={styles.button}
+      onPress={() => setToggle({word, level})}>
       <SvgIcon name="Sound" size={20} />
     </TouchableOpacity>
   );
 }
 
-export default React.memo(SoundButton);
+const styles = StyleSheet.create({
+  button: {
+    alignSelf: 'flex-start',
+  },
+});
+
+export default memo(SoundButton);

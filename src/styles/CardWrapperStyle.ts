@@ -1,5 +1,6 @@
 import {StyleSheet, ViewStyle} from 'react-native';
 import {DisplaySize, getDisplaySize} from './screen';
+import {lightTheme} from './colors';
 
 type Style = {
   cardWrapper: ViewStyle;
@@ -11,14 +12,14 @@ const commonPart: Style = {
     width: '100%',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    shadowColor: '#000',
+    shadowColor: lightTheme.shadowGray,
     shadowOffset: {
       width: 0,
       height: 5,
     },
     shadowOpacity: 0.34,
     shadowRadius: 6.27,
-    elevation: 10,
+    elevation: 7,
     flex: 1,
     top: 10,
     paddingTop: 10,

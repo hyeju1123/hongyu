@@ -12,12 +12,14 @@ import QuizNavigation from './QuizNavigation';
 import BusuNavigation from './BusuNavigation';
 import Busu from '../model/Busu';
 import BusuDetailPage from '../busu/BusuDetailPage';
+import WordNavigation from './WordNavigation';
 
 export type RootStackParamList = {
   MainPage: undefined;
   SearchPage: undefined;
   WordDetailPage: {id: number};
   EditWordPage: {id: number};
+  WordNavigation: undefined;
   HskNavigation: {level: number};
   BookmarkNavigation: undefined;
   QuizNavigation: undefined;
@@ -35,6 +37,9 @@ function RootNavigation(): JSX.Element {
         <Stack.Screen name="SearchPage" component={SearchPage} />
         <Stack.Screen name="EditWordPage" component={EditWordPage} />
         <Stack.Screen name="WordDetailPage" component={WordDetailPage} />
+        <Stack.Screen name="BusuDetailPage" component={BusuDetailPage} />
+
+        <Stack.Screen name="WordNavigation" component={WordNavigation} />
         <Stack.Screen name="HskNavigation" component={HskNavigation} />
         <Stack.Screen
           name="BookmarkNavigation"
@@ -42,7 +47,6 @@ function RootNavigation(): JSX.Element {
         />
         <Stack.Screen name="QuizNavigation" component={QuizNavigation} />
         <Stack.Screen name="BusuNavigation" component={BusuNavigation} />
-        <Stack.Screen name="BusuDetailPage" component={BusuDetailPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

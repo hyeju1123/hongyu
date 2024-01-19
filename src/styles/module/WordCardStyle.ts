@@ -17,7 +17,7 @@ const commonPart: Style = {
     top: 10,
     width: '100%',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     borderWidth: 1,
     borderColor: 'black',

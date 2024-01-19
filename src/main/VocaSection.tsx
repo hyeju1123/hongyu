@@ -1,10 +1,13 @@
 import React, {PropsWithChildren} from 'react';
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import Card, {ThemeColor} from '../module/Card';
 import styles from '../styles/VocaSectionStyle';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import images from '../styles/images';
+
+import {useSetRecoilState} from 'recoil';
+import {WordNav, wordNavState} from '../recoil/WordNavState';
+import SvgIcon from '../module/SvgIcon';
 
 type VocaSectionProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -14,17 +17,21 @@ type VocaSectionProps = PropsWithChildren<{
   >;
 }>;
 
+const LEVELS = [1, 2, 3, 4, 5, 6];
+
 function VocaSection({navigation: {navigate}}: VocaSectionProps) {
-  const {lanternOn} = images.module;
-  const levels = [1, 2, 3, 4, 5, 6];
+  const navTypeSetter = useSetRecoilState(wordNavState);
 
   return (
     <View>
       <Text style={styles.sectionText}>HSK 단어</Text>
       <View style={styles.cardsWrapper}>
-        {levels.map(level => (
+        {LEVELS.map(level => (
           <TouchableOpacity
-            onPress={() => navigate('HskNavigation', {level})}
+            onPress={() => {
+              navTypeSetter(() => ({navType: WordNav.Voca, level}));
+              navigate('WordNavigation');
+            }}
             key={level}>
             <Card theme={ThemeColor.Red}>
               <View style={styles.contents}>
@@ -35,11 +42,15 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
           </TouchableOpacity>
         ))}
       </View>
-      <TouchableOpacity onPress={() => navigate('BookmarkNavigation')}>
+      <TouchableOpacity
+        onPress={() => {
+          navTypeSetter(prev => ({...prev, navType: WordNav.Book}));
+          navigate('WordNavigation');
+        }}>
         <Card theme={ThemeColor.Red}>
           <View style={styles.scrap}>
             <Text style={styles.scrapText}>내 단어장</Text>
-            <Image style={styles.scrapImg} source={lanternOn} />
+            <SvgIcon name="LanternOn" size={25} />
           </View>
         </Card>
       </TouchableOpacity>

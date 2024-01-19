@@ -63,6 +63,7 @@ const handleStyles = () => {
       fontFamily: fonts.mainBold,
       color: lightTheme.white,
       fontSize: 15,
+      marginRight: 10,
     },
     scrapImg: {
       width: 25,

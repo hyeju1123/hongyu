@@ -110,6 +110,8 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
         wordclass: word.wordclass,
         level: word.level,
         explanation: word.explanation,
+        info: '',
+        isBusu: false,
       };
     } else {
       return {
@@ -118,9 +120,11 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
         meaning: word.xunyin,
         intonation: word.yin,
         bookmarked: word.bookmarked,
-        wordclass: '',
-        level: 0,
+        wordclass: word.sample,
+        level: word.stroke,
         explanation: word.explanation,
+        info: word.info,
+        isBusu: true,
       };
     }
   }, []);
