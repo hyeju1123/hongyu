@@ -35,7 +35,7 @@ function PickCategoryPage({
   const {items, loadData} = useUtil(filteredTheme);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
 
-  const categoryData: InfoType[] = items.map(({theme}) => ({
+  const categoryData: InfoType<string>[] = items.map(({theme}) => ({
     title: theme,
     desc: '단어 20개',
     icon: 'Matching',

@@ -1,4 +1,4 @@
-import {useRecoilValue} from 'recoil';
+import {useRecoilState, useRecoilValue, useResetRecoilState} from 'recoil';
 import {useVoca} from '../providers/VocaProvider';
 import useUtil from './util';
 import {
@@ -7,7 +7,8 @@ import {
   bookedNavState,
   wordNavState,
 } from '../recoil/WordNavState';
-import {useCallback} from 'react';
+import {useCallback, useEffect} from 'react';
+import {wordListState} from '../recoil/WordListState';
 
 export default function useWordData(category: string) {
   const {
@@ -19,6 +20,8 @@ export default function useWordData(category: string) {
   const {convertToWord} = useUtil();
   const {navType, level} = useRecoilValue(wordNavState);
   const {bookedNavType, bookedLevel} = useRecoilValue(bookedNavState);
+  const [wordsFromRecoil, setWords] = useRecoilState(wordListState);
+  const resetWords = useResetRecoilState(wordListState);
 
   const fetchBookmarkedData = useCallback(() => {
     return bookedNavType === BookedNav.Voca
@@ -48,5 +51,13 @@ export default function useWordData(category: string) {
     return fetchData().map(word => convertToWord(word));
   }, [fetchData, convertToWord]);
 
-  return getWordData;
+  useEffect(() => {
+    const words = getWordData();
+    setWords(words);
+    return () => {
+      resetWords();
+    };
+  }, [getWordData, setWords, resetWords]);
+
+  return {getWordData, wordsFromRecoil};
 }

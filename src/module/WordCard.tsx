@@ -10,10 +10,10 @@ import {useRecoilValue} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 import WordCardContent from './WordCardContent';
 
-function VocaCard({id, isBusu}: {id: number; isBusu: boolean}): JSX.Element {
+function WordCard({id, isBusu}: {id: number; isBusu: boolean}): JSX.Element {
   const wordItem = useRecoilValue(isBusu ? busuState(id) : vocaState(id));
   const {word, level, intonation, meaning, bookmarked} = wordItem;
-  console.log('vocacard is render');
+
   return (
     <Card underdressing={false}>
       <View style={styles.dirRow}>
@@ -35,4 +35,4 @@ function VocaCard({id, isBusu}: {id: number; isBusu: boolean}): JSX.Element {
   );
 }
 
-export default memo(VocaCard);
+export default memo(WordCard);

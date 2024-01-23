@@ -27,7 +27,6 @@ function CategoryCardWrapper<T>({
   infos,
   loadData = () => {},
 }: CategoryCardWrapperProps<T>) {
-  console.log(infos.length);
   return (
     <View
       style={[

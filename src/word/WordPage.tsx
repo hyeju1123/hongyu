@@ -8,8 +8,6 @@ import WordCard from '../module/WordCard';
 import usePolly from '../hooks/polly';
 import usePaginate from '../hooks/paginate';
 import useWordData from '../hooks/wordData';
-import {useRecoilState, useResetRecoilState} from 'recoil';
-import {wordListState} from '../recoil/WordListState';
 
 import styles from '../styles/word/WordPageStyle';
 
@@ -22,23 +20,12 @@ function WordPage({
   },
 }: WordPageProps): JSX.Element {
   const {clearMp3File} = usePolly();
-  const getWordData = useWordData(category);
-  const [wordsFromRecoil, setWords] = useRecoilState(wordListState);
-  const resetWords = useResetRecoilState(wordListState);
+  const {wordsFromRecoil} = useWordData(category);
 
   const {
     rendered: {items},
     loadData,
   } = usePaginate(wordsFromRecoil);
-
-  useEffect(() => {
-    const words = getWordData();
-    setWords(words);
-
-    return () => {
-      resetWords();
-    };
-  }, [setWords, resetWords, getWordData]);
 
   useEffect(() => {
     return () => {
