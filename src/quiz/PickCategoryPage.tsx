@@ -11,7 +11,7 @@ import {InfoType} from '../module/CategoryCardWrapper';
 
 import images from '../styles/images';
 import {lightTheme} from '../styles/colors';
-import styles from '../styles/QuizTypePageStyle';
+import styles from '../styles/quiz/QuizTypePageStyle';
 
 type PickCategoryPageProps = NativeStackScreenProps<
   QuizStackParamList,

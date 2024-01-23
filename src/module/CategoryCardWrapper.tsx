@@ -1,7 +1,7 @@
 import React, {PropsWithChildren} from 'react';
 import {DimensionValue, FlatList, TouchableOpacity, View} from 'react-native';
 
-import styles from '../styles/CardWrapperStyle';
+import styles from '../styles/module/CardWrapperStyle';
 import {lightTheme} from '../styles/colors';
 import CategoryCard from './CategoryCard';
 import * as Icons from '../styles/svgIndex';

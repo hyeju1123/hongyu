@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {View, Image, TouchableOpacity, Text} from 'react-native';
-import styles from '../styles/HeaderStyle';
+import styles from '../styles/main/HeaderStyle';
 import images from '../styles/images';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootNavigation';

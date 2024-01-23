@@ -1,7 +1,7 @@
 import React, {PropsWithChildren} from 'react';
 import {Text, View} from 'react-native';
 import Card from './Card';
-import styles from '../styles/CategoryCardStyle';
+import styles from '../styles/module/CategoryCardStyle';
 import SvgIcon from '../module/SvgIcon';
 import {lightTheme} from '../styles/colors';
 import * as Icons from '../styles/svgIndex';

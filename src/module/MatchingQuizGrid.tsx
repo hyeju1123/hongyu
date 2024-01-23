@@ -5,7 +5,7 @@ import useQuiz from '../hooks/quiz';
 import useDidMountEffect from '../hooks/didMount';
 
 import {lightTheme} from '../styles/colors';
-import styles from '../styles/MatchingQuizGridStyle';
+import styles from '../styles/quiz/MatchingQuizGridStyle';
 
 const MARKED_DURATION = 250;
 

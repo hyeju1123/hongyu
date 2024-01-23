@@ -5,9 +5,9 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import {lightTheme} from './colors';
-import {getDisplaySize, DisplaySize} from './screen';
-import {fonts} from './fonts';
+import {lightTheme} from '../colors';
+import {getDisplaySize, DisplaySize} from '../screen';
+import {fonts} from '../fonts';
 
 type Style = {
   card: ViewStyle;

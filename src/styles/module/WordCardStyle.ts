@@ -8,7 +8,10 @@ type Style = {
   lantern: ImageStyle;
   hanzi: TextStyle;
   meaningText: TextStyle;
+  redText: TextStyle;
   content: ViewStyle;
+  notTouched: ViewStyle;
+  touched: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -19,8 +22,6 @@ const commonPart: Style = {
     display: 'flex',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
-    borderWidth: 1,
-    borderColor: 'black',
   },
   lantern: {
     width: 20,
@@ -36,10 +37,26 @@ const commonPart: Style = {
     marginVertical: 2,
     fontFamily: fonts.pinyin,
     fontSize: 12,
-    color: lightTheme.gray,
+    color: lightTheme.black,
+  },
+  redText: {
+    color: lightTheme.red,
   },
   content: {
-    position: 'absolute',
+    marginTop: 3,
+    width: '100%',
+    borderRadius: 5,
+    alignItems: 'center',
+    padding: 5,
+  },
+  notTouched: {
+    padding: 3,
+    backgroundColor: lightTheme.white,
+    borderWidth: 1,
+    borderColor: lightTheme.red,
+  },
+  touched: {
+    backgroundColor: lightTheme.oatmeal,
   },
 };
 

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import styles from '../styles/FlatCardStyle';
+import styles from '../styles/module/FlatCardStyle';
 import images from '../styles/images';
 
 type FlatCardProps = PropsWithChildren<{

@@ -1,6 +1,6 @@
 import {StyleSheet, ViewStyle} from 'react-native';
-import {lightTheme} from './colors';
-import {DisplaySize, getDisplaySize} from './screen';
+import {lightTheme} from '../colors';
+import {DisplaySize, getDisplaySize} from '../screen';
 
 type Style = {
   container: ViewStyle;

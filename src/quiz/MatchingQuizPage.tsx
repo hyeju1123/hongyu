@@ -9,7 +9,7 @@ import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
 
 import images from '../styles/images';
-import styles from '../styles/MatchingQuizPageStyle';
+import styles from '../styles/quiz/MatchingQuizPageStyle';
 import SvgIcon from '../module/SvgIcon';
 import {lightTheme} from '../styles/colors';
 

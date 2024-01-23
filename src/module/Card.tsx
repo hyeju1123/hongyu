@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {View} from 'react-native';
-import styles from '../styles/CardStyle';
+import styles from '../styles/module/CardStyle';
 import {lightTheme} from '../styles/colors';
 
 export enum ThemeColor {

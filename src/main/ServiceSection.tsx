@@ -1,7 +1,7 @@
 import React, {PropsWithChildren} from 'react';
 import {View, Text} from 'react-native';
 import FlatCard from '../module/FlatCard';
-import styles from '../styles/VocaSectionStyle';
+import styles from '../styles/main/VocaSectionStyle';
 import images from '../styles/images';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootNavigation';

@@ -3,7 +3,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FlatList, TouchableOpacity} from 'react-native';
-import VocaCard from '../module/VocaCard';
+import WordCard from '../module/WordCard';
 
 import usePolly from '../hooks/polly';
 import usePaginate from '../hooks/paginate';
@@ -55,10 +55,11 @@ function WordPage({
         renderItem={({item: {_id, isBusu}}) => (
           <TouchableOpacity
             key={_id}
+            activeOpacity={0.5}
             onPress={() =>
               navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id: _id})
             }>
-            <VocaCard id={_id} isBusu={isBusu} />
+            <WordCard id={_id} isBusu={isBusu} />
           </TouchableOpacity>
         )}
         onEndReached={() => loadData(items.length)}

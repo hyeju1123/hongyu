@@ -6,7 +6,7 @@ import {RootStackParamList} from '../navigation/RootNavigation';
 import Header from './Header';
 import VocaSection from './VocaSection';
 import ServiceSection from './ServiceSection';
-import styles from '../styles/MainPageStyle';
+import styles from '../styles/main/MainPageStyle';
 
 type MainPageProps = NativeStackScreenProps<RootStackParamList, 'MainPage'>;
 

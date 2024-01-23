@@ -16,13 +16,13 @@ import Busu from '../model/Busu';
 import DebouncedTextInput from '../module/DebouncedTextInput';
 
 import images from '../styles/images';
-import styles from '../styles/SearchPageStyle';
+import styles from '../styles/search/SearchPageStyle';
 
 type SearchPageProps = NativeStackScreenProps<RootStackParamList, 'SearchPage'>;
 
 function SearchPage({navigation}: SearchPageProps): JSX.Element {
   const {getVocasBySearch} = useVoca();
-  const {goBack, navigate} = navigation;
+  const {goBack} = navigation;
   const {redArrow, pencilWithZh} = images.module;
   const [searchedWords, setSearchedWords] = useState<(Busu | Voca)[]>([]);
 
@@ -34,10 +34,7 @@ function SearchPage({navigation}: SearchPageProps): JSX.Element {
   const handleData = (item: Busu | Voca) => {
     if (item instanceof Voca) {
       return (
-        <TouchableOpacity
-          onPress={() => navigate('WordDetailPage', {id: item._id})}
-          style={styles.resultBar}
-          key={item._id}>
+        <TouchableOpacity style={styles.resultBar} key={item._id}>
           <Text style={styles.text}>{item.word}</Text>
           <Text style={styles.text}>{item.intonation}</Text>
           <Text
@@ -51,10 +48,7 @@ function SearchPage({navigation}: SearchPageProps): JSX.Element {
       );
     } else {
       return (
-        <TouchableOpacity
-          onPress={() => navigate('BusuDetailPage', {busuData: item})}
-          style={styles.resultBar}
-          key={item._id}>
+        <TouchableOpacity style={styles.resultBar} key={item._id}>
           <Text style={styles.text}>{item.busu}</Text>
           <Text style={styles.text}>[{item.yin}]</Text>
           <Text

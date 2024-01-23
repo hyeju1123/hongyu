@@ -1,7 +1,7 @@
 import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from './colors';
-import {DisplaySize, getDisplaySize} from './screen';
-import {fonts} from './fonts';
+import {lightTheme} from '../colors';
+import {DisplaySize, getDisplaySize} from '../screen';
+import {fonts} from '../fonts';
 
 type Style = {
   cardWrapper: ViewStyle;

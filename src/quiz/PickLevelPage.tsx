@@ -7,7 +7,7 @@ import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import {InfoType} from '../module/CategoryCardWrapper';
 import * as Icons from '../styles/svgIndex';
 import {lightTheme} from '../styles/colors';
-import styles from '../styles/QuizTypePageStyle';
+import styles from '../styles/quiz/QuizTypePageStyle';
 
 type PickLevelPageProps = NativeStackScreenProps<
   QuizStackParamList,

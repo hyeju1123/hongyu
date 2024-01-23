@@ -1,8 +1,8 @@
 import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from './colors';
-import {DisplaySize, getDisplaySize} from './screen';
-import {commonPart as mainCommonPart} from './MainPageStyle';
-import {fonts} from './fonts';
+import {lightTheme} from '../colors';
+import {DisplaySize, getDisplaySize} from '../screen';
+import {commonPart as mainCommonPart} from '../main/MainPageStyle';
+import {fonts} from '../fonts';
 
 type Style = {
   container: ViewStyle;

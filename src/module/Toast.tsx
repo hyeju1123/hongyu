@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useRef} from 'react';
 import {Text, Image, TouchableOpacity, Animated} from 'react-native';
 import {useRecoilState} from 'recoil';
 import {toastState} from '../recoil/ToastState';
-import styles from '../styles/ToastStyle';
+import styles from '../styles/module/ToastStyle';
 import images from '../styles/images';
 
 function Toast(): JSX.Element {

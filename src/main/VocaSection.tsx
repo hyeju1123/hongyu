@@ -1,7 +1,7 @@
 import React, {PropsWithChildren} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Card, {ThemeColor} from '../module/Card';
-import styles from '../styles/VocaSectionStyle';
+import styles from '../styles/main/VocaSectionStyle';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 

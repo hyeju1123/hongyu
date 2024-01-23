@@ -1,6 +1,6 @@
 import {StyleSheet, ViewStyle} from 'react-native';
-import {lightTheme} from './colors';
-import {getDisplaySize, DisplaySize} from './screen';
+import {lightTheme} from '../colors';
+import {getDisplaySize, DisplaySize} from '../screen';
 
 type Style = {
   card: ViewStyle;
@@ -25,7 +25,7 @@ const commonPart: Style = {
   },
   underdressing: {
     backgroundColor: lightTheme.shadowGray,
-    borderRadius: 8,
+    borderRadius: 10,
     paddingBottom: 3,
   },
   noUnderdressing: {

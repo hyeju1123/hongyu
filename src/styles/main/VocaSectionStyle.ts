@@ -5,9 +5,9 @@ import {
   TextStyle,
   ImageStyle,
 } from 'react-native';
-import {lightTheme} from './colors';
-import {fonts} from './fonts';
-import {getDisplaySize, DisplaySize} from './screen';
+import {lightTheme} from '../colors';
+import {fonts} from '../fonts';
+import {getDisplaySize, DisplaySize} from '../screen';
 
 const width = Dimensions.get('screen').width;
 
