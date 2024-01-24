@@ -1,4 +1,4 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {commonPart as mainCommonPart} from '../main/MainPageStyle';
@@ -10,7 +10,7 @@ type Style = {
   scrollViewContent: ViewStyle;
   inputWrapper: ViewStyle;
   input: TextStyle;
-  pencilWithZhImg: ImageStyle;
+  backButton: ViewStyle;
   resultBar: ViewStyle;
   text: TextStyle;
   meaningText: TextStyle;
@@ -19,10 +19,8 @@ type Style = {
 
 export const commonPart: Style = {
   ...mainCommonPart,
-  scrollView: {
-    ...mainCommonPart.scrollView,
-    paddingVertical: 15,
-    marginBottom: 10,
+  scrollViewContent: {
+    paddingVertical: 10,
   },
   inputWrapper: {
     display: 'flex',
@@ -31,7 +29,6 @@ export const commonPart: Style = {
     paddingHorizontal: 15,
     borderBottomColor: lightTheme.red,
     borderBottomWidth: 1,
-    marginTop: 10,
   },
   input: {
     flex: 1,
@@ -39,9 +36,8 @@ export const commonPart: Style = {
     color: lightTheme.black,
     paddingHorizontal: 10,
   },
-  pencilWithZhImg: {
-    width: 20,
-    height: 20,
+  backButton: {
+    transform: [{rotateY: '180deg'}],
   },
   resultBar: {
     paddingVertical: 15,

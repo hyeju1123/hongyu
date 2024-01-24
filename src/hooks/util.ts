@@ -3,6 +3,7 @@ import useToast from './toast';
 import {useVoca} from '../providers/VocaProvider';
 import Voca from '../model/Voca';
 import Busu from '../model/Busu';
+import {ToastIcon} from '../recoil/ToastState';
 
 type handleBookmarkProps = {
   setBookmark: (value: React.SetStateAction<boolean>) => void;
@@ -51,7 +52,7 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
       if (value.length > 250) {
         fireToast({
           text: '250자를 넘지 말아주세요.',
-          icon: 'warning',
+          icon: ToastIcon.AbNormal,
           remove: true,
         });
         return true;
@@ -68,7 +69,7 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
       busu ? updateBusuBookmark(_id) : updateBookmark(_id);
       fireToast({
         text: `'내 단어장'에 '${word}'를 ${status}했습니다.`,
-        icon: 'checkedGreen',
+        icon: ToastIcon.Normal,
         remove: true,
       });
     },

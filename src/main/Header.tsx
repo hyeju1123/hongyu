@@ -1,9 +1,11 @@
 import React, {PropsWithChildren} from 'react';
-import {View, Image, TouchableOpacity, Text} from 'react-native';
-import styles from '../styles/main/HeaderStyle';
-import images from '../styles/images';
-import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootNavigation';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {View, TouchableOpacity, Text} from 'react-native';
+import SvgIcon from '../module/SvgIcon';
+
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/main/HeaderStyle';
 
 type HeaderProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -13,20 +15,17 @@ type HeaderProps = PropsWithChildren<{
   >;
 }>;
 
-function Header({navigation}: HeaderProps): JSX.Element {
-  const {navigate} = navigation;
-  const {mainLantern, pencilWithZh} = images.module;
-
+function Header({navigation: {navigate}}: HeaderProps): JSX.Element {
   return (
     <View style={styles.headerBox}>
       <TouchableOpacity>
-        <Image style={styles.logoImg} source={mainLantern} />
+        <SvgIcon name="Hong" size={65} />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigate('SearchPage')}
+        onPress={() => navigate('SearchNavigation')}
         style={styles.inputSection}>
         <Text style={styles.text}>단어를 검색해보세요!</Text>
-        <Image style={styles.pencilWithZhImg} source={pencilWithZh} />
+        <SvgIcon name="PencilH" size={20} fill={lightTheme.red} />
       </TouchableOpacity>
     </View>
   );

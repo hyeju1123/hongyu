@@ -9,6 +9,7 @@ import {useIsFocused} from '@react-navigation/native';
 
 import {fonts} from '../styles/fonts';
 import {lightTheme} from '../styles/colors';
+import {ToastIcon} from '../recoil/ToastState';
 
 type Props = {
   style: any;
@@ -43,7 +44,7 @@ function DebouncedTextInput({
       !forSearch &&
         fireToast({
           text: '메모가 저장되었습니다.',
-          icon: 'checkedGreen',
+          icon: ToastIcon.Normal,
           remove: true,
         });
     }

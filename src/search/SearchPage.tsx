@@ -1,67 +1,49 @@
-import React, {useState} from 'react';
-import {
-  Image,
-  ScrollView,
-  StatusBar,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {useEffect} from 'react';
+import {ScrollView, StatusBar, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {RootStackParamList} from '../navigation/RootNavigation';
+import {SearchStackParamList} from '../navigation/SearchNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
-import Voca from '../model/Voca';
-import Busu from '../model/Busu';
+
+import {wordListState} from '../recoil/WordListState';
+import {useRecoilState, useResetRecoilState} from 'recoil';
+
+import SvgIcon from '../module/SvgIcon';
+import SearchedItem from './SearchedItem';
 import DebouncedTextInput from '../module/DebouncedTextInput';
 
-import images from '../styles/images';
 import styles from '../styles/search/SearchPageStyle';
+import {lightTheme} from '../styles/colors';
 
-type SearchPageProps = NativeStackScreenProps<RootStackParamList, 'SearchPage'>;
+type SearchPageProps = NativeStackScreenProps<
+  SearchStackParamList,
+  'SearchPage'
+>;
 
-function SearchPage({navigation}: SearchPageProps): JSX.Element {
+function SearchPage({
+  navigation: {goBack, navigate},
+}: SearchPageProps): JSX.Element {
+  const {convertToWord} = useUtil();
   const {getVocasBySearch} = useVoca();
-  const {goBack} = navigation;
-  const {redArrow, pencilWithZh} = images.module;
-  const [searchedWords, setSearchedWords] = useState<(Busu | Voca)[]>([]);
+  const [searchedWords, setSearchedWords] = useRecoilState(wordListState);
+  const resetWordList = useResetRecoilState(wordListState);
 
   const handleSearch = (val: string) => {
-    const result = getVocasBySearch(val);
+    const result = getVocasBySearch(val).map(convertToWord);
+
     setSearchedWords([...result]);
   };
 
-  const handleData = (item: Busu | Voca) => {
-    if (item instanceof Voca) {
-      return (
-        <TouchableOpacity style={styles.resultBar} key={item._id}>
-          <Text style={styles.text}>{item.word}</Text>
-          <Text style={styles.text}>{item.intonation}</Text>
-          <Text
-            style={styles.meaningText}
-            numberOfLines={1}
-            ellipsizeMode="tail">
-            {item.meaning}
-          </Text>
-          <Text style={styles.levelText}>{item.level}급</Text>
-        </TouchableOpacity>
-      );
-    } else {
-      return (
-        <TouchableOpacity style={styles.resultBar} key={item._id}>
-          <Text style={styles.text}>{item.busu}</Text>
-          <Text style={styles.text}>[{item.yin}]</Text>
-          <Text
-            style={styles.meaningText}
-            numberOfLines={1}
-            ellipsizeMode="tail">
-            {item.xunyin}
-          </Text>
-          <Text style={styles.levelText}>{item.stroke}획</Text>
-        </TouchableOpacity>
-      );
-    }
+  const moveToDetailPage = (id: number, isBusu: boolean) => {
+    navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id});
   };
+
+  useEffect(() => {
+    return () => {
+      resetWordList();
+    };
+  }, [resetWordList]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -71,8 +53,8 @@ function SearchPage({navigation}: SearchPageProps): JSX.Element {
         translucent={true}
       />
       <View style={styles.inputWrapper}>
-        <TouchableOpacity onPress={() => goBack()}>
-          <Image style={styles.pencilWithZhImg} source={redArrow} />
+        <TouchableOpacity style={styles.backButton} onPress={goBack}>
+          <SvgIcon name="LineArrow" size={20} fill={lightTheme.red} />
         </TouchableOpacity>
         <DebouncedTextInput
           textVal={''}
@@ -81,10 +63,19 @@ function SearchPage({navigation}: SearchPageProps): JSX.Element {
           updateFn={handleSearch}
           placeholder="단어를 검색해보세요."
         />
-        <Image style={styles.pencilWithZhImg} source={pencilWithZh} />
+        <SvgIcon name="PencilH" size={20} fill={lightTheme.red} />
       </View>
-      <ScrollView style={styles.scrollView}>
-        {searchedWords.map(handleData)}
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.scrollViewContent}>
+        {searchedWords.map(({_id, word, isBusu}) => (
+          <SearchedItem
+            id={_id}
+            key={_id + word}
+            isBusu={isBusu}
+            moveToDetailPage={moveToDetailPage}
+          />
+        ))}
       </ScrollView>
     </SafeAreaView>
   );

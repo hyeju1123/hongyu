@@ -1,10 +1,10 @@
 import {useCallback} from 'react';
 import {useSetRecoilState} from 'recoil';
-import {toastState} from '../recoil/ToastState';
+import {ToastIcon, toastState} from '../recoil/ToastState';
 
 export type ToastDataProps = {
   text: string;
-  icon: string;
+  icon: ToastIcon;
   remove: boolean;
 };
 

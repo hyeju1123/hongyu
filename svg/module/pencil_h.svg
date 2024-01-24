@@ -1,0 +1,35 @@
+<svg id="레이어_1" data-name="레이어 1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 396.85 396.85">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: none;
+        stroke: #d14124;
+        stroke-miterlimit: 10;
+        stroke-width: 20px;
+      }
+
+      .cls-2 {
+        font-size: 173.05px;
+        font-family: AppleSDGothicNeo-Bold-KSCpc-EUC-H, Apple SD Gothic Neo;
+      }
+
+      .cls-2, .cls-4 {
+        fill: #d14124;
+      }
+
+      .cls-3 {
+        clip-path: url(#clip-path);
+      }
+    </style>
+    <clipPath id="clip-path">
+      <path class="cls-1" d="M242.82,23.79,56.6,271.57a19.8,19.8,0,0,0-3.54,7.86L34.59,369.28A11.8,11.8,0,0,0,51.65,382.1l81.17-42.73a19.64,19.64,0,0,0,6.57-5.58L325.61,86a19.68,19.68,0,0,0-3.91-27.54L270.36,19.89A19.67,19.67,0,0,0,242.82,23.79Z"/>
+    </clipPath>
+  </defs>
+  <text class="cls-2" transform="translate(232.84 368.65) scale(0.99 1)">字</text>
+  <g>
+    <g class="cls-3">
+      <polyline class="cls-4" points="40.74 339.34 79.19 368.23 28.28 396.33 40.74 339.34"/>
+    </g>
+    <path class="cls-1" d="M242.82,23.79,56.6,271.57a19.8,19.8,0,0,0-3.54,7.86L34.59,369.28A11.8,11.8,0,0,0,51.65,382.1l81.17-42.73a19.64,19.64,0,0,0,6.57-5.58L325.61,86a19.68,19.68,0,0,0-3.91-27.54L270.36,19.89A19.67,19.67,0,0,0,242.82,23.79Z"/>
+  </g>
+</svg>

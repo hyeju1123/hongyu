@@ -35,6 +35,7 @@ const images = {
     개사: require('../../images/wordClass/preposition.png'),
     접속사: require('../../images/wordClass/conjunction.png'),
     양사: require('../../images/wordClass/quantifier.png'),
+    수량사: require('../../images/wordClass/quantifier.png'),
     조사: require('../../images/wordClass/postposition.png'),
     조동사: require('../../images/wordClass/auxiliary.png'),
     감탄사: require('../../images/wordClass/exclamation.png'),

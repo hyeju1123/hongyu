@@ -12,6 +12,7 @@ import {InfoType} from '../module/CategoryCardWrapper';
 import images from '../styles/images';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/QuizTypePageStyle';
+import {ToastIcon} from '../recoil/ToastState';
 
 type PickCategoryPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -46,7 +47,7 @@ function PickCategoryPage({
     if (selectedCategory.length >= 5) {
       fireToast({
         text: '테마는 5개까지 선택가능합니다',
-        icon: 'warning',
+        icon: ToastIcon.AbNormal,
         remove: true,
       });
       return;
@@ -54,7 +55,7 @@ function PickCategoryPage({
     if (selectedCategory.includes(theme)) {
       fireToast({
         text: '이미 선택된 테마입니다',
-        icon: 'warning',
+        icon: ToastIcon.AbNormal,
         remove: true,
       });
       return;
@@ -70,7 +71,7 @@ function PickCategoryPage({
     if (selectedCategory.length === 0) {
       fireToast({
         text: '테마를 1개 이상 선택해주세요',
-        icon: 'warning',
+        icon: ToastIcon.AbNormal,
         remove: true,
       });
       return;

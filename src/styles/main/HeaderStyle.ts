@@ -42,6 +42,7 @@ const handleStyles = () => {
     },
     text: {
       fontFamily: fonts.mainBold,
+      fontSize: 12,
       color: lightTheme.ligthGray,
     },
     pencilWithZhImg: {

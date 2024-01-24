@@ -1,5 +1,5 @@
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useMemo, useState} from 'react';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   ScrollView,
   TextInput,
@@ -8,20 +8,24 @@ import {
   Text,
   View,
 } from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
+import {SearchStackParamList} from '../navigation/SearchNavigation';
 import {UpdateVocaContent, useVoca} from '../providers/VocaProvider';
-import images from '../styles/images';
-import {useRecoilCallback, useRecoilValue} from 'recoil';
-import {vocaState} from '../recoil/WordListState';
 import useToast from '../hooks/toast';
 import useUtil from '../hooks/util';
-import styles from '../styles/word/EditVocaPageStyle';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {lightTheme} from '../styles/colors';
 import SvgIcon from '../module/SvgIcon';
+import {ToastIcon} from '../recoil/ToastState';
+
+import {vocaState} from '../recoil/WordListState';
+import {useRecoilCallback, useRecoilValue} from 'recoil';
+
+import images from '../styles/images';
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/word/EditVocaPageStyle';
 
 type EditVocaPageProps = NativeStackScreenProps<
-  WordStackParamList,
+  WordStackParamList | SearchStackParamList,
   'EditVocaPage'
 >;
 
@@ -79,7 +83,7 @@ function EditVocaPage({
 
         fireToast({
           text: '단어를 수정하였습니다!',
-          icon: 'checkedGreen',
+          icon: ToastIcon.Normal,
           remove: true,
         });
         goBack();

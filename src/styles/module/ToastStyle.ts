@@ -1,18 +1,12 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
 type Style = {
   container: ViewStyle;
-  icon: ImageStyle;
-  closeImage: ImageStyle;
+  displayFlex: ViewStyle;
+  displayNone: ViewStyle;
   text: TextStyle;
 };
 
@@ -20,7 +14,6 @@ const width = Dimensions.get('screen').width;
 
 const commonPart: Style = {
   container: {
-    display: 'flex',
     position: 'absolute',
     marginTop: 100,
     backgroundColor: lightTheme.white,
@@ -38,16 +31,13 @@ const commonPart: Style = {
     },
     shadowOpacity: 0.43,
     shadowRadius: 9.51,
-
     elevation: 10,
   },
-  icon: {
-    width: width * 0.04,
-    height: width * 0.04,
+  displayFlex: {
+    display: 'flex',
   },
-  closeImage: {
-    width: width * 0.025,
-    height: width * 0.025,
+  displayNone: {
+    display: 'none',
   },
   text: {
     flex: 1,

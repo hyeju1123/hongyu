@@ -1,12 +1,17 @@
+// main
+export {default as Hong} from '../../svg/main/hong.svg';
+
 // module
 export {default as LineArrow} from '../../svg/module/lineArrow.svg';
 export {default as StopWatch} from '../../svg/module/stopwatch.svg';
 export {default as Cross} from '../../svg/module/cross.svg';
 export {default as CheckCircle} from '../../svg/module/check-circle.svg';
+export {default as Warning} from '../../svg/module/warning.svg';
 export {default as Sound} from '../../svg/module/sound.svg';
 export {default as LanternOff} from '../../svg/module/lantern-off.svg';
 export {default as LanternOn} from '../../svg/module/lantern-on.svg';
 export {default as Pencil} from '../../svg/module/pencil.svg';
+export {default as PencilH} from '../../svg/module/pencil_h.svg';
 
 // circle number svg
 export {default as Circle0} from '../../svg/number/circle-a.svg';

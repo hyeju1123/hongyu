@@ -1,6 +1,7 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../../navigation/WordNavigation';
+import {SearchStackParamList} from '../../navigation/SearchNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, Text, View} from 'react-native';
 import Card from '../../module/Card';
@@ -14,7 +15,7 @@ import {useVoca} from '../../providers/VocaProvider';
 import styles from '../../styles/word/WordDetailPageStyle';
 
 type BusuDetailPageProps = NativeStackScreenProps<
-  WordStackParamList,
+  WordStackParamList | SearchStackParamList,
   'BusuDetailPage'
 >;
 
@@ -34,12 +35,12 @@ function BusuDetailPage({
     explanation,
     info,
   } = wordItem;
-  const {updateExplanation} = useVoca();
+  const {updateBusuExplanation} = useVoca();
 
   const handleExplanation = useRecoilCallback(
     ({set}) =>
       (text: string) => {
-        updateExplanation(id, text);
+        updateBusuExplanation(id, text);
         set(busuState(id), {...wordItem, explanation: text});
       },
     [wordItem],

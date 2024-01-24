@@ -5,6 +5,7 @@ import Config from 'react-native-config';
 import useToast from './toast';
 import useDebounce from './debounce';
 import useDidMountEffect from './didMount';
+import {ToastIcon} from '../recoil/ToastState';
 
 const apiUrl = Config.POLLY_API_URL;
 
@@ -27,14 +28,14 @@ export default function Polly() {
         playAudio(filePath, error => {
           fireToast({
             text: error,
-            icon: 'warning',
+            icon: ToastIcon.AbNormal,
             remove: true,
           });
         });
       } catch (e) {
         fireToast({
           text: '재시도해주세요!',
-          icon: 'warning',
+          icon: ToastIcon.AbNormal,
           remove: true,
         });
       } finally {

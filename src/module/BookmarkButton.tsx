@@ -6,6 +6,7 @@ import {useSetRecoilState} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 
 import images from '../styles/images';
+import {ToastIcon} from '../recoil/ToastState';
 
 export enum ButtonSize {
   Small = 's',
@@ -39,7 +40,7 @@ function BookmarkButton({
       text: `'내 단어장'에 '${word}'를 ${
         bookmarked ? '삭제' : '저장'
       }했습니다.`,
-      icon: 'checkedGreen',
+      icon: ToastIcon.Normal,
       remove: true,
     });
   };
