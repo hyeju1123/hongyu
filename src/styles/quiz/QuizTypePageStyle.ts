@@ -27,7 +27,7 @@ const width = Dimensions.get('screen').width;
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.darkRed,
+    backgroundColor: lightTheme.white,
   },
   guideText: {
     marginHorizontal: width * 0.05,
@@ -35,7 +35,7 @@ const commonPart: Style = {
     marginBottom: width * 0.02,
     fontFamily: fonts.mainBold,
     fontSize: width * 0.05,
-    color: lightTheme.white,
+    color: lightTheme.black,
   },
   themePanel: {
     minHeight: width * 0.25,
@@ -56,19 +56,22 @@ const commonPart: Style = {
     flexDirection: 'row',
     width: '100%',
     flexWrap: 'wrap',
-    marginTop: 30,
+    marginTop: 20,
   },
   labelButton: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 5,
-    marginHorizontal: 5,
+    borderWidth: 1,
+    borderColor: lightTheme.darkRed,
+    marginHorizontal: 3,
+    marginVertical: 3,
     paddingHorizontal: 5,
     paddingVertical: 3,
-    backgroundColor: lightTheme.white,
   },
   label: {
+    marginHorizontal: 2,
     fontFamily: fonts.mainBold,
     color: lightTheme.black,
   },

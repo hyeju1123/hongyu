@@ -21,7 +21,6 @@ const commonPart: Style = {
   card: {
     width: (width - 60) / 2,
     minHeight: width * 0.2,
-    backgroundColor: lightTheme.white,
     borderRadius: 10,
     display: 'flex',
     justifyContent: 'center',

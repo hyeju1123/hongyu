@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -13,11 +7,11 @@ type Style = {
   container: ViewStyle;
   scrollView: ViewStyle;
   scrollViewContent: ViewStyle;
+  endQuizContainer: ViewStyle;
   endQuizWrapper: ViewStyle;
   endQuizText: TextStyle;
   largeText: TextStyle;
   smallText: TextStyle;
-  dumplingIcon: ImageStyle;
   timerWrapper: ViewStyle;
 };
 
@@ -26,7 +20,7 @@ const width = Dimensions.get('screen').width;
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.darkRed,
+    backgroundColor: lightTheme.white,
   },
   scrollView: {
     marginHorizontal: 20,
@@ -37,14 +31,22 @@ const commonPart: Style = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  endQuizWrapper: {
+  endQuizContainer: {
+    zIndex: 10,
     position: 'absolute',
     width: '100%',
     height: '100%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    zIndex: 10,
+    backgroundColor: lightTheme.white,
+  },
+  endQuizWrapper: {
+    width: width * 0.6,
+    height: width * 0.6,
+    borderRadius: width * 0.3,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: lightTheme.darkRed,
   },
   endQuizText: {
@@ -53,14 +55,10 @@ const commonPart: Style = {
     color: lightTheme.white,
   },
   largeText: {
-    fontSize: width * 0.08,
+    fontSize: width * 0.06,
   },
   smallText: {
-    fontSize: width * 0.04,
-  },
-  dumplingIcon: {
-    width: width * 0.3,
-    height: width * 0.3,
+    fontSize: width * 0.025,
   },
   timerWrapper: {
     display: 'flex',

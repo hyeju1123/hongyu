@@ -1,18 +1,21 @@
 import React, {useMemo, useState} from 'react';
-import {Image, StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import {StatusBar, Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import {useVoca} from '../providers/VocaProvider';
-import useUtil from '../hooks/util';
-import useToast from '../hooks/toast';
-import {InfoType} from '../module/CategoryCardWrapper';
 
-import images from '../styles/images';
+import useToast from '../hooks/toast';
+import usePaginate from '../hooks/paginate';
+import * as Icons from '../styles/svgIndex';
+import SvgIcon from '../module/SvgIcon';
+
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/QuizTypePageStyle';
 import {ToastIcon} from '../recoil/ToastState';
+
+const PICK_MAXIMUM = 5;
 
 type PickCategoryPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -20,31 +23,34 @@ type PickCategoryPageProps = NativeStackScreenProps<
 >;
 
 function PickCategoryPage({
-  navigation,
-  route,
+  navigation: {navigate},
+  route: {
+    params: {level},
+  },
 }: PickCategoryPageProps): JSX.Element {
-  const {navigate} = navigation;
-  const {level} = route.params;
-  const {closed} = images.module;
   const {fireToast} = useToast();
-  const {getVocasByLevel} = useVoca();
+  const {countVocaByCategory} = useVoca();
   const filteredTheme = useMemo(
-    () => getVocasByLevel(level),
-    [getVocasByLevel, level],
+    () => countVocaByCategory(level),
+    [countVocaByCategory, level],
   );
 
-  const {items, loadData} = useUtil(filteredTheme);
+  const categories = Object.entries(filteredTheme).map(([key, value]) => {
+    const title = key;
+    const desc = `단어 ${value}개`;
+    const icon = 'CheckCircle' as keyof typeof Icons;
+
+    return {title, desc, icon, navData: key};
+  });
+
+  const {
+    loadData,
+    rendered: {items},
+  } = usePaginate(categories);
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
 
-  const categoryData: InfoType<string>[] = items.map(({theme}) => ({
-    title: theme,
-    desc: '단어 20개',
-    icon: 'Matching',
-    navData: theme,
-  }));
-
   const selectCategory = (theme: string) => {
-    if (selectedCategory.length >= 5) {
+    if (selectedCategory.length >= PICK_MAXIMUM) {
       fireToast({
         text: '테마는 5개까지 선택가능합니다',
         icon: ToastIcon.AbNormal,
@@ -82,7 +88,7 @@ function PickCategoryPage({
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
-        barStyle="light-content"
+        barStyle="dark-content"
         backgroundColor="transparent"
         translucent={true}
       />
@@ -106,7 +112,7 @@ function PickCategoryPage({
               key={category}
               style={styles.labelButton}>
               <Text style={styles.label}>{category}</Text>
-              <Image style={styles.closeImage} source={closed} />
+              <SvgIcon name="Cross" size={12} fill={lightTheme.darkRed} />
             </TouchableOpacity>
           ))}
         </View>
@@ -115,8 +121,7 @@ function PickCategoryPage({
         nav={selectCategory}
         topPanelHeight={styles.themePanel.minHeight}
         loadData={loadData}
-        infos={categoryData}
-        theme={lightTheme.darkRed}
+        infos={items}
       />
     </SafeAreaView>
   );

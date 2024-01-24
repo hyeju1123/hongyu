@@ -11,7 +11,6 @@ import PickCategoryPage from '../quiz/PickCategoryPage';
 import MatchingQuizPage from '../quiz/MatchingQuizPage';
 
 import {lightTheme} from '../styles/colors';
-import {fonts} from '../styles/fonts';
 import QuizResultPage from '../quiz/QuizResultPage';
 import Voca from '../model/Voca';
 
@@ -35,30 +34,29 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
     <Stack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
-        headerTintColor: lightTheme.white,
         headerShadowVisible: false,
-        headerTitleStyle: {fontFamily: fonts.mainBold},
-        headerStyle: {backgroundColor: lightTheme.darkRed},
+        headerTintColor: lightTheme.black,
+        headerStyle: {backgroundColor: lightTheme.white},
       }}>
       <Stack.Screen
         name="QuizTypePage"
         component={QuizTypePage}
         options={{
-          headerTitle: '단어 암기 시험',
+          headerTitle: '시험 유형',
         }}
       />
       <Stack.Screen
         name="PickLevelPage"
         component={PickLevelPage}
         options={{
-          headerTitle: '',
+          headerTitle: '급수 선택',
         }}
       />
       <Stack.Screen
         name="PickCategoryPage"
         component={PickCategoryPage}
         options={{
-          headerTitle: '',
+          headerTitle: '테마 선택',
         }}
       />
       <Stack.Screen
@@ -72,7 +70,7 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
         name="QuizResultPage"
         component={QuizResultPage}
         options={{
-          headerTitle: '',
+          headerTitle: '결과',
         }}
       />
     </Stack.Navigator>

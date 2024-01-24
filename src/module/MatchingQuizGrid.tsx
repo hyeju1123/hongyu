@@ -74,9 +74,9 @@ function MatchingQuizGrid({
   };
 
   const setCardColor = (value: string) => {
-    let color: string = lightTheme.white;
+    let color: string = lightTheme.transGray;
 
-    color = tempText === value ? lightTheme.transWhite : color;
+    color = tempText === value ? lightTheme.transBlack : color;
     color = value === '  ' ? lightTheme.transparent : color;
     color = correctPair.includes(value) ? lightTheme.mint : color;
     color = wrongPair.includes(value) ? lightTheme.salmon : color;
@@ -86,6 +86,7 @@ function MatchingQuizGrid({
 
   useDidMountEffect(() => {
     correctedNum.current = 0;
+    setTempText('');
     setWordList(getWordList(words));
   }, [words, getWordList]);
 
@@ -94,7 +95,7 @@ function MatchingQuizGrid({
       {wordList.map((value, idx) => (
         <TouchableOpacity
           activeOpacity={1.0}
-          delayLongPress={5000}
+          delayLongPress={500}
           disabled={value === '  '}
           onPress={() => tryMatching(value)}
           key={idx}

@@ -16,7 +16,7 @@ type Style = {
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.darkRed,
+    backgroundColor: lightTheme.white,
   },
   flatlist: {
     marginHorizontal: 20,

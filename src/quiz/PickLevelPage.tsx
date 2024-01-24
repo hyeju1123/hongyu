@@ -6,7 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import {InfoType} from '../module/CategoryCardWrapper';
 import * as Icons from '../styles/svgIndex';
-import {lightTheme} from '../styles/colors';
+
 import styles from '../styles/quiz/QuizTypePageStyle';
 
 type PickLevelPageProps = NativeStackScreenProps<
@@ -18,7 +18,7 @@ function PickLevelPage({navigation}: PickLevelPageProps): JSX.Element {
   const {navigate} = navigation;
   const levels = [1, 2, 3, 4, 5, 6];
 
-  const levelData: InfoType[] = levels.map(level => ({
+  const levelData: InfoType<string>[] = levels.map(level => ({
     title: `HSK ${level}급`,
     desc: `${level}급 시험보기`,
     icon: `Circle${level}` as keyof typeof Icons,
@@ -32,15 +32,11 @@ function PickLevelPage({navigation}: PickLevelPageProps): JSX.Element {
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <StatusBar
-        barStyle="light-content"
+        barStyle="dark-content"
         backgroundColor="transparent"
         translucent={true}
       />
-      <CategoryCardWrapper
-        nav={moveToCategory}
-        infos={levelData}
-        theme={lightTheme.darkRed}
-      />
+      <CategoryCardWrapper nav={moveToCategory} infos={levelData} />
     </SafeAreaView>
   );
 }
