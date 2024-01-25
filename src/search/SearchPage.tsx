@@ -67,7 +67,8 @@ function SearchPage({
       </View>
       <ScrollView
         style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}>
+        contentContainerStyle={styles.scrollViewContent}
+        keyboardShouldPersistTaps={'handled'}>
         {searchedWords.map(({_id, word, isBusu}) => (
           <SearchedItem
             id={_id}
