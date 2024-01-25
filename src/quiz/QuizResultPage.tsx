@@ -1,13 +1,27 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HeaderBackButton} from '@react-navigation/elements';
-import {BackHandler, FlatList} from 'react-native';
+import {
+  BackHandler,
+  FlatList,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import SvgIcon from '../module/SvgIcon';
 import QuizResultCard from '../module/QuizResultCard';
-import usePaginate from '../hooks/paginate';
-import styles from '../styles/quiz/QuizResultPageStyle';
 import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/quiz/QuizResultPageStyle';
+import cardWrapperStyles from '../styles/module/CardWrapperStyle';
+
+enum resultType {
+  ALL = 'all',
+  CORRECT = 'correct',
+  WRONG = 'wrong',
+}
 
 type QuizResultPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -20,10 +34,21 @@ function QuizResultPage({
     params: {words, corrected},
   },
 }: QuizResultPageProps) {
-  const {
-    loadData,
-    rendered: {items},
-  } = usePaginate(words);
+  console.log('in result page');
+
+  const {green, red, white} = lightTheme;
+  const {ALL, CORRECT, WRONG} = resultType;
+  const [nav, setnav] = useState<resultType>(ALL);
+  const [filtered, setFiltered] = useState(words);
+
+  const handleNav = (type: resultType) => {
+    setnav(type);
+    type === ALL && setFiltered(words);
+    type === CORRECT &&
+      setFiltered(words.filter(({_id}) => corrected.includes(_id)));
+    type === WRONG &&
+      setFiltered(words.filter(({_id}) => !corrected.includes(_id)));
+  };
 
   useEffect(() => {
     const handleBackButton = (props: HeaderBackButtonProps) => (
@@ -51,17 +76,47 @@ function QuizResultPage({
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <FlatList
-        style={styles.flatlist}
-        contentContainerStyle={styles.flatlistContent}
-        data={items}
-        renderItem={({item}) => {
-          const isCorrected = corrected.includes(item._id);
-          return <QuizResultCard voca={item} isCorrected={isCorrected} />;
-        }}
-        onEndReached={() => loadData(items.length)}
-        onEndReachedThreshold={0.8}
-      />
+      <View style={[styles.navTab, styles.dirRow]}>
+        <TouchableOpacity
+          onPress={() => handleNav(ALL)}
+          style={[
+            styles.dirRow,
+            styles.navButton,
+            nav === ALL && styles.bottomLine,
+          ]}>
+          <Text style={styles.text}>전체</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleNav(CORRECT)}
+          style={[
+            styles.dirRow,
+            styles.navButton,
+            nav === CORRECT && styles.bottomLine,
+          ]}>
+          <SvgIcon name="Circle" size={13} fill={green} />
+          <Text style={[styles.text, {color: green}]}>정답</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => handleNav(WRONG)}
+          style={[
+            styles.dirRow,
+            styles.navButton,
+            nav === WRONG && styles.bottomLine,
+          ]}>
+          <SvgIcon name="Cross" size={13} fill={red} />
+          <Text style={[styles.text, {color: red}]}>오답</Text>
+        </TouchableOpacity>
+      </View>
+      <View style={[cardWrapperStyles.cardWrapper, {backgroundColor: white}]}>
+        <FlatList
+          contentContainerStyle={styles.flatlistContent}
+          data={filtered}
+          renderItem={({item}) => {
+            const isCorrected = corrected.includes(item._id);
+            return <QuizResultCard voca={item} isCorrected={isCorrected} />;
+          }}
+        />
+      </View>
     </SafeAreaView>
   );
 }

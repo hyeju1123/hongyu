@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {DimensionValue, FlatList, TouchableOpacity, View} from 'react-native';
+import {FlatList, TouchableOpacity, View} from 'react-native';
 
 import styles from '../styles/module/CardWrapperStyle';
 import {lightTheme} from '../styles/colors';
@@ -15,7 +15,6 @@ export type InfoType<T> = {
 
 type CategoryCardWrapperProps<T> = PropsWithChildren<{
   theme?: string;
-  topPanelHeight?: DimensionValue;
   infos: InfoType<T>[];
   nav: (param: T) => void;
   loadData?: (prevLength: number) => void;

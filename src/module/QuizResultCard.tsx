@@ -22,7 +22,7 @@ function QuizResultCard({
   isCorrected: boolean;
 }): JSX.Element {
   const {_id, word, bookmarked, level, meaning, intonation} = voca;
-  const {black, green, red} = lightTheme;
+  const {green, red} = lightTheme;
   const {fireToast} = useToast();
   const {updateBookmark} = useVoca();
   const [book, setBook] = useState(bookmarked);
@@ -52,9 +52,7 @@ function QuizResultCard({
         </View>
         <SoundButton level={level} word={word} />
       </View>
-      <Text style={[styles.hanzi, {color: isCorrected ? black : red}]}>
-        {word}
-      </Text>
+      <Text style={styles.hanzi}>{word}</Text>
       <WordCardContent isBusu meaning={meaning} intonation={intonation} />
     </Card>
   );

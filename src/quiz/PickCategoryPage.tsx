@@ -119,7 +119,6 @@ function PickCategoryPage({
       </View>
       <CategoryCardWrapper
         nav={selectCategory}
-        topPanelHeight={styles.themePanel.minHeight}
         loadData={loadData}
         infos={items}
       />

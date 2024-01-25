@@ -1,16 +1,16 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
 type Style = {
   container: ViewStyle;
-  flatlist: ViewStyle;
-  flatlistContent: ViewStyle;
+  navTab: ViewStyle;
   dirRow: ViewStyle;
-  lantern: ImageStyle;
-  hanzi: TextStyle;
-  meaningText: TextStyle;
+  navButton: ViewStyle;
+  bottomLine: ViewStyle;
+  flatlistContent: ViewStyle;
+  text: TextStyle;
 };
 
 const commonPart: Style = {
@@ -18,36 +18,30 @@ const commonPart: Style = {
     flex: 1,
     backgroundColor: lightTheme.white,
   },
-  flatlist: {
-    marginHorizontal: 20,
+  navTab: {
+    padding: 20,
+  },
+  dirRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  navButton: {
+    padding: 5,
+    marginHorizontal: 15,
+  },
+  bottomLine: {
+    borderBottomWidth: 2,
+    borderBottomColor: lightTheme.oatmeal,
   },
   flatlistContent: {
     paddingVertical: 10,
   },
-  dirRow: {
-    position: 'absolute',
-    top: 10,
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'row',
-
-    justifyContent: 'space-between',
-  },
-  lantern: {
-    width: 20,
-    height: 20,
-  },
-  hanzi: {
-    marginVertical: 8,
-    fontFamily: fonts.hanzi,
-    fontSize: 20,
-    color: lightTheme.black,
-  },
-  meaningText: {
-    marginVertical: 2,
+  text: {
     fontFamily: fonts.pinyin,
-    fontSize: 12,
-    color: lightTheme.gray,
+    fontSize: 13,
+    color: lightTheme.black,
   },
 };
 
