@@ -1,10 +1,10 @@
-import React, {useEffect} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {FlatList, TouchableOpacity} from 'react-native';
 import WordCard from '../module/WordCard';
-
+import {Word} from '../recoil/WordListState';
 import usePolly from '../hooks/polly';
 import usePaginate from '../hooks/paginate';
 import useWordData from '../hooks/wordData';
@@ -27,6 +27,20 @@ function WordPage({
     loadData,
   } = usePaginate(wordsFromRecoil);
 
+  const renderItem = useCallback(
+    ({item: {_id, isBusu}}: {item: Word}) => (
+      <TouchableOpacity
+        key={_id}
+        activeOpacity={0.5}
+        onPress={() =>
+          navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id: _id})
+        }>
+        <WordCard id={_id} isBusu={isBusu} />
+      </TouchableOpacity>
+    ),
+    [navigate],
+  );
+
   useEffect(() => {
     return () => {
       clearMp3File();
@@ -39,16 +53,7 @@ function WordPage({
         style={styles.flatlist}
         contentContainerStyle={styles.flatlistContent}
         data={items}
-        renderItem={({item: {_id, isBusu}}) => (
-          <TouchableOpacity
-            key={_id}
-            activeOpacity={0.5}
-            onPress={() =>
-              navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id: _id})
-            }>
-            <WordCard id={_id} isBusu={isBusu} />
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
         onEndReached={() => loadData(items.length)}
         onEndReachedThreshold={0.8}
       />

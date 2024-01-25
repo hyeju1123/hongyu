@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, useCallback} from 'react';
 import {FlatList, TouchableOpacity, View} from 'react-native';
 
 import styles from '../styles/module/CardWrapperStyle';
@@ -26,6 +26,15 @@ function CategoryCardWrapper<T>({
   infos,
   loadData = () => {},
 }: CategoryCardWrapperProps<T>) {
+  const renderItem = useCallback(
+    ({item: {navData, title, desc, icon}}: {item: InfoType<T>}) => (
+      <TouchableOpacity onPress={() => nav(navData)}>
+        <CategoryCard title={title} desc={desc} icon={icon} />
+      </TouchableOpacity>
+    ),
+    [nav],
+  );
+
   return (
     <View
       style={[
@@ -37,11 +46,7 @@ function CategoryCardWrapper<T>({
       <FlatList
         contentContainerStyle={styles.flatlistContent}
         data={infos}
-        renderItem={({item: {title, desc, icon, navData}}) => (
-          <TouchableOpacity onPress={() => nav(navData)}>
-            <CategoryCard title={title} desc={desc} icon={icon} />
-          </TouchableOpacity>
-        )}
+        renderItem={renderItem}
         onEndReached={() => loadData(infos.length)}
         onEndReachedThreshold={0.8}
       />

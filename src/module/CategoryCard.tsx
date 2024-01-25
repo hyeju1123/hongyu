@@ -1,4 +1,4 @@
-import React, {PropsWithChildren} from 'react';
+import React, {PropsWithChildren, memo} from 'react';
 import {Text, View} from 'react-native';
 import Card from './Card';
 import styles from '../styles/module/CategoryCardStyle';
@@ -11,7 +11,6 @@ type CategoryCardProps = PropsWithChildren<{
   title: string;
   desc: string;
   icon: keyof typeof Icons;
-  titleCetner?: boolean;
 }>;
 
 function CategoryCard({title, desc, icon}: CategoryCardProps): JSX.Element {
@@ -31,4 +30,4 @@ function CategoryCard({title, desc, icon}: CategoryCardProps): JSX.Element {
   );
 }
 
-export default CategoryCard;
+export default memo(CategoryCard);
