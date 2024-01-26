@@ -1,9 +1,11 @@
 import React, {PropsWithChildren, useCallback} from 'react';
-import {FlatList, TouchableOpacity, View} from 'react-native';
-
-import styles from '../styles/module/CardWrapperStyle';
-import {lightTheme} from '../styles/colors';
+import {TouchableOpacity, View} from 'react-native';
+import {FlashList} from '@shopify/flash-list';
 import CategoryCard from './CategoryCard';
+
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/module/CardWrapperStyle';
+
 import * as Icons from '../styles/svgIndex';
 
 export type InfoType<T> = {
@@ -43,12 +45,14 @@ function CategoryCardWrapper<T>({
           backgroundColor: theme,
         },
       ]}>
-      <FlatList
-        contentContainerStyle={styles.flatlistContent}
+      <FlashList
         data={infos}
         renderItem={renderItem}
+        estimatedItemSize={90}
         onEndReached={() => loadData(infos.length)}
         onEndReachedThreshold={0.8}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.flashlistContent}
       />
     </View>
   );

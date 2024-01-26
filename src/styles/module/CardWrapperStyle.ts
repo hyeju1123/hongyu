@@ -4,7 +4,7 @@ import {lightTheme} from '../colors';
 
 type Style = {
   cardWrapper: ViewStyle;
-  flatlistContent: ViewStyle;
+  flashlistContent: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -25,10 +25,8 @@ const commonPart: Style = {
     paddingTop: 10,
     paddingHorizontal: 20,
   },
-  flatlistContent: {
+  flashlistContent: {
     paddingBottom: 10,
-    flexGrow: 1,
-    justifyContent: 'center',
   },
 };
 

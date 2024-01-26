@@ -6,8 +6,7 @@ import {fonts} from '../fonts';
 
 type Style = {
   container: ViewStyle;
-  scrollView: ViewStyle;
-  scrollViewContent: ViewStyle;
+  flashlistContent: ViewStyle;
   inputWrapper: ViewStyle;
   input: TextStyle;
   backButton: ViewStyle;
@@ -19,8 +18,8 @@ type Style = {
 
 export const commonPart: Style = {
   ...mainCommonPart,
-  scrollViewContent: {
-    paddingVertical: 10,
+  flashlistContent: {
+    paddingHorizontal: 20,
   },
   inputWrapper: {
     display: 'flex',
@@ -40,7 +39,7 @@ export const commonPart: Style = {
     transform: [{rotateY: '180deg'}],
   },
   resultBar: {
-    paddingVertical: 15,
+    paddingVertical: 10,
     display: 'flex',
     flexDirection: 'row',
     borderBottomWidth: 0.8,
@@ -50,6 +49,7 @@ export const commonPart: Style = {
     fontFamily: fonts.hanzi,
     color: lightTheme.black,
     marginHorizontal: 2,
+    paddingVertical: 1,
   },
   meaningText: {
     flex: 1,
@@ -70,10 +70,6 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
-      scrollView: {
-        ...commonPart.scrollView,
-        marginHorizontal: 35,
-      },
     });
   }
   return StyleSheet.create({...commonPart});

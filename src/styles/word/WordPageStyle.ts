@@ -4,8 +4,7 @@ import {DisplaySize, getDisplaySize} from '../screen';
 
 type Style = {
   container: ViewStyle;
-  flatlist: ViewStyle;
-  flatlistContent: ViewStyle;
+  flashlistContent: ViewStyle;
 };
 
 export const commonPart: Style = {
@@ -13,12 +12,9 @@ export const commonPart: Style = {
     flex: 1,
     backgroundColor: lightTheme.white,
   },
-  flatlist: {
-    marginHorizontal: 20,
-  },
-  flatlistContent: {
+  flashlistContent: {
+    paddingHorizontal: 20,
     paddingBottom: 10,
-    flexGrow: 1,
   },
 };
 

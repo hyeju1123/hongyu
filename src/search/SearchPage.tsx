@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
-import {ScrollView, StatusBar, TouchableOpacity, View} from 'react-native';
+import React, {useCallback, useEffect} from 'react';
+import {StatusBar, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SearchStackParamList} from '../navigation/SearchNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
 
-import {wordListState} from '../recoil/WordListState';
+import {Word, wordListState} from '../recoil/WordListState';
 import {useRecoilState, useResetRecoilState} from 'recoil';
 
 import SvgIcon from '../module/SvgIcon';
@@ -15,6 +15,7 @@ import DebouncedTextInput from '../module/DebouncedTextInput';
 
 import styles from '../styles/search/SearchPageStyle';
 import {lightTheme} from '../styles/colors';
+import {FlashList} from '@shopify/flash-list';
 
 type SearchPageProps = NativeStackScreenProps<
   SearchStackParamList,
@@ -35,9 +36,23 @@ function SearchPage({
     setSearchedWords([...result]);
   };
 
-  const moveToDetailPage = (id: number, isBusu: boolean) => {
-    navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id});
-  };
+  const moveToDetailPage = useCallback(
+    (id: number, isBusu: boolean) => {
+      navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id});
+    },
+    [navigate],
+  );
+
+  const renderItem = useCallback(
+    ({item: {_id, isBusu}}: {item: Word}) => (
+      <SearchedItem
+        id={_id}
+        isBusu={isBusu}
+        moveToDetailPage={moveToDetailPage}
+      />
+    ),
+    [moveToDetailPage],
+  );
 
   useEffect(() => {
     return () => {
@@ -65,19 +80,14 @@ function SearchPage({
         />
         <SvgIcon name="PencilH" size={20} fill={lightTheme.red} />
       </View>
-      <ScrollView
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}
-        keyboardShouldPersistTaps={'handled'}>
-        {searchedWords.map(({_id, word, isBusu}) => (
-          <SearchedItem
-            id={_id}
-            key={_id + word}
-            isBusu={isBusu}
-            moveToDetailPage={moveToDetailPage}
-          />
-        ))}
-      </ScrollView>
+      <FlashList
+        data={searchedWords}
+        renderItem={renderItem}
+        estimatedItemSize={40}
+        showsVerticalScrollIndicator={false}
+        keyboardShouldPersistTaps={'handled'}
+        contentContainerStyle={styles.flashlistContent}
+      />
     </SafeAreaView>
   );
 }

@@ -2,7 +2,8 @@ import React, {useCallback, useEffect} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {FlatList, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
+import {FlashList} from '@shopify/flash-list';
 import WordCard from '../module/WordCard';
 import {Word} from '../recoil/WordListState';
 import usePolly from '../hooks/polly';
@@ -30,7 +31,6 @@ function WordPage({
   const renderItem = useCallback(
     ({item: {_id, isBusu}}: {item: Word}) => (
       <TouchableOpacity
-        key={_id}
         activeOpacity={0.5}
         onPress={() =>
           navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id: _id})
@@ -49,13 +49,14 @@ function WordPage({
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <FlatList
-        style={styles.flatlist}
-        contentContainerStyle={styles.flatlistContent}
+      <FlashList
         data={items}
         renderItem={renderItem}
+        estimatedItemSize={90}
         onEndReached={() => loadData(items.length)}
         onEndReachedThreshold={0.8}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.flashlistContent}
       />
     </SafeAreaView>
   );
