@@ -24,6 +24,7 @@ const commonPart: Style = {
     top: 10,
     paddingTop: 10,
     paddingHorizontal: 20,
+    backgroundColor: lightTheme.white,
   },
   flashlistContent: {
     paddingBottom: 10,

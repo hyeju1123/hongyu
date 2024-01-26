@@ -1,9 +1,14 @@
-import React, {PropsWithChildren, useCallback} from 'react';
+import React, {
+  PropsWithChildren,
+  useCallback,
+  useMemo,
+  useState,
+  memo,
+} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import CategoryCard from './CategoryCard';
 
-import {lightTheme} from '../styles/colors';
 import styles from '../styles/module/CardWrapperStyle';
 
 import * as Icons from '../styles/svgIndex';
@@ -16,40 +21,48 @@ export type InfoType<T> = {
 };
 
 type CategoryCardWrapperProps<T> = PropsWithChildren<{
-  theme?: string;
   infos: InfoType<T>[];
   nav: (param: T) => void;
-  loadData?: (prevLength: number) => void;
 }>;
 
-function CategoryCardWrapper<T>({
-  nav,
-  theme = lightTheme.white,
-  infos,
-  loadData = () => {},
-}: CategoryCardWrapperProps<T>) {
+const LOAD_DATA_NUM = 15;
+
+function CategoryCardWrapper<T>({nav, infos}: CategoryCardWrapperProps<T>) {
+  const [items, setItems] = useState<{count: number; data: InfoType<T>[]}>({
+    count: 0,
+    data: [],
+  });
+  const infosLength = useMemo(() => infos.length, [infos.length]);
+
+  const onEndReached = useCallback(
+    (prevLen: number) => {
+      prevLen < infosLength &&
+        setItems(prev => ({
+          count: prev.count + LOAD_DATA_NUM,
+          data: infos.slice(0, prev.count + LOAD_DATA_NUM),
+        }));
+    },
+    [infos, infosLength],
+  );
+
   const renderItem = useCallback(
-    ({item: {navData, title, desc, icon}}: {item: InfoType<T>}) => (
-      <TouchableOpacity onPress={() => nav(navData)}>
-        <CategoryCard title={title} desc={desc} icon={icon} />
-      </TouchableOpacity>
-    ),
+    ({item: {navData, title, desc, icon}}: {item: InfoType<T>}) => {
+      return (
+        <TouchableOpacity onPress={() => nav(navData)}>
+          <CategoryCard title={title} desc={desc} icon={icon} />
+        </TouchableOpacity>
+      );
+    },
     [nav],
   );
 
   return (
-    <View
-      style={[
-        styles.cardWrapper,
-        {
-          backgroundColor: theme,
-        },
-      ]}>
+    <View style={styles.cardWrapper}>
       <FlashList
-        data={infos}
+        data={items.data}
         renderItem={renderItem}
         estimatedItemSize={90}
-        onEndReached={() => loadData(infos.length)}
+        onEndReached={() => onEndReached(items.count)}
         onEndReachedThreshold={0.8}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.flashlistContent}
@@ -58,4 +71,4 @@ function CategoryCardWrapper<T>({
   );
 }
 
-export default CategoryCardWrapper;
+export default memo(CategoryCardWrapper) as typeof CategoryCardWrapper;
