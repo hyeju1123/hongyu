@@ -1,5 +1,6 @@
 import React, {PropsWithChildren, useRef, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import {Text, View} from 'react-native';
+import {BaseButton} from 'react-native-gesture-handler';
 import Voca from '../model/Voca';
 import useQuiz from '../hooks/quiz';
 import useDidMountEffect from '../hooks/didMount';
@@ -8,6 +9,7 @@ import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/MatchingQuizGridStyle';
 
 const MARKED_DURATION = 250;
+const CORRECT_VERIFIED_VALUE = '  ';
 
 type MatchingQuizGridProps = PropsWithChildren<{
   words: Voca[];
@@ -35,7 +37,9 @@ function MatchingQuizGrid({
     setTimeout(() => {
       setCorrectPair([]);
       setWordList(prev =>
-        prev.map(value => (pair.includes(value) ? '  ' : value)),
+        prev.map(value =>
+          pair.includes(value) ? CORRECT_VERIFIED_VALUE : value,
+        ),
       );
       correctedNum.current === words.length && handleAllClear();
     }, MARKED_DURATION);
@@ -48,7 +52,7 @@ function MatchingQuizGrid({
     }, MARKED_DURATION);
   };
 
-  const checkMatching = (pair: string[]) => {
+  const checkAnswer = (pair: string[]) => {
     for (const {_id, word, meaning} of wordDict) {
       if ([word, meaning].every(item => pair.includes(item))) {
         correctedIds.push(_id);
@@ -64,7 +68,7 @@ function MatchingQuizGrid({
       return;
     }
 
-    const isMatched = checkMatching([pickedText, tempText]);
+    const isMatched = checkAnswer([pickedText, tempText]);
 
     isMatched
       ? indicateCorrect([pickedText, tempText])
@@ -93,15 +97,16 @@ function MatchingQuizGrid({
   return (
     <View style={styles.cardWrapper}>
       {wordList.map((value, idx) => (
-        <TouchableOpacity
-          activeOpacity={1.0}
-          delayLongPress={500}
-          disabled={value === '  '}
-          onPress={() => tryMatching(value)}
+        <BaseButton
           key={idx}
+          exclusive={false}
+          enabled={value !== CORRECT_VERIFIED_VALUE}
+          onPress={() => tryMatching(value)}
           style={[styles.card, {backgroundColor: setCardColor(value)}]}>
-          <Text style={styles.cardText}>{value}</Text>
-        </TouchableOpacity>
+          <View accessible accessibilityRole="button">
+            <Text style={styles.cardText}>{value}</Text>
+          </View>
+        </BaseButton>
       ))}
     </View>
   );
