@@ -14,6 +14,8 @@ export {default as LanternOff} from '../../svg/module/lantern-off.svg';
 export {default as LanternOn} from '../../svg/module/lantern-on.svg';
 export {default as Pencil} from '../../svg/module/pencil.svg';
 export {default as PencilH} from '../../svg/module/pencil_h.svg';
+export {default as Eraser} from '../../svg/module/eraser.svg';
+export {default as Sparkles} from '../../svg/module/sparkles.svg';
 
 // circle number svg
 export {default as Circle0} from '../../svg/number/circle-a.svg';
