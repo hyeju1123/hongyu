@@ -9,18 +9,26 @@ import QuizTypePage from '../quiz/QuizTypePage';
 import PickLevelPage from '../quiz/PickLevelPage';
 import PickCategoryPage from '../quiz/PickCategoryPage';
 import MatchingQuizPage from '../quiz/MatchingQuizPage';
-
-import {lightTheme} from '../styles/colors';
+import WritingQuizPage from '../quiz/WritingQuizPage';
 import QuizResultPage from '../quiz/QuizResultPage';
-import Voca from '../model/Voca';
 
-export type QuizStackParamList = {
+import Voca from '../model/Voca';
+import {lightTheme} from '../styles/colors';
+
+export type QuizServiceStackParamList = {
   QuizTypePage: undefined;
-  PickLevelPage: undefined;
-  PickCategoryPage: {level: number};
-  MatchingQuizPage: {level: number; categories: string[]};
+  PickLevelPage: {quizType: keyof QuizPageStackParamList};
+  PickCategoryPage: {level: number; quizType: keyof QuizPageStackParamList};
   QuizResultPage: {words: Voca[]; corrected: number[]};
 };
+
+export type QuizPageStackParamList = {
+  MatchingQuizPage: {level: number; categories: string[]};
+  WritingQuizPage: {level: number; categories: string[]};
+};
+
+export type QuizStackParamList = QuizServiceStackParamList &
+  QuizPageStackParamList;
 
 const Stack = createNativeStackNavigator<QuizStackParamList>();
 
@@ -62,6 +70,13 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
       <Stack.Screen
         name="MatchingQuizPage"
         component={MatchingQuizPage}
+        options={{
+          headerTitle: '',
+        }}
+      />
+      <Stack.Screen
+        name="WritingQuizPage"
+        component={WritingQuizPage}
         options={{
           headerTitle: '',
         }}

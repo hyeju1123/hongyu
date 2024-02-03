@@ -24,7 +24,7 @@ type PickCategoryPageProps = NativeStackScreenProps<
 function PickCategoryPage({
   navigation: {navigate},
   route: {
-    params: {level},
+    params: {level, quizType},
   },
 }: PickCategoryPageProps): JSX.Element {
   const {fireToast} = useToast();
@@ -62,7 +62,7 @@ function PickCategoryPage({
   }, []);
 
   const moveToQuizPage = () => {
-    navigate('MatchingQuizPage', {
+    navigate(quizType, {
       level,
       categories: selectedCategory,
     });

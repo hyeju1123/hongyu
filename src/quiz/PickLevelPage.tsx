@@ -14,7 +14,12 @@ type PickLevelPageProps = NativeStackScreenProps<
   'PickLevelPage'
 >;
 
-function PickLevelPage({navigation}: PickLevelPageProps): JSX.Element {
+function PickLevelPage({
+  navigation,
+  route: {
+    params: {quizType},
+  },
+}: PickLevelPageProps): JSX.Element {
   const {navigate} = navigation;
   const levels = [1, 2, 3, 4, 5, 6];
 
@@ -26,7 +31,7 @@ function PickLevelPage({navigation}: PickLevelPageProps): JSX.Element {
   }));
 
   const moveToCategory = (level: string) => {
-    navigate('PickCategoryPage', {level: Number(level)});
+    navigate('PickCategoryPage', {level: Number(level), quizType});
   };
 
   return (
