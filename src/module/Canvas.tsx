@@ -14,7 +14,7 @@ type SigningPathType = PathType[];
 
 export const STROKE_SIZE = 2.5;
 
-const Canvas = (): JSX.Element => {
+const Canvas = ({hanzi}: {hanzi: string}): JSX.Element => {
   const stroke = STROKE_SIZE;
   const color = lightTheme.black;
   const [paths, setPaths] = useState<SigningPathType>([]);
@@ -75,7 +75,13 @@ const Canvas = (): JSX.Element => {
         <View style={styles.backHanziWrapper}>
           <View style={[styles.auxiliaryLine, styles.horizonLine]} />
           <View style={[styles.auxiliaryLine, styles.verticalLine]} />
-          <Text style={styles.backHanzi}>发出</Text>
+          <Text
+            style={[
+              styles.backHanzi,
+              hanzi?.length > 3 ? styles.longLenHanzi : styles.shortLenHanzi,
+            ]}>
+            {hanzi}
+          </Text>
         </View>
         <Svg height={'100%'} width={'100%'}>
           {paths.map(({path, color: c, stroke: s}, i) => {

@@ -14,6 +14,8 @@ type Style = {
   canvas: ViewStyle;
   backHanziWrapper: ViewStyle;
   backHanzi: TextStyle;
+  shortLenHanzi: TextStyle;
+  longLenHanzi: TextStyle;
   buttonWrapper: ViewStyle;
   resetButton: ViewStyle;
   resetButtonText: TextStyle;
@@ -53,9 +55,14 @@ const commonPart: Style = {
     alignItems: 'center',
   },
   backHanzi: {
-    fontSize: 120,
     fontFamily: fonts.hanzi,
     color: lightTheme.ligthGray,
+  },
+  shortLenHanzi: {
+    fontSize: width * 0.3,
+  },
+  longLenHanzi: {
+    fontSize: width * 0.23,
   },
   buttonWrapper: {
     display: 'flex',

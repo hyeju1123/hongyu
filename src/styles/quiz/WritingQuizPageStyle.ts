@@ -6,7 +6,16 @@ import {fonts} from '../fonts';
 type Style = {
   container: ViewStyle;
   scrollViewContent: ViewStyle;
+  infoContainer: ViewStyle;
   infoWrapper: ViewStyle;
+  guideText: TextStyle;
+  dirRow: ViewStyle;
+  hanzi: TextStyle;
+  intonation: TextStyle;
+  meaning: TextStyle;
+  buttonWrapper: ViewStyle;
+  svgWrapper: ViewStyle;
+  horizonFlip: ViewStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -22,11 +31,62 @@ const commonPart: Style = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  infoWrapper: {
-    flex: 1,
+  infoContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    height: '40%',
     width: '100%',
-    borderWidth: 1,
-    borderColor: 'blue',
+    padding: 10,
+  },
+  infoWrapper: {
+    display: 'flex',
+    width: '100%',
+    alignItems: 'center',
+    bottom: 0,
+  },
+  guideText: {
+    fontFamily: fonts.hanzi,
+    fontSize: width * 0.045,
+    color: lightTheme.black,
+  },
+  dirRow: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 10,
+    marginBottom: 10,
+  },
+  hanzi: {
+    fontFamily: fonts.hanzi,
+    fontSize: 30,
+    color: lightTheme.black,
+  },
+  intonation: {
+    fontFamily: fonts.pinyin,
+    fontSize: width * 0.04,
+    color: lightTheme.red,
+  },
+  meaning: {
+    width: width * 0.6,
+    textAlign: 'center',
+    fontFamily: fonts.hanzi,
+    fontSize: width * 0.04,
+    color: lightTheme.black,
+  },
+  buttonWrapper: {
+    position: 'absolute',
+    width: '100%',
+    top: 0,
+    bottom: 0,
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  svgWrapper: {
+    margin: 5,
+  },
+  horizonFlip: {
+    transform: [{rotateY: '180deg'}],
   },
 };
 

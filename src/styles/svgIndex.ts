@@ -14,8 +14,6 @@ export {default as LanternOff} from '../../svg/module/lantern-off.svg';
 export {default as LanternOn} from '../../svg/module/lantern-on.svg';
 export {default as Pencil} from '../../svg/module/pencil.svg';
 export {default as PencilH} from '../../svg/module/pencil_h.svg';
-export {default as Eraser} from '../../svg/module/eraser.svg';
-export {default as Sparkles} from '../../svg/module/sparkles.svg';
 
 // circle number svg
 export {default as Circle0} from '../../svg/number/circle-a.svg';
@@ -37,3 +35,9 @@ export {default as Listening} from '../../svg/quiz/listening.svg';
 export {default as Matching} from '../../svg/quiz/matching.svg';
 export {default as Picking} from '../../svg/quiz/picking.svg';
 export {default as Writing} from '../../svg/quiz/writing.svg';
+export {default as Eraser} from '../../svg/quiz/eraser.svg';
+export {default as Sparkles} from '../../svg/quiz/sparkles.svg';
+export {default as Lock} from '../../svg/quiz/lock.svg';
+export {default as Unlock} from '../../svg/quiz/unlock.svg';
+export {default as QuestionSquare} from '../../svg/quiz/question-square.svg';
+export {default as Play} from '../../svg/quiz/play.svg';
