@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {ColorValue, Text, TouchableOpacity, View} from 'react-native';
 import Svg, {Path} from 'react-native-svg';
 import {lightTheme} from '../styles/colors';
@@ -10,11 +10,17 @@ type PathType = {
   color: string;
   stroke: number;
 };
-type SigningPathType = PathType[];
+export type SigningPathType = PathType[];
 
 export const STROKE_SIZE = 2.5;
 
-const Canvas = ({hanzi}: {hanzi: string}): JSX.Element => {
+type CanvasProp = {
+  index: number;
+  writings: SigningPathType[];
+  writingRef: React.MutableRefObject<SigningPathType>;
+};
+
+const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
   const stroke = STROKE_SIZE;
   const color = lightTheme.black;
   const [paths, setPaths] = useState<SigningPathType>([]);
@@ -29,18 +35,29 @@ const Canvas = ({hanzi}: {hanzi: string}): JSX.Element => {
     [color, stroke],
   );
 
-  const updatePath = useCallback((x: number, y: number) => {
-    setPaths(prev => {
-      const currentPath = prev[prev.length - 1];
-      currentPath && currentPath.path.push(`L${x} ${y}`);
+  const updatePath = useCallback(
+    (x: number, y: number) => {
+      setPaths(prev => {
+        const currentPath = prev[prev.length - 1];
+        currentPath && currentPath.path.push(`L${x} ${y}`);
 
-      return currentPath ? [...prev.slice(0, -1), currentPath] : prev;
-    });
-  }, []);
+        const updatedValue = currentPath
+          ? [...prev.slice(0, -1), currentPath]
+          : prev;
+        writingRef.current = updatedValue;
+        return updatedValue;
+      });
+    },
+    [writingRef],
+  );
 
   const deleteOnePath = useCallback(() => {
     setPaths(prev => prev.slice(0, -1));
   }, []);
+
+  useEffect(() => {
+    setPaths(writings[index]);
+  }, [writings, index]);
 
   return (
     <View style={styles.canvasBackground}>
@@ -63,28 +80,23 @@ const Canvas = ({hanzi}: {hanzi: string}): JSX.Element => {
         onStartShouldSetResponder={() => true}
         onMoveShouldSetResponder={() => true}
         onResponderStart={e => {
-          e.stopPropagation();
-          const {locationX, locationY} = e.nativeEvent;
-          setNewPath(locationX, locationY);
+          if (e.nativeEvent.touches.length === 1) {
+            const {locationX, locationY} = e.nativeEvent;
+            setNewPath(locationX, locationY);
+          }
         }}
         onResponderMove={e => {
-          e.stopPropagation();
-          const {locationX, locationY} = e.nativeEvent;
-          updatePath(locationX, locationY);
+          if (e.nativeEvent.touches.length === 1) {
+            const {locationX, locationY} = e.nativeEvent;
+            updatePath(locationX, locationY);
+          }
         }}>
         <View style={styles.backHanziWrapper}>
           <View style={[styles.auxiliaryLine, styles.horizonLine]} />
           <View style={[styles.auxiliaryLine, styles.verticalLine]} />
-          <Text
-            style={[
-              styles.backHanzi,
-              hanzi?.length > 3 ? styles.longLenHanzi : styles.shortLenHanzi,
-            ]}>
-            {hanzi}
-          </Text>
         </View>
         <Svg height={'100%'} width={'100%'}>
-          {paths.map(({path, color: c, stroke: s}, i) => {
+          {paths?.map(({path, color: c, stroke: s}, i) => {
             return (
               <Path
                 key={i}

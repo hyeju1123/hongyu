@@ -40,7 +40,7 @@ function QuizTypePage({navigation}: QuizTypePageProps): JSX.Element {
     },
     {
       title: '필기 시험',
-      desc: '주어진 뜻을 한자로 적어보세요.',
+      desc: '뜻에 맞는 한자를 적은 후\n자물쇠 버튼을 눌러 정답을 확인해보세요.',
       icon: 'Writing',
       navData: 'WritingQuizPage',
     },

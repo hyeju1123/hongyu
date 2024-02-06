@@ -1,22 +1,23 @@
-import React, {FC, useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-import {ScrollView, View, Text, TouchableOpacity} from 'react-native';
-import Canvas from '../module/Canvas';
-import SvgIcon from '../module/SvgIcon';
-
+import {ScrollView, View, Text} from 'react-native';
+import Canvas, {SigningPathType} from '../module/Canvas';
+import WritingPreviewInfo from './WritingPreviewInfo';
 import Voca from '../model/Voca';
 import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
 import {ToastIcon} from '../recoil/ToastState';
 import {useVoca} from '../providers/VocaProvider';
 
-import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/WritingQuizPageStyle';
+import SvgIcon from '../module/SvgIcon';
+import {TouchableOpacity} from 'react-native-gesture-handler';
+import {lightTheme} from '../styles/colors';
 
-enum Dir {
+export enum Dir {
   FORWARD = 'forward',
   BACKWARD = 'backward',
 }
@@ -25,66 +26,6 @@ type WritingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
   'WritingQuizPage'
 >;
-
-type WordInformationProps = {
-  data: Voca;
-  showWord: boolean;
-  handleShowWord: () => void;
-  handlePageMove: (dir: Dir) => void;
-};
-
-const WordInformation: FC<WordInformationProps> = ({
-  data,
-  showWord,
-  handleShowWord,
-  handlePageMove,
-}) => {
-  const {word, intonation, meaning} = data;
-  return (
-    <View style={[styles.infoWrapper]}>
-      <View style={[styles.dirRow, styles.buttonWrapper]}>
-        <TouchableOpacity
-          style={[styles.svgWrapper, styles.horizonFlip]}
-          onPress={() => handlePageMove(Dir.BACKWARD)}>
-          <SvgIcon name="Play" fill={lightTheme.black} size={25} />
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={styles.svgWrapper}
-          onPress={() => handlePageMove(Dir.FORWARD)}>
-          <SvgIcon name="Play" fill={lightTheme.black} size={25} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.dirRow}>
-        {showWord ? (
-          <>
-            <Text style={styles.hanzi}>{word}</Text>
-            <TouchableOpacity
-              style={styles.svgWrapper}
-              onPress={handleShowWord}>
-              <SvgIcon name="Unlock" fill={lightTheme.black} size={25} />
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <SvgIcon name={'QuestionSquare'} fill={lightTheme.red} size={30} />
-            <TouchableOpacity
-              style={styles.svgWrapper}
-              onPress={handleShowWord}>
-              <SvgIcon name="Lock" fill={lightTheme.black} size={25} />
-            </TouchableOpacity>
-          </>
-        )}
-      </View>
-      <Text style={styles.intonation}>{intonation}</Text>
-      <Text
-        textBreakStrategy="balanced"
-        lineBreakStrategyIOS="hangul-word"
-        style={styles.meaning}>
-        {meaning}
-      </Text>
-    </View>
-  );
-};
 
 function WritingQuizPage({
   navigation: {setOptions},
@@ -96,9 +37,13 @@ function WritingQuizPage({
   const {shuffleArray} = useUtil();
   const {getVocasByMultipleCategory} = useVoca();
 
-  const [words, setWords] = useState<Voca[]>([]);
+  const writingRef = useRef<SigningPathType>([]);
   const [index, setIndex] = useState(0);
-  const [showWord, setShowWord] = useState(true);
+  const [words, setWords] = useState<Voca[]>([]);
+  const [showWord, setShowWord] = useState(false);
+  const [keepVisible, setKeepVisible] = useState(false);
+  const [scoreCard, setScoreCard] = useState<boolean[]>();
+  const [writings, setWritings] = useState<SigningPathType[]>([]);
   const totalLen = useMemo(() => words.length, [words.length]);
 
   const handlePageMove = (dir: Dir) => {
@@ -118,6 +63,13 @@ function WritingQuizPage({
         showToast('마지막 페이지입니다');
       } else {
         setIndex(prev => prev + 1);
+
+        const newWritings = writings.map((v, i) =>
+          i === index ? writingRef.current : v,
+        );
+        setWritings(newWritings);
+
+        writingRef.current = writings[index + 1];
       }
     }
 
@@ -126,12 +78,23 @@ function WritingQuizPage({
         showToast('첫번째 페이지입니다');
       } else {
         setIndex(prev => prev - 1);
+
+        const newWritings = writings.map((v, i) =>
+          i === index ? writingRef.current : v,
+        );
+        setWritings(newWritings);
+        writingRef.current = writings[index - 1];
       }
     }
+
+    !keepVisible && setShowWord(false);
   };
 
   useEffect(() => {
-    setWords(shuffleArray(getVocasByMultipleCategory(level, categories)));
+    const data = shuffleArray(getVocasByMultipleCategory(level, categories));
+    setWords(data);
+    setScoreCard(Array.from({length: data.length}, () => false));
+    setWritings(Array.from({length: data.length}, () => []));
   }, [shuffleArray, getVocasByMultipleCategory, level, categories]);
 
   useEffect(() => {
@@ -142,9 +105,58 @@ function WritingQuizPage({
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.infoContainer}>
-          <Text style={styles.guideText}>주어진 뜻에 맞는 한자를 써보세요</Text>
+          <View style={styles.serviceButtonWrapper}>
+            <TouchableOpacity
+              style={styles.serviceButtonWrapper}
+              onPress={() =>
+                setScoreCard(prev =>
+                  prev?.map((v, i) => (i === index ? !v : v)),
+                )
+              }>
+              <SvgIcon name={'Circle'} fill={lightTheme.green} size={20} />
+              {scoreCard?.[index] ? (
+                <SvgIcon name={'Checkbox'} fill={lightTheme.gray} size={14} />
+              ) : (
+                <SvgIcon name={'Square'} fill={lightTheme.gray} size={14} />
+              )}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.serviceButtonWrapper}
+              onPress={() =>
+                setScoreCard(prev =>
+                  prev?.map((v, i) => (i === index ? !v : v)),
+                )
+              }>
+              <SvgIcon name={'Cross'} fill={lightTheme.warning} size={20} />
+              {scoreCard?.[index] ? (
+                <SvgIcon name={'Square'} fill={lightTheme.gray} size={14} />
+              ) : (
+                <SvgIcon name={'Checkbox'} fill={lightTheme.gray} size={14} />
+              )}
+            </TouchableOpacity>
+          </View>
+          {showWord && (
+            <View style={styles.serviceButtonWrapper}>
+              <Text style={styles.guideText}>
+                다음 페이지에서도 한자가 보이도록 유지
+              </Text>
+              {keepVisible ? (
+                <TouchableOpacity
+                  style={styles.svgWrapper}
+                  onPress={() => setKeepVisible(false)}>
+                  <SvgIcon name={'Checkbox'} fill={lightTheme.gray} size={14} />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.svgWrapper}
+                  onPress={() => setKeepVisible(true)}>
+                  <SvgIcon name={'Square'} fill={lightTheme.gray} size={14} />
+                </TouchableOpacity>
+              )}
+            </View>
+          )}
           {words.length > 0 && (
-            <WordInformation
+            <WritingPreviewInfo
               data={words[index]}
               showWord={showWord}
               handleShowWord={() => setShowWord(prev => !prev)}
@@ -152,7 +164,7 @@ function WritingQuizPage({
             />
           )}
         </View>
-        <Canvas hanzi={showWord ? words[index]?.word : ''} />
+        <Canvas index={index} writings={writings} writingRef={writingRef} />
       </ScrollView>
     </SafeAreaView>
   );

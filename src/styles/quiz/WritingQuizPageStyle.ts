@@ -8,6 +8,7 @@ type Style = {
   scrollViewContent: ViewStyle;
   infoContainer: ViewStyle;
   infoWrapper: ViewStyle;
+  serviceButtonWrapper: ViewStyle;
   guideText: TextStyle;
   dirRow: ViewStyle;
   hanzi: TextStyle;
@@ -45,17 +46,23 @@ const commonPart: Style = {
     alignItems: 'center',
     bottom: 0,
   },
+  serviceButtonWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
+  },
   guideText: {
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.045,
+    fontSize: width * 0.035,
     color: lightTheme.black,
   },
   dirRow: {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
-    marginBottom: 10,
+    minHeight: '25%',
   },
   hanzi: {
     fontFamily: fonts.hanzi,
@@ -80,7 +87,9 @@ const commonPart: Style = {
     top: 0,
     bottom: 0,
     display: 'flex',
+    flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center',
   },
   svgWrapper: {
     margin: 5,
