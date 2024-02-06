@@ -22,7 +22,7 @@ function QuizResultCard({
   isCorrected: boolean;
 }): JSX.Element {
   const {_id, word, bookmarked, level, meaning, intonation} = voca;
-  const {green, red} = lightTheme;
+  const {green, warning} = lightTheme;
   const {fireToast} = useToast();
   const {updateBookmark} = useVoca();
   const [book, setBook] = useState(bookmarked);
@@ -43,7 +43,7 @@ function QuizResultCard({
         <View>
           <SvgIcon
             name={isCorrected ? 'Circle' : 'Cross'}
-            fill={isCorrected ? green : red}
+            fill={isCorrected ? green : warning}
             size={18}
           />
           <TouchableOpacity onPress={handleBookmark}>

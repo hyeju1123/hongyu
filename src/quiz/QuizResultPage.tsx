@@ -3,18 +3,18 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {HeaderBackButton} from '@react-navigation/elements';
-import {BackHandler, Text, TouchableOpacity, View} from 'react-native';
+import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import Voca from '../model/Voca';
 import {FlashList} from '@shopify/flash-list';
+import {BackHandler, Text, TouchableOpacity, View} from 'react-native';
 import SvgIcon from '../module/SvgIcon';
 import QuizResultCard from '../module/QuizResultCard';
-import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/QuizResultPageStyle';
 import cardWrapperStyles from '../styles/module/CardWrapperStyle';
-import Voca from '../model/Voca';
 
 enum resultType {
-  ALL = 'all',
   CORRECT = 'correct',
   WRONG = 'wrong',
 }
@@ -29,6 +29,11 @@ type ItemsProps = {
   data: Voca[];
 };
 
+type DataProps = {
+  correct: Voca[];
+  wrong: Voca[];
+};
+
 const LOAD_DATA_NUM = 15;
 
 function QuizResultPage({
@@ -37,85 +42,64 @@ function QuizResultPage({
     params: {words, corrected},
   },
 }: QuizResultPageProps) {
-  const {green, red, white} = lightTheme;
-  const {ALL, CORRECT, WRONG} = resultType;
+  const {green, warning, white} = lightTheme;
+  const {CORRECT, WRONG} = resultType;
 
-  const correctWords = useMemo(
-    () => words.filter(({_id}) => corrected.includes(_id)),
-    [words, corrected],
-  );
-  const wrongWords = useMemo(
-    () => words.filter(({_id}) => !corrected.includes(_id)),
-    [words, corrected],
-  );
-  const [nav, setNav] = useState<resultType>(ALL);
+  const [nav, setNav] = useState<resultType>(CORRECT);
+  const [data, setData] = useState<DataProps>({
+    correct: [],
+    wrong: [],
+  });
   const [items, setItems] = useState<ItemsProps>({
     count: 0,
     data: [],
   });
+  const lenInfo = useMemo(() => {
+    const {correct, wrong} = data;
+    return {correctLen: correct.length, wrongLen: wrong.length};
+  }, [data]);
 
   const handleNav = useCallback(
     (type: resultType) => {
-      let fullData: Voca[] = words;
-
-      switch (type) {
-        case CORRECT:
-          fullData = correctWords;
-          break;
-        case WRONG:
-          fullData = wrongWords;
-          break;
-      }
-
       setNav(type);
-      setItems(prev => ({
-        ...prev,
-        count: prev.count + LOAD_DATA_NUM,
-        data: fullData.slice(0, prev.count + LOAD_DATA_NUM),
+      setItems(() => ({
+        count: LOAD_DATA_NUM,
+        data: data[type].slice(0, LOAD_DATA_NUM),
       }));
     },
-    [CORRECT, WRONG, correctWords, wrongWords, words],
+    [data],
   );
 
-  const onEndReached = useCallback(() => {
-    let fullData: Voca[] = words;
-
-    switch (nav) {
-      case CORRECT:
-        fullData = correctWords;
-        break;
-      case WRONG:
-        fullData = wrongWords;
-        break;
-    }
-
-    setItems(prev => {
-      if (prev.count < fullData.length) {
-        return {
-          ...prev,
+  const onEndReached = useCallback(
+    (prevLen: number) => {
+      const {correctLen, wrongLen} = lenInfo;
+      const len = nav === CORRECT ? correctLen : wrongLen;
+      prevLen < len &&
+        setItems(prev => ({
           count: prev.count + LOAD_DATA_NUM,
-          data: fullData.slice(0, prev.count + LOAD_DATA_NUM),
-        };
-      } else {
-        return prev;
-      }
-    });
-  }, [CORRECT, WRONG, correctWords, wrongWords, words, nav]);
+          data: data[nav].slice(0, prev.count + LOAD_DATA_NUM),
+        }));
+    },
+    [data, nav, CORRECT, lenInfo],
+  );
 
   const renderItem = useCallback(
     ({item}: {item: Voca}) => {
-      let isCorrected = null;
-      if (nav === ALL) {
-        isCorrected = corrected.includes(item._id);
-      } else if (nav === WRONG) {
-        isCorrected = false;
-      } else {
-        isCorrected = true;
-      }
-      return <QuizResultCard voca={item} isCorrected={isCorrected} />;
+      return (
+        <QuizResultCard
+          voca={item}
+          isCorrected={nav === CORRECT ? true : false}
+        />
+      );
     },
-    [nav, ALL, WRONG, corrected],
+    [nav, CORRECT],
   );
+
+  useEffect(() => {
+    const correct = words.filter(({_id}) => corrected.includes(_id));
+    const wrong = words.filter(({_id}) => !corrected.includes(_id));
+    setData({correct, wrong});
+  }, [words, corrected]);
 
   useEffect(() => {
     const handleBackButton = (props: HeaderBackButtonProps) => (
@@ -145,15 +129,6 @@ function QuizResultPage({
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <View style={[styles.navTab, styles.dirRow]}>
         <TouchableOpacity
-          onPress={() => handleNav(ALL)}
-          style={[
-            styles.dirRow,
-            styles.navButton,
-            nav === ALL && styles.bottomLine,
-          ]}>
-          <Text style={styles.text}>전체 {words.length}</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={() => handleNav(CORRECT)}
           style={[
             styles.dirRow,
@@ -162,7 +137,7 @@ function QuizResultPage({
           ]}>
           <SvgIcon name="Circle" size={13} fill={green} />
           <Text style={[styles.text, {color: green}]}>
-            정답 {correctWords.length}
+            정답 {lenInfo.correctLen}
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -172,9 +147,9 @@ function QuizResultPage({
             styles.navButton,
             nav === WRONG && styles.bottomLine,
           ]}>
-          <SvgIcon name="Cross" size={13} fill={red} />
-          <Text style={[styles.text, {color: red}]}>
-            오답 {wrongWords.length}
+          <SvgIcon name="Cross" size={13} fill={warning} />
+          <Text style={[styles.text, {color: warning}]}>
+            오답 {lenInfo.wrongLen}
           </Text>
         </TouchableOpacity>
       </View>
@@ -183,7 +158,7 @@ function QuizResultPage({
           data={items.data}
           estimatedItemSize={90}
           renderItem={renderItem}
-          onEndReached={onEndReached}
+          onEndReached={() => onEndReached(items.count)}
           onEndReachedThreshold={0.8}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.flatlistContent}
