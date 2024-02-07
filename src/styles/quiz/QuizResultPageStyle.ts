@@ -11,6 +11,8 @@ type Style = {
   bottomLine: ViewStyle;
   flatlistContent: ViewStyle;
   text: TextStyle;
+  retryButton: ViewStyle;
+  retryText: TextStyle;
 };
 
 const commonPart: Style = {
@@ -42,6 +44,19 @@ const commonPart: Style = {
     fontFamily: fonts.pinyin,
     fontSize: 13,
     color: lightTheme.black,
+  },
+  retryButton: {
+    position: 'absolute',
+    backgroundColor: lightTheme.transWhite,
+    borderWidth: 1,
+    borderColor: lightTheme.warning,
+    padding: 5,
+    borderRadius: 8,
+    bottom: 30,
+    left: 25,
+  },
+  retryText: {
+    color: lightTheme.warning,
   },
 };
 

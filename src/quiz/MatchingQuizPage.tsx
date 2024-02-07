@@ -5,16 +5,16 @@ import {ScrollView, Text, View, BackHandler} from 'react-native';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {StackActions} from '@react-navigation/native';
 import MatchingQuizGrid from '../module/MatchingQuizGrid';
 import Timer from '../module/Timer';
 import SvgIcon from '../module/SvgIcon';
 
-import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
-import {useVoca} from '../providers/VocaProvider';
 
 import styles from '../styles/quiz/MatchingQuizPageStyle';
 import {ToastIcon} from '../recoil/ToastState';
+import Voca from '../model/Voca';
 
 type MatchingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -25,20 +25,15 @@ const TIMEOUT = 10000;
 const PAGE_TRANSITION_DELAY = 1000;
 
 function MatchingQuizPage({
-  navigation: {navigate, goBack, setOptions},
+  navigation: {goBack, setOptions, dispatch},
   route: {
-    params: {level, categories},
+    params: {wordData},
   },
 }: MatchingQuizPageProps): JSX.Element {
   const {fireToast} = useToast();
-  const {shuffleArray} = useUtil();
 
   const correctedIds: number[] = useMemo(() => [], []);
-  const {getVocasByMultipleCategory} = useVoca();
-
-  const [words] = useState(
-    shuffleArray(getVocasByMultipleCategory(level, categories)),
-  );
+  const [words, setWords] = useState<Voca[]>([]);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [notifyQuizEnd, setNotifyQuizEnd] = useState({
@@ -46,16 +41,19 @@ function MatchingQuizPage({
     result: '',
   });
   const backEvent = useRef(0);
-  const pageLength = useRef(Math.ceil(words.length / 5)).current;
+  const pageLength = useMemo(() => Math.ceil(words.length / 5), [words.length]);
   const currentPageWords = words.slice(5 * (currentPage - 1), 5 * currentPage);
 
   const handleTimeover = useCallback(() => {
     const timeout = setTimeout(() => {
       if (currentPage === pageLength) {
-        navigate('QuizResultPage', {
-          words: words,
-          corrected: correctedIds,
-        });
+        dispatch(
+          StackActions.replace('QuizResultPage', {
+            words,
+            corrected: correctedIds,
+            quizType: 'MatchingQuizPage',
+          }),
+        );
       } else {
         setNotifyQuizEnd({state: true, result: 'TIMEOVER'});
         setTimeout(() => {
@@ -66,7 +64,7 @@ function MatchingQuizPage({
     }, TIMEOUT);
 
     timeoutId.current = timeout;
-  }, [currentPage, pageLength, words, navigate, correctedIds]);
+  }, [currentPage, pageLength, words, dispatch, correctedIds]);
 
   const handleAllClear = () => {
     timeoutId.current !== null && clearTimeout(timeoutId.current);
@@ -74,10 +72,13 @@ function MatchingQuizPage({
 
     setTimeout(() => {
       if (currentPage === pageLength) {
-        navigate('QuizResultPage', {
-          words: words,
-          corrected: correctedIds,
-        });
+        dispatch(
+          StackActions.replace('QuizResultPage', {
+            words,
+            corrected: correctedIds,
+            quizType: 'MatchingQuizPage',
+          }),
+        );
       } else {
         setCurrentPage(prev => prev + 1);
         setNotifyQuizEnd(prev => ({...prev, state: false}));
@@ -121,12 +122,13 @@ function MatchingQuizPage({
       backAction,
     );
 
+    setWords(wordData);
     setOptions({
       headerLeft: handleBackButton,
     });
 
     return () => handleHardwareBack.remove();
-  }, [fireToast, setOptions, goBack]);
+  }, [fireToast, setOptions, goBack, wordData]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>

@@ -6,6 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import {useVoca} from '../providers/VocaProvider';
 
+import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
 import * as Icons from '../styles/svgIndex';
 import SvgIcon from '../module/SvgIcon';
@@ -28,7 +29,8 @@ function PickCategoryPage({
   },
 }: PickCategoryPageProps): JSX.Element {
   const {fireToast} = useToast();
-  const {countVocaByCategory} = useVoca();
+  const {shuffleArray} = useUtil();
+  const {countVocaByCategory, getVocasByMultipleCategory} = useVoca();
   const filteredTheme = useMemo(
     () => countVocaByCategory(level),
     [countVocaByCategory, level],
@@ -62,10 +64,10 @@ function PickCategoryPage({
   }, []);
 
   const moveToQuizPage = () => {
-    navigate(quizType, {
-      level,
-      categories: selectedCategory,
-    });
+    const wordData = shuffleArray(
+      getVocasByMultipleCategory(level, selectedCategory),
+    );
+    navigate(quizType, {wordData});
   };
 
   useEffect(() => {

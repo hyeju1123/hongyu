@@ -19,12 +19,16 @@ export type QuizServiceStackParamList = {
   QuizTypePage: undefined;
   PickLevelPage: {quizType: keyof QuizPageStackParamList};
   PickCategoryPage: {level: number; quizType: keyof QuizPageStackParamList};
-  QuizResultPage: {words: Voca[]; corrected: number[]};
+  QuizResultPage: {
+    words: Voca[];
+    corrected: number[];
+    quizType: keyof QuizPageStackParamList;
+  };
 };
 
 export type QuizPageStackParamList = {
-  MatchingQuizPage: {level: number; categories: string[]};
-  WritingQuizPage: {level: number; categories: string[]};
+  MatchingQuizPage: {wordData: Voca[]};
+  WritingQuizPage: {wordData: Voca[]};
 };
 
 export type QuizStackParamList = QuizServiceStackParamList &

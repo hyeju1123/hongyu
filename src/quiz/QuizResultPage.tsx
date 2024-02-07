@@ -1,15 +1,16 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {StackActions} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {HeaderBackButton} from '@react-navigation/elements';
-import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
 import Voca from '../model/Voca';
 import {FlashList} from '@shopify/flash-list';
-import {BackHandler, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import SvgIcon from '../module/SvgIcon';
 import QuizResultCard from '../module/QuizResultCard';
 
+import useToast from '../hooks/toast';
+import {ToastIcon} from '../recoil/ToastState';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/QuizResultPageStyle';
 import cardWrapperStyles from '../styles/module/CardWrapperStyle';
@@ -37,13 +38,15 @@ type DataProps = {
 const LOAD_DATA_NUM = 15;
 
 function QuizResultPage({
-  navigation: {setOptions, pop},
+  navigation: {dispatch},
   route: {
-    params: {words, corrected},
+    params: {words, corrected, quizType},
   },
 }: QuizResultPageProps) {
   const {green, warning, white} = lightTheme;
   const {CORRECT, WRONG} = resultType;
+
+  const {fireToast} = useToast();
 
   const [nav, setNav] = useState<resultType>(CORRECT);
   const [data, setData] = useState<DataProps>({
@@ -95,35 +98,28 @@ function QuizResultPage({
     [nav, CORRECT],
   );
 
+  const retryWrongs = useCallback(() => {
+    const {wrong} = data;
+    if (wrong.length === 0) {
+      fireToast({
+        text: '오답인 단어가 없어요!',
+        icon: ToastIcon.AbNormal,
+        remove: true,
+      });
+      return;
+    }
+    dispatch(
+      StackActions.replace(quizType, {
+        wordData: wrong,
+      }),
+    );
+  }, [dispatch, data, fireToast, quizType]);
+
   useEffect(() => {
     const correct = words.filter(({_id}) => corrected.includes(_id));
     const wrong = words.filter(({_id}) => !corrected.includes(_id));
     setData({correct, wrong});
   }, [words, corrected]);
-
-  useEffect(() => {
-    const handleBackButton = (props: HeaderBackButtonProps) => (
-      <HeaderBackButton
-        {...props}
-        onPress={() => {
-          pop(2);
-        }}
-      />
-    );
-
-    const handleHardwareBack = BackHandler.addEventListener(
-      'hardwareBackPress',
-      () => {
-        pop(2);
-        return true;
-      },
-    );
-    setOptions({
-      headerLeft: handleBackButton,
-    });
-
-    return () => handleHardwareBack.remove();
-  }, [setOptions, pop]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -164,6 +160,9 @@ function QuizResultPage({
           contentContainerStyle={styles.flatlistContent}
         />
       </View>
+      <TouchableOpacity style={styles.retryButton} onPress={retryWrongs}>
+        <Text style={[styles.text, styles.retryText]}>오답 다시 하기</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }

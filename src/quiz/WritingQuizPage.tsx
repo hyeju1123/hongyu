@@ -7,16 +7,16 @@ import {ScrollView, View, Text} from 'react-native';
 import Canvas, {SigningPathType} from '../module/Canvas';
 import WritingPreviewInfo from './WritingPreviewInfo';
 import Voca from '../model/Voca';
-import useUtil from '../hooks/util';
+
 import useToast from '../hooks/toast';
 import {ToastIcon} from '../recoil/ToastState';
-import {useVoca} from '../providers/VocaProvider';
 
 import * as Icons from '../styles/svgIndex';
 import styles from '../styles/quiz/WritingQuizPageStyle';
 import SvgIcon from '../module/SvgIcon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {lightTheme} from '../styles/colors';
+import {StackActions} from '@react-navigation/native';
 
 export enum Dir {
   FORWARD = 'forward',
@@ -66,14 +66,12 @@ const ScoreButton = ({
 };
 
 function WritingQuizPage({
-  navigation: {setOptions, navigate},
+  navigation: {setOptions, dispatch},
   route: {
-    params: {level, categories},
+    params: {wordData},
   },
 }: WritingQuizPageProps): JSX.Element {
   const {fireToast} = useToast();
-  const {shuffleArray} = useUtil();
-  const {getVocasByMultipleCategory} = useVoca();
 
   const writingRef = useRef<SigningPathType>([]);
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
@@ -138,14 +136,13 @@ function WritingQuizPage({
   };
 
   useEffect(() => {
-    const data = shuffleArray(getVocasByMultipleCategory(level, categories));
-    setWords(data);
-    setScoreCard(Array.from({length: data.length}, () => false));
+    setWords(wordData);
+    setScoreCard(Array.from({length: wordData.length}, () => false));
     setPageInfo(prev => ({
       ...prev,
-      writings: Array.from({length: data.length}, () => []),
+      writings: Array.from({length: wordData.length}, () => []),
     }));
-  }, [shuffleArray, getVocasByMultipleCategory, level, categories]);
+  }, [wordData]);
 
   useEffect(() => {
     setOptions({headerTitle: index + 1 + '/' + totalLen});
@@ -158,7 +155,13 @@ function WritingQuizPage({
           ?.map((v, i) => (v ? words?.[i]._id : -1))
           .filter(v => v !== -1) || [];
 
-      navigate('QuizResultPage', {words, corrected});
+      dispatch(
+        StackActions.replace('QuizResultPage', {
+          words,
+          corrected,
+          quizType: 'WritingQuizPage',
+        }),
+      );
     };
 
     const moveResultPage = () => (
@@ -168,7 +171,7 @@ function WritingQuizPage({
     );
 
     setOptions({headerRight: moveResultPage});
-  }, [setOptions, navigate, scoreCard, words]);
+  }, [setOptions, scoreCard, words, dispatch]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
