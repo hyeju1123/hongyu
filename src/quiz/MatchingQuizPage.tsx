@@ -14,7 +14,7 @@ import useToast from '../hooks/toast';
 
 import styles from '../styles/quiz/MatchingQuizPageStyle';
 import {ToastIcon} from '../recoil/ToastState';
-import Voca from '../model/Voca';
+import {Word} from '../recoil/WordListState';
 
 type MatchingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -33,7 +33,7 @@ function MatchingQuizPage({
   const {fireToast} = useToast();
 
   const correctedIds: number[] = useMemo(() => [], []);
-  const [words, setWords] = useState<Voca[]>([]);
+  const [words, setWords] = useState<Word[]>([]);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [notifyQuizEnd, setNotifyQuizEnd] = useState({
@@ -43,6 +43,8 @@ function MatchingQuizPage({
   const backEvent = useRef(0);
   const pageLength = useMemo(() => Math.ceil(words.length / 5), [words.length]);
   const currentPageWords = words.slice(5 * (currentPage - 1), 5 * currentPage);
+
+  console.log('render');
 
   const handleTimeover = useCallback(() => {
     const timeout = setTimeout(() => {

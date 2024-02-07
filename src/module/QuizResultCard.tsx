@@ -1,41 +1,27 @@
-import React, {memo, useState} from 'react';
-import {Text, TouchableOpacity, View} from 'react-native';
+import React, {memo} from 'react';
+import {Text, View} from 'react-native';
 import SvgIcon from './SvgIcon';
-import Voca from '../model/Voca';
 
 import Card from './Card';
 import SoundButton from './SoundButton';
 import WordCardContent from './WordCardContent';
 
-import useToast from '../hooks/toast';
-import {useVoca} from '../providers/VocaProvider';
-import {ToastIcon} from '../recoil/ToastState';
-
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/module/WordCardStyle';
+import {useRecoilValue} from 'recoil';
+import {vocaState} from '../recoil/WordListState';
+import BookmarkButton from './BookmarkButton';
 
 function QuizResultCard({
-  voca,
+  id,
   isCorrected,
 }: {
-  voca: Voca;
+  id: number;
   isCorrected: boolean;
 }): JSX.Element {
-  const {_id, word, bookmarked, level, meaning, intonation} = voca;
+  const vocaItem = useRecoilValue(vocaState(id));
+  const {_id, word, bookmarked, level, meaning, intonation} = vocaItem;
   const {green, warning} = lightTheme;
-  const {fireToast} = useToast();
-  const {updateBookmark} = useVoca();
-  const [book, setBook] = useState(bookmarked);
-
-  const handleBookmark = () => {
-    updateBookmark(_id);
-    setBook(prev => !prev);
-    fireToast({
-      text: `'내 단어장'에 '${word}'를 ${book ? '삭제' : '저장'}했습니다.`,
-      icon: ToastIcon.Normal,
-      remove: true,
-    });
-  };
 
   return (
     <Card key={_id} underdressing={false}>
@@ -46,9 +32,12 @@ function QuizResultCard({
             fill={isCorrected ? green : warning}
             size={18}
           />
-          <TouchableOpacity onPress={handleBookmark}>
-            <SvgIcon name={book ? 'LanternOn' : 'LanternOff'} size={18} />
-          </TouchableOpacity>
+          <BookmarkButton
+            id={_id}
+            word={word}
+            bookmarked={bookmarked}
+            isBusu={false}
+          />
         </View>
         <SoundButton level={level} word={word} />
       </View>

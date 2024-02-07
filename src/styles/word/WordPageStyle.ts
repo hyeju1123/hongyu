@@ -5,6 +5,7 @@ import {DisplaySize, getDisplaySize} from '../screen';
 type Style = {
   container: ViewStyle;
   flashlistContent: ViewStyle;
+  modalBack: ViewStyle;
 };
 
 export const commonPart: Style = {
@@ -15,6 +16,12 @@ export const commonPart: Style = {
   flashlistContent: {
     paddingHorizontal: 20,
     paddingBottom: 10,
+  },
+  modalBack: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 10,
   },
 };
 

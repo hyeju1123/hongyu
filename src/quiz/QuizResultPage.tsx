@@ -3,7 +3,6 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {StackActions} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import Voca from '../model/Voca';
 import {FlashList} from '@shopify/flash-list';
 import {Text, TouchableOpacity, View} from 'react-native';
 import SvgIcon from '../module/SvgIcon';
@@ -14,6 +13,7 @@ import {ToastIcon} from '../recoil/ToastState';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/QuizResultPageStyle';
 import cardWrapperStyles from '../styles/module/CardWrapperStyle';
+import {Word} from '../recoil/WordListState';
 
 enum resultType {
   CORRECT = 'correct',
@@ -27,12 +27,12 @@ type QuizResultPageProps = NativeStackScreenProps<
 
 type ItemsProps = {
   count: number;
-  data: Voca[];
+  data: Word[];
 };
 
 type DataProps = {
-  correct: Voca[];
-  wrong: Voca[];
+  correct: Word[];
+  wrong: Word[];
 };
 
 const LOAD_DATA_NUM = 15;
@@ -87,12 +87,9 @@ function QuizResultPage({
   );
 
   const renderItem = useCallback(
-    ({item}: {item: Voca}) => {
+    ({item: {_id}}: {item: Word}) => {
       return (
-        <QuizResultCard
-          voca={item}
-          isCorrected={nav === CORRECT ? true : false}
-        />
+        <QuizResultCard id={_id} isCorrected={nav === CORRECT ? true : false} />
       );
     },
     [nav, CORRECT],

@@ -13,10 +13,10 @@ export {default as Sound} from '../../svg/module/sound.svg';
 export {default as LanternOff} from '../../svg/module/lantern-off.svg';
 export {default as LanternOn} from '../../svg/module/lantern-on.svg';
 export {default as Pencil} from '../../svg/module/pencil.svg';
-export {default as PencilH} from '../../svg/module/pencil_h.svg';
 export {default as Checkbox} from '../../svg/module/checkbox.svg';
 export {default as Square} from '../../svg/module/square.svg';
 export {default as Chart} from '../../svg/module/chart.svg';
+export {default as Search} from '../../svg/module/search.svg';
 
 // circle number svg
 export {default as Circle0} from '../../svg/number/circle-a.svg';
@@ -44,3 +44,4 @@ export {default as Lock} from '../../svg/quiz/lock.svg';
 export {default as Unlock} from '../../svg/quiz/unlock.svg';
 export {default as QuestionSquare} from '../../svg/quiz/question-square.svg';
 export {default as Play} from '../../svg/quiz/play.svg';
+export {default as Assessment} from '../../svg/quiz/assessment.svg';

@@ -14,6 +14,8 @@ import SvgIcon from '../module/SvgIcon';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/QuizTypePageStyle';
 import {ToastIcon} from '../recoil/ToastState';
+import {useResetRecoilState, useSetRecoilState} from 'recoil';
+import {wordListState} from '../recoil/WordListState';
 
 const PICK_MAXIMUM = 5;
 
@@ -29,7 +31,7 @@ function PickCategoryPage({
   },
 }: PickCategoryPageProps): JSX.Element {
   const {fireToast} = useToast();
-  const {shuffleArray} = useUtil();
+  const {shuffleArray, convertToWord} = useUtil();
   const {countVocaByCategory, getVocasByMultipleCategory} = useVoca();
   const filteredTheme = useMemo(
     () => countVocaByCategory(level),
@@ -47,6 +49,8 @@ function PickCategoryPage({
       }),
     [filteredTheme],
   );
+  const setWords = useSetRecoilState(wordListState);
+  const resetWords = useResetRecoilState(wordListState);
 
   const [selectedCategory, setSelectedCategory] = useState<string[]>([]);
 
@@ -66,7 +70,8 @@ function PickCategoryPage({
   const moveToQuizPage = () => {
     const wordData = shuffleArray(
       getVocasByMultipleCategory(level, selectedCategory),
-    );
+    ).map(convertToWord);
+    setWords(wordData);
     navigate(quizType, {wordData});
   };
 
@@ -78,7 +83,10 @@ function PickCategoryPage({
         remove: true,
       });
     }
-  }, [selectedCategory.length, fireToast]);
+    return () => {
+      resetWords();
+    };
+  }, [selectedCategory.length, fireToast, resetWords]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>

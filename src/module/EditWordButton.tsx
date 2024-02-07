@@ -17,7 +17,7 @@ type EditWordButtonProps = PropsWithChildren<{
 function EditWordButton({navigation: {navigate}, id}: EditWordButtonProps) {
   return (
     <TouchableOpacity onPress={() => navigate('EditVocaPage', {id})}>
-      <SvgIcon name="Pencil" size={20} color={lightTheme.gray} />
+      <SvgIcon name="Pencil" size={18} fill={lightTheme.black} />
     </TouchableOpacity>
   );
 }

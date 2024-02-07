@@ -12,23 +12,23 @@ import MatchingQuizPage from '../quiz/MatchingQuizPage';
 import WritingQuizPage from '../quiz/WritingQuizPage';
 import QuizResultPage from '../quiz/QuizResultPage';
 
-import Voca from '../model/Voca';
 import {lightTheme} from '../styles/colors';
+import {Word} from '../recoil/WordListState';
 
 export type QuizServiceStackParamList = {
   QuizTypePage: undefined;
   PickLevelPage: {quizType: keyof QuizPageStackParamList};
   PickCategoryPage: {level: number; quizType: keyof QuizPageStackParamList};
   QuizResultPage: {
-    words: Voca[];
+    words: Word[];
     corrected: number[];
     quizType: keyof QuizPageStackParamList;
   };
 };
 
 export type QuizPageStackParamList = {
-  MatchingQuizPage: {wordData: Voca[]};
-  WritingQuizPage: {wordData: Voca[]};
+  MatchingQuizPage: {wordData: Word[]};
+  WritingQuizPage: {wordData: Word[]};
 };
 
 export type QuizStackParamList = QuizServiceStackParamList &

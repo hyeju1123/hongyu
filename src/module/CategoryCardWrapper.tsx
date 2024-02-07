@@ -61,7 +61,7 @@ function CategoryCardWrapper<T>({nav, infos}: CategoryCardWrapperProps<T>) {
       <FlashList
         data={items.data}
         renderItem={renderItem}
-        estimatedItemSize={90}
+        estimatedItemSize={100}
         onEndReached={() => onEndReached(items.count)}
         onEndReachedThreshold={0.8}
         showsVerticalScrollIndicator={false}

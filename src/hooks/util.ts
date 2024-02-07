@@ -1,31 +1,15 @@
-import {useCallback, useState} from 'react';
+import {useCallback} from 'react';
 import useToast from './toast';
-import {useVoca} from '../providers/VocaProvider';
 import Voca from '../model/Voca';
 import Busu from '../model/Busu';
 import {ToastIcon} from '../recoil/ToastState';
+import {InfoType} from '../module/CategoryCardWrapper';
+import {QuizPageStackParamList} from '../navigation/QuizNavigation';
 
-type handleBookmarkProps = {
-  setBookmark: (value: React.SetStateAction<boolean>) => void;
-  _id: number;
-  word: string;
-  bookmark: boolean;
-  busu?: boolean;
-};
+const TEXTINPUT_LIMIT_LEN = 250;
 
-type renderedDataProps<T> = {
-  count: number;
-  items: T[];
-};
-
-export default function Util<T extends Voca | Busu>(longData: T[] = []) {
+export default function Util() {
   const {fireToast} = useToast();
-  const {updateBookmark, updateBusuBookmark} = useVoca();
-  const [renderedData, setRenderedData] = useState<renderedDataProps<T>>({
-    count: 10,
-    items: longData.slice(0, 10),
-  });
-  const {items} = renderedData;
 
   const getWCLabels = useCallback(
     () => [
@@ -47,9 +31,39 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
     [],
   );
 
+  const getQuizTypeData = useCallback(
+    (): InfoType<keyof QuizPageStackParamList>[] => [
+      {
+        title: '짝 맞추기',
+        desc: '제한시간 안에 단어와 뜻을 짝 맞춰보세요.',
+        icon: 'Matching',
+        navData: 'MatchingQuizPage',
+      },
+      {
+        title: '뜻 고르기',
+        desc: '단어와 일치하는 뜻을 골라보세요.',
+        icon: 'FourIdiom',
+        navData: 'MatchingQuizPage',
+      },
+      {
+        title: '듣기 연습',
+        desc: '음성을 듣고 해당하는 단어를 골라보세요.',
+        icon: 'Listening',
+        navData: 'MatchingQuizPage',
+      },
+      {
+        title: '필기 연습',
+        desc: '뜻에 맞는 한자를 적은 후\n자물쇠 버튼을 눌러 정답을 확인해보세요.',
+        icon: 'Writing',
+        navData: 'WritingQuizPage',
+      },
+    ],
+    [],
+  );
+
   const limitTextLength = useCallback(
     (value: string) => {
-      if (value.length > 250) {
+      if (value.length > TEXTINPUT_LIMIT_LEN) {
         fireToast({
           text: '250자를 넘지 말아주세요.',
           icon: ToastIcon.AbNormal,
@@ -61,27 +75,6 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
     },
     [fireToast],
   );
-
-  const handleBookmark = useCallback(
-    ({setBookmark, _id, word, bookmark, busu = false}: handleBookmarkProps) => {
-      const status = bookmark ? '삭제' : '저장';
-      setBookmark(prev => !prev);
-      busu ? updateBusuBookmark(_id) : updateBookmark(_id);
-      fireToast({
-        text: `'내 단어장'에 '${word}'를 ${status}했습니다.`,
-        icon: ToastIcon.Normal,
-        remove: true,
-      });
-    },
-    [updateBookmark, updateBusuBookmark, fireToast],
-  );
-
-  const loadData = useCallback(() => {
-    setRenderedData(({count}) => ({
-      count: count + 10,
-      items: longData.slice(0, count + 10),
-    }));
-  }, [longData]);
 
   const shuffleArray = useCallback((array: any[]) => {
     let currentIndex = array.length,
@@ -133,10 +126,8 @@ export default function Util<T extends Voca | Busu>(longData: T[] = []) {
   return {
     getWCLabels,
     limitTextLength,
-    handleBookmark,
-    items,
-    loadData,
     shuffleArray,
     convertToWord,
+    getQuizTypeData,
   };
 }

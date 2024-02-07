@@ -1,32 +1,54 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
+import {QuizPageStackParamList} from '../navigation/QuizNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {TouchableOpacity} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
-import WordCard from '../module/WordCard';
 import {Word} from '../recoil/WordListState';
-import usePolly from '../hooks/polly';
-import usePaginate from '../hooks/paginate';
-import useWordData from '../hooks/wordData';
+import SvgIcon from '../module/SvgIcon';
+import WordCard from '../module/WordCard';
+import PickQuizTypeModal from '../module/PickQuizTypeModal';
 
+import usePolly from '../hooks/polly';
+import useWordData from '../hooks/wordData';
+import {useRecoilValue} from 'recoil';
+import {WordNav, wordNavState} from '../recoil/WordNavState';
+
+import {lightTheme} from '../styles/colors';
 import styles from '../styles/word/WordPageStyle';
 
 type WordPageProps = NativeStackScreenProps<WordStackParamList, 'WordPage'>;
 
+const LOAD_DATA_NUM = 20;
+
 function WordPage({
-  navigation: {navigate},
+  navigation: {navigate, setOptions},
   route: {
     params: {category},
   },
 }: WordPageProps): JSX.Element {
+  const {Busu} = WordNav;
   const {clearMp3File} = usePolly();
-  const {wordsFromRecoil} = useWordData(category);
+  const {navType} = useRecoilValue(wordNavState);
+  const words = useWordData(category).wordsFromRecoil;
+  const [showModal, setShowModal] = useState(false);
+  const [items, setItems] = useState<{count: number; data: Word[]}>({
+    count: 0,
+    data: [],
+  });
+  const wordsLength = useMemo(() => words.length, [words.length]);
 
-  const {
-    rendered: {items},
-    loadData,
-  } = usePaginate(wordsFromRecoil);
+  const onEndReached = useCallback(
+    (prevLen: number) => {
+      prevLen < wordsLength &&
+        setItems(prev => ({
+          count: prev.count + LOAD_DATA_NUM,
+          data: words.slice(0, prev.count + LOAD_DATA_NUM),
+        }));
+    },
+    [words, wordsLength],
+  );
 
   const renderItem = useCallback(
     ({item: {_id, isBusu}}: {item: Word}) => (
@@ -41,19 +63,49 @@ function WordPage({
     [navigate],
   );
 
+  const handleMove = useCallback(
+    (quizType: keyof QuizPageStackParamList) => {
+      navigate(quizType, {wordData: words});
+      setShowModal(false);
+    },
+    [navigate, words],
+  );
+
+  const handleModal = useCallback(() => {
+    setShowModal(prev => !prev);
+  }, []);
+
   useEffect(() => {
+    const moveQuizPage = () => (
+      <TouchableOpacity onPress={handleModal}>
+        <SvgIcon name="Assessment" fill={lightTheme.black} size={20} />
+      </TouchableOpacity>
+    );
+
+    navType === Busu
+      ? setOptions({headerTitle: category + '획'})
+      : setOptions({headerTitle: category, headerRight: moveQuizPage});
+
     return () => {
       clearMp3File();
     };
-  }, [clearMp3File]);
+  }, [clearMp3File, navType, Busu, setOptions, category, handleModal]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
+      {showModal && (
+        <TouchableOpacity onPress={handleModal} style={styles.modalBack}>
+          <PickQuizTypeModal
+            handleModal={handleModal}
+            handleMove={handleMove}
+          />
+        </TouchableOpacity>
+      )}
       <FlashList
-        data={items}
+        data={items.data}
         renderItem={renderItem}
-        estimatedItemSize={90}
-        onEndReached={() => loadData(items.length)}
+        estimatedItemSize={100}
+        onEndReached={() => onEndReached(items.count)}
         onEndReachedThreshold={0.8}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.flashlistContent}

@@ -78,7 +78,7 @@ function SearchPage({
           updateFn={handleSearch}
           placeholder="단어를 검색해보세요."
         />
-        <SvgIcon name="PencilH" size={20} fill={lightTheme.red} />
+        <SvgIcon name="Search" size={15} fill={lightTheme.red} />
       </View>
       <FlashList
         data={searchedWords}

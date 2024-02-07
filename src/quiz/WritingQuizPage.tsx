@@ -6,8 +6,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ScrollView, View, Text} from 'react-native';
 import Canvas, {SigningPathType} from '../module/Canvas';
 import WritingPreviewInfo from './WritingPreviewInfo';
-import Voca from '../model/Voca';
-
+import {Word} from '../recoil/WordListState';
 import useToast from '../hooks/toast';
 import {ToastIcon} from '../recoil/ToastState';
 
@@ -78,7 +77,7 @@ function WritingQuizPage({
     index: 0,
     writings: [],
   });
-  const [words, setWords] = useState<Voca[]>([]);
+  const [words, setWords] = useState<Word[]>([]);
   const [showWord, setShowWord] = useState(false);
   const [keepVisible, setKeepVisible] = useState(false);
   const [scoreCard, setScoreCard] = useState<boolean[]>();

@@ -34,8 +34,6 @@ function BookedCategoryPage({
   const [vocas, setVocas] = useState<Voca[]>([]);
   const [busues, setBusues] = useState<Busu[]>([]);
 
-  console.log('bookmarkedCategoryPage is render');
-
   const countedLevelWords = vocas.reduce(
     (counts: {[level: number]: number}, {level}) => {
       counts[level] = (counts[level] || 0) + 1;

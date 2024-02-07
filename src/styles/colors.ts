@@ -14,6 +14,7 @@ export const lightTheme = {
   salmon: '#FED3C1',
   transparent: 'transparent',
   transWhite: 'rgba(255,255,255,0.5)',
+  transOatmeal: 'rgba(243, 241, 238, 0.5)',
   transBlack: 'rgba(0,0,0,0.2)',
   transGray: 'rgba(228,228,228,0.3)',
 };

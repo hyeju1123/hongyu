@@ -1,7 +1,7 @@
 import React, {PropsWithChildren, useRef, useState} from 'react';
 import {Text, View} from 'react-native';
 import {BaseButton} from 'react-native-gesture-handler';
-import Voca from '../model/Voca';
+import {Word} from '../recoil/WordListState';
 import useQuiz from '../hooks/quiz';
 import useDidMountEffect from '../hooks/didMount';
 
@@ -12,7 +12,7 @@ const MARKED_DURATION = 250;
 const CORRECT_VERIFIED_VALUE = '  ';
 
 type MatchingQuizGridProps = PropsWithChildren<{
-  words: Voca[];
+  words: Word[];
   correctedIds: number[];
   handleAllClear: () => void;
 }>;

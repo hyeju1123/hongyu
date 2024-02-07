@@ -1,6 +1,7 @@
 import {useCallback} from 'react';
 import useUtil from './util';
 import Voca from '../model/Voca';
+import {Word} from '../recoil/WordListState';
 
 type WordDictProps = {
   _id: number;
@@ -11,7 +12,7 @@ type WordDictProps = {
 export default function Quiz() {
   const {shuffleArray} = useUtil();
 
-  const getWordDict = useCallback((words: Voca[]) => {
+  const getWordDict = useCallback((words: Voca[] | Word[]) => {
     const wordDict: WordDictProps[] = [];
 
     words.forEach(({_id, word, meaning}) => {
@@ -21,7 +22,7 @@ export default function Quiz() {
   }, []);
 
   const getWordList = useCallback(
-    (words: Voca[], shuffle = true) => {
+    (words: Voca[] | Word[], shuffle = true) => {
       const wordList: string[] = [];
       words.forEach(({word, meaning}) => {
         wordList.push(word, meaning);

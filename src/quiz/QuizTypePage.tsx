@@ -7,7 +7,7 @@ import {
 } from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
-import {InfoType} from '../module/CategoryCardWrapper';
+import useUtil from '../hooks/util';
 
 import styles from '../styles/quiz/QuizTypePageStyle';
 
@@ -18,39 +18,9 @@ type QuizTypePageProps = NativeStackScreenProps<
 
 function QuizTypePage({navigation}: QuizTypePageProps): JSX.Element {
   const {navigate} = navigation;
+  const {getQuizTypeData} = useUtil();
 
-  const quizTypeData: InfoType<keyof QuizPageStackParamList>[] = [
-    {
-      title: '짝 맞추기',
-      desc: '제한시간 안에 단어와 뜻을 짝 맞춰보세요.',
-      icon: 'Matching',
-      navData: 'MatchingQuizPage',
-    },
-    {
-      title: '뜻 고르기',
-      desc: '단어와 일치하는 뜻을 골라보세요.',
-      icon: 'Picking',
-      navData: 'MatchingQuizPage',
-    },
-    {
-      title: '듣기 시험',
-      desc: '음성을 듣고 해당하는 단어를 골라보세요.',
-      icon: 'Listening',
-      navData: 'MatchingQuizPage',
-    },
-    {
-      title: '필기 시험',
-      desc: '뜻에 맞는 한자를 적은 후\n자물쇠 버튼을 눌러 정답을 확인해보세요.',
-      icon: 'Writing',
-      navData: 'WritingQuizPage',
-    },
-    {
-      title: '사자성어',
-      desc: '주어진 한자로 사자성어를 완성하세요.',
-      icon: 'FourIdiom',
-      navData: 'MatchingQuizPage',
-    },
-  ];
+  const quizTypeData = getQuizTypeData();
 
   const moveToPickLevel = (quizType: keyof QuizPageStackParamList) => {
     navigate('PickLevelPage', {quizType});

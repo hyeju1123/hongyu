@@ -20,6 +20,7 @@ type Style = {
   closeImage: ImageStyle;
   completeImage: ImageStyle;
   dirRow: ViewStyle;
+  modalBack: ViewStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -84,6 +85,13 @@ const commonPart: Style = {
     marginLeft: 4,
     width: width * 0.03,
     height: width * 0.03,
+  },
+  modalBack: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    zIndex: 10,
+    backgroundColor: lightTheme.transBlack,
   },
 };
 

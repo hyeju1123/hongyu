@@ -4,10 +4,11 @@ import {Dir} from './WritingQuizPage';
 import styles from '../styles/quiz/WritingQuizPageStyle';
 import SvgIcon from '../module/SvgIcon';
 import Voca from '../model/Voca';
+import {Word} from '../recoil/WordListState';
 import {lightTheme} from '../styles/colors';
 
 type WordInformationProps = {
-  data: Voca;
+  data: Voca | Word;
   showWord: boolean;
   handleShowWord: () => void;
   handlePageMove: (dir: Dir) => void;
