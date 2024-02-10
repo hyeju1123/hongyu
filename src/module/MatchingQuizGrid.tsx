@@ -83,7 +83,7 @@ function MatchingQuizGrid({
     color = tempText === value ? lightTheme.transBlack : color;
     color = value === '  ' ? lightTheme.transparent : color;
     color = correctPair.includes(value) ? lightTheme.mint : color;
-    color = wrongPair.includes(value) ? lightTheme.salmon : color;
+    color = wrongPair.includes(value) ? lightTheme.mildYellow : color;
 
     return color;
   };

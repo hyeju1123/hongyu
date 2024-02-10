@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -7,8 +7,6 @@ import {ScrollView, View, Text} from 'react-native';
 import Canvas, {SigningPathType} from '../module/Canvas';
 import WritingPreviewInfo from './WritingPreviewInfo';
 import {Word} from '../recoil/WordListState';
-import useToast from '../hooks/toast';
-import {ToastIcon} from '../recoil/ToastState';
 
 import * as Icons from '../styles/svgIndex';
 import styles from '../styles/quiz/WritingQuizPageStyle';
@@ -16,11 +14,6 @@ import SvgIcon from '../module/SvgIcon';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {lightTheme} from '../styles/colors';
 import {StackActions} from '@react-navigation/native';
-
-export enum Dir {
-  FORWARD = 'forward',
-  BACKWARD = 'backward',
-}
 
 type WritingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -70,8 +63,6 @@ function WritingQuizPage({
     params: {wordData},
   },
 }: WritingQuizPageProps): JSX.Element {
-  const {fireToast} = useToast();
-
   const writingRef = useRef<SigningPathType>([]);
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     index: 0,
@@ -85,54 +76,22 @@ function WritingQuizPage({
 
   const {index, writings} = pageInfo;
 
-  const handlePageMove = (dir: Dir) => {
-    const isLastPage = index === totalLen - 1;
-    const isFirstPage = index === 0;
+  const moveCallback = useCallback(
+    (newIdx: number) => {
+      const newWritings = writings.map((v, i) =>
+        i === index ? writingRef.current : v,
+      );
 
-    const showToast = (message: string) => {
-      fireToast({
-        text: message,
-        icon: ToastIcon.AbNormal,
-        remove: true,
+      setPageInfo({
+        index: newIdx,
+        writings: newWritings,
       });
-    };
 
-    if (dir === Dir.FORWARD) {
-      if (isLastPage) {
-        showToast('마지막 페이지입니다');
-      } else {
-        const newWritings = writings.map((v, i) =>
-          i === index ? writingRef.current : v,
-        );
-
-        setPageInfo({
-          index: index + 1,
-          writings: newWritings,
-        });
-
-        writingRef.current = writings[index + 1];
-      }
-    }
-
-    if (dir === Dir.BACKWARD) {
-      if (isFirstPage) {
-        showToast('첫번째 페이지입니다');
-      } else {
-        const newWritings = writings.map((v, i) =>
-          i === index ? writingRef.current : v,
-        );
-
-        setPageInfo({
-          index: index - 1,
-          writings: newWritings,
-        });
-
-        writingRef.current = writings[index - 1];
-      }
-    }
-
-    !keepVisible && setShowWord(false);
-  };
+      writingRef.current = writings[newIdx];
+      !keepVisible && setShowWord(false);
+    },
+    [index, writings, keepVisible],
+  );
 
   useEffect(() => {
     setWords(wordData);
@@ -208,10 +167,12 @@ function WritingQuizPage({
           )}
           {words.length > 0 && (
             <WritingPreviewInfo
+              index={index}
+              totalLen={totalLen}
               data={words[index]}
               showWord={showWord}
               handleShowWord={() => setShowWord(prev => !prev)}
-              handlePageMove={handlePageMove}
+              moveCallback={moveCallback}
             />
           )}
         </View>

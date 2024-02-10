@@ -1,37 +1,47 @@
 import React, {FC} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import {Dir} from './WritingQuizPage';
 import styles from '../styles/quiz/WritingQuizPageStyle';
 import SvgIcon from '../module/SvgIcon';
-import Voca from '../model/Voca';
+import useQuiz from '../hooks/quiz';
+import {Dir} from '../hooks/quiz';
 import {Word} from '../recoil/WordListState';
 import {lightTheme} from '../styles/colors';
 
 type WordInformationProps = {
-  data: Voca | Word;
+  index: number;
+  totalLen: number;
+  data: Word;
   showWord: boolean;
   handleShowWord: () => void;
-  handlePageMove: (dir: Dir) => void;
+  moveCallback: (newIdx: number) => void;
 };
 
 const WritingPreviewInfo: FC<WordInformationProps> = ({
+  index,
+  totalLen,
   data,
   showWord,
   handleShowWord,
-  handlePageMove,
+  moveCallback,
 }) => {
+  const {handlePageMove} = useQuiz();
+  const {FORWARD, BACKWARD} = Dir;
   const {word, intonation, meaning} = data;
   return (
     <View style={[styles.infoWrapper]}>
       <View style={[styles.buttonWrapper]}>
         <TouchableOpacity
-          style={[styles.svgWrapper, styles.horizonFlip]}
-          onPress={() => handlePageMove(Dir.BACKWARD)}>
+          style={[styles.moveButtonWrapper, styles.horizonFlip]}
+          onPress={() =>
+            handlePageMove({dir: BACKWARD, index, totalLen, moveCallback})
+          }>
           <SvgIcon name="Play" fill={lightTheme.black} size={25} />
         </TouchableOpacity>
         <TouchableOpacity
-          style={styles.svgWrapper}
-          onPress={() => handlePageMove(Dir.FORWARD)}>
+          style={styles.moveButtonWrapper}
+          onPress={() =>
+            handlePageMove({dir: FORWARD, index, totalLen, moveCallback})
+          }>
           <SvgIcon name="Play" fill={lightTheme.black} size={25} />
         </TouchableOpacity>
       </View>

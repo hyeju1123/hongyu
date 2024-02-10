@@ -118,10 +118,7 @@ export function VocaProvider({children}: PropsWithChildren) {
 
   const getVocasByLevel = useCallback(
     (level: number) => {
-      return realm
-        .objects<Voca>('Voca')
-        .filtered('level == $0 DISTINCT(theme)', level)
-        .slice();
+      return realm.objects<Voca>('Voca').filtered('level == $0', level).slice();
     },
     [realm],
   );

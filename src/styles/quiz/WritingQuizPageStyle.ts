@@ -16,6 +16,7 @@ type Style = {
   meaning: TextStyle;
   buttonWrapper: ViewStyle;
   svgWrapper: ViewStyle;
+  moveButtonWrapper: ViewStyle;
   horizonFlip: ViewStyle;
 };
 
@@ -93,6 +94,9 @@ const commonPart: Style = {
   },
   svgWrapper: {
     margin: 5,
+  },
+  moveButtonWrapper: {
+    padding: 20,
   },
   horizonFlip: {
     transform: [{rotateY: '180deg'}],

@@ -14,6 +14,7 @@ import EditVocaPage from '../word/EditVocaPage';
 
 // Quiz Page
 import MatchingQuizPage from '../quiz/MatchingQuizPage';
+import PickingQuizPage from '../quiz/PickingQuizPage';
 import WritingQuizPage from '../quiz/WritingQuizPage';
 import QuizResultPage from '../quiz/QuizResultPage';
 
@@ -41,6 +42,7 @@ export type QuizServiceStackParamList = {
 
 export type QuizPageStackParamList = {
   MatchingQuizPage: {wordData: Word[]};
+  PickingQuizPage: {wordData: Word[]};
   WritingQuizPage: {wordData: Word[]};
 };
 
@@ -84,6 +86,13 @@ function WordNavigation({}: WordNavigationProps): JSX.Element {
       <Stack.Screen
         name="MatchingQuizPage"
         component={MatchingQuizPage}
+        options={{
+          headerTitle: '',
+        }}
+      />
+      <Stack.Screen
+        name="PickingQuizPage"
+        component={PickingQuizPage}
         options={{
           headerTitle: '',
         }}
