@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-end',
     fontFamily: fonts.pinyin,
     fontSize: width * 0.03,
+    color: lightTheme.black,
   },
 });
 

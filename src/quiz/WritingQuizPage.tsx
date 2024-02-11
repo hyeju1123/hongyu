@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -6,7 +6,6 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ScrollView, View, Text} from 'react-native';
 import Canvas, {SigningPathType} from '../module/Canvas';
 import WritingPreviewInfo from './WritingPreviewInfo';
-import {Word} from '../recoil/WordListState';
 
 import * as Icons from '../styles/svgIndex';
 import styles from '../styles/quiz/WritingQuizPageStyle';
@@ -64,37 +63,54 @@ function WritingQuizPage({
   },
 }: WritingQuizPageProps): JSX.Element {
   const writingRef = useRef<SigningPathType>([]);
+  const totalLen = useRef(wordData.length).current;
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
     index: 0,
     writings: [],
   });
-  const [words, setWords] = useState<Word[]>([]);
   const [showWord, setShowWord] = useState(false);
   const [keepVisible, setKeepVisible] = useState(false);
   const [scoreCard, setScoreCard] = useState<boolean[]>();
-  const totalLen = useMemo(() => words.length, [words.length]);
 
   const {index, writings} = pageInfo;
 
+  const moveToResult = useCallback(() => {
+    const corrected =
+      scoreCard
+        ?.map((v, i) => (v ? wordData?.[i]._id : -1))
+        .filter(v => v !== -1) || [];
+
+    dispatch(
+      StackActions.replace('QuizResultPage', {
+        words: wordData,
+        corrected,
+        quizType: 'WritingQuizPage',
+      }),
+    );
+  }, [dispatch, scoreCard, wordData]);
+
   const moveCallback = useCallback(
     (newIdx: number) => {
-      const newWritings = writings.map((v, i) =>
-        i === index ? writingRef.current : v,
-      );
+      if (newIdx === totalLen) {
+        moveToResult();
+      } else {
+        const newWritings = writings.map((v, i) =>
+          i === index ? writingRef.current : v,
+        );
 
-      setPageInfo({
-        index: newIdx,
-        writings: newWritings,
-      });
+        setPageInfo({
+          index: newIdx,
+          writings: newWritings,
+        });
 
-      writingRef.current = writings[newIdx];
-      !keepVisible && setShowWord(false);
+        writingRef.current = writings[newIdx];
+        !keepVisible && setShowWord(false);
+      }
     },
-    [index, writings, keepVisible],
+    [index, writings, keepVisible, totalLen, moveToResult],
   );
 
   useEffect(() => {
-    setWords(wordData);
     setScoreCard(Array.from({length: wordData.length}, () => false));
     setPageInfo(prev => ({
       ...prev,
@@ -105,31 +121,6 @@ function WritingQuizPage({
   useEffect(() => {
     setOptions({headerTitle: index + 1 + '/' + totalLen});
   }, [index, totalLen, setOptions]);
-
-  useEffect(() => {
-    const handleMove = () => {
-      const corrected =
-        scoreCard
-          ?.map((v, i) => (v ? words?.[i]._id : -1))
-          .filter(v => v !== -1) || [];
-
-      dispatch(
-        StackActions.replace('QuizResultPage', {
-          words,
-          corrected,
-          quizType: 'WritingQuizPage',
-        }),
-      );
-    };
-
-    const moveResultPage = () => (
-      <TouchableOpacity onPress={handleMove}>
-        <SvgIcon name="Chart" fill={lightTheme.black} size={16} />
-      </TouchableOpacity>
-    );
-
-    setOptions({headerRight: moveResultPage});
-  }, [setOptions, scoreCard, words, dispatch]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -165,16 +156,14 @@ function WritingQuizPage({
               </TouchableOpacity>
             </View>
           )}
-          {words.length > 0 && (
-            <WritingPreviewInfo
-              index={index}
-              totalLen={totalLen}
-              data={words[index]}
-              showWord={showWord}
-              handleShowWord={() => setShowWord(prev => !prev)}
-              moveCallback={moveCallback}
-            />
-          )}
+          <WritingPreviewInfo
+            index={index}
+            totalLen={totalLen}
+            data={wordData[index]}
+            showWord={showWord}
+            handleShowWord={() => setShowWord(prev => !prev)}
+            moveCallback={moveCallback}
+          />
         </View>
         <Canvas index={index} writings={writings} writingRef={writingRef} />
       </ScrollView>

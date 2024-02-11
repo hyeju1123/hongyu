@@ -44,8 +44,6 @@ function MatchingQuizPage({
   const pageLength = useMemo(() => Math.ceil(words.length / 5), [words.length]);
   const currentPageWords = words.slice(5 * (currentPage - 1), 5 * currentPage);
 
-  console.log('render');
-
   const handleTimeover = useCallback(() => {
     const timeout = setTimeout(() => {
       if (currentPage === pageLength) {
