@@ -46,7 +46,7 @@ function BookmarkButton({
   };
 
   return (
-    <TouchableOpacity onPress={handleBookmark}>
+    <TouchableOpacity style={styles.buttonWrapper} onPress={handleBookmark}>
       <Image
         source={bookmarked ? lanternOn : lanternOff}
         style={size === ButtonSize.Small ? styles.small : styles.large}
@@ -58,6 +58,9 @@ function BookmarkButton({
 export default memo(BookmarkButton);
 
 const styles = StyleSheet.create({
+  buttonWrapper: {
+    padding: 5,
+  },
   small: {
     width: 20,
     height: 20,

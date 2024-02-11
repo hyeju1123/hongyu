@@ -15,8 +15,6 @@ const commonPart: Style = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'black',
     paddingVertical: 40,
   },
   smallSize: {

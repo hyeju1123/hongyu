@@ -23,6 +23,7 @@ function SoundButton({level, word}: SoundButtonProps) {
 const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-start',
+    padding: 5,
   },
 });
 
