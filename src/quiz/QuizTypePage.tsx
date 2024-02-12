@@ -7,7 +7,7 @@ import {
 } from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
-import useUtil from '../hooks/util';
+import useQuiz from '../hooks/quiz';
 
 import styles from '../styles/quiz/QuizTypePageStyle';
 
@@ -18,7 +18,7 @@ type QuizTypePageProps = NativeStackScreenProps<
 
 function QuizTypePage({navigation}: QuizTypePageProps): JSX.Element {
   const {navigate} = navigation;
-  const {getQuizTypeData} = useUtil();
+  const {getQuizTypeData} = useQuiz();
 
   const quizTypeData = getQuizTypeData();
 

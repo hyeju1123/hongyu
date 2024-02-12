@@ -8,13 +8,14 @@ import styles from '../styles/quiz/PickingPanelStyle';
 import {useVoca} from '../providers/VocaProvider';
 import {lightTheme} from '../styles/colors';
 import {PickDataProps} from './PickingQuizPage';
+import SoundButton from '../module/SoundButton';
 
 type PickingPanelProps = {
   index: number;
   totalLen: number;
   wordData: Word;
   pickData: PickDataProps;
-
+  listening?: boolean;
   handlePick: (picked: string, answer: string) => void;
 };
 
@@ -23,8 +24,9 @@ const CARD_NUM = 4;
 function PickingPanel({
   index,
   totalLen,
-  wordData: {word, meaning, intonation},
+  wordData: {word, meaning, intonation, level},
   pickData: {picked, correct},
+  listening = false,
   handlePick,
 }: PickingPanelProps): JSX.Element {
   const {mint, mildYellow} = lightTheme;
@@ -47,8 +49,8 @@ function PickingPanel({
 
   useEffect(() => {
     if (picked === '') {
-      const level = Math.floor(Math.random() * 6) + 1;
-      const samples = getVocasByLevel(level);
+      const randomLevel = Math.floor(Math.random() * 6) + 1;
+      const samples = getVocasByLevel(randomLevel);
 
       const getCandidates = () => {
         const candidatesIdx = [index];
@@ -77,7 +79,11 @@ function PickingPanel({
   return (
     <View style={styles.panel}>
       <View style={styles.panelPart}>
-        <Text style={styles.query}>{word}</Text>
+        {listening ? (
+          <SoundButton word={word} level={level} largeSize />
+        ) : (
+          <Text style={styles.query}>{word}</Text>
+        )}
         <Text style={styles.pinyin}>{intonation}</Text>
       </View>
       <View style={styles.panelPart}>

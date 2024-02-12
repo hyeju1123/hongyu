@@ -6,16 +6,17 @@ import usePolly from '../hooks/polly';
 type SoundButtonProps = PropsWithChildren<{
   level: number;
   word: string;
+  largeSize?: boolean;
 }>;
 
-function SoundButton({level, word}: SoundButtonProps) {
+function SoundButton({level, word, largeSize = false}: SoundButtonProps) {
   const {setToggle} = usePolly();
 
   return (
     <TouchableOpacity
-      style={styles.button}
+      style={[styles.button, largeSize && styles.alignCenter]}
       onPress={() => setToggle({word, level})}>
-      <SvgIcon name="Sound" size={20} />
+      <SvgIcon name="Sound" size={largeSize ? 50 : 20} />
     </TouchableOpacity>
   );
 }
@@ -24,6 +25,9 @@ const styles = StyleSheet.create({
   button: {
     alignSelf: 'flex-start',
     padding: 5,
+  },
+  alignCenter: {
+    alignSelf: 'center',
   },
 });
 

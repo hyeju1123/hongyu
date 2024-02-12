@@ -3,7 +3,7 @@ import {Text, TouchableOpacity} from 'react-native';
 import styles from '../styles/module/PickQuizTypeModalStyle';
 import SvgIcon from './SvgIcon';
 import {lightTheme} from '../styles/colors';
-import useUtil from '../hooks/util';
+import useQuiz from '../hooks/quiz';
 import CategoryCard from './CategoryCard';
 import {QuizPageStackParamList} from '../navigation/QuizNavigation';
 
@@ -16,7 +16,7 @@ type PickQuizTypeModalProps = {
 } & CardsProps;
 
 const Cards = ({handleMove}: CardsProps): JSX.Element => {
-  const {getQuizTypeData} = useUtil();
+  const {getQuizTypeData} = useQuiz();
   return (
     <>
       {getQuizTypeData().map(({title, desc, icon, navData}) => (

@@ -10,6 +10,7 @@ import PickLevelPage from '../quiz/PickLevelPage';
 import PickCategoryPage from '../quiz/PickCategoryPage';
 import MatchingQuizPage from '../quiz/MatchingQuizPage';
 import PickingQuizPage from '../quiz/PickingQuizPage';
+import ListeningQuizPage from '../quiz/ListeningQuizPage';
 import WritingQuizPage from '../quiz/WritingQuizPage';
 import QuizResultPage from '../quiz/QuizResultPage';
 
@@ -30,6 +31,7 @@ export type QuizServiceStackParamList = {
 export type QuizPageStackParamList = {
   MatchingQuizPage: {wordData: Word[]};
   PickingQuizPage: {wordData: Word[]};
+  ListeningQuizPage: {wordData: Word[]};
   WritingQuizPage: {wordData: Word[]};
 };
 
@@ -83,6 +85,13 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
       <Stack.Screen
         name="PickingQuizPage"
         component={PickingQuizPage}
+        options={{
+          headerTitle: '',
+        }}
+      />
+      <Stack.Screen
+        name="ListeningQuizPage"
+        component={ListeningQuizPage}
         options={{
           headerTitle: '',
         }}

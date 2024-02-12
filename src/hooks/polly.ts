@@ -16,12 +16,11 @@ export default function Polly() {
   const debouncedSoundToggle = useDebounce(toggle, 300);
 
   useDidMountEffect(() => {
-    // fetchPolly(toggle.level, toggle.word);
+    fetchPolly(toggle.level, toggle.word);
   }, [debouncedSoundToggle]);
 
   const fetchPolly = useCallback(
     async (level: number, hanzi: string) => {
-      const start = new Date();
       try {
         const url = await fetchPollyUrl(level, hanzi);
         const filePath = await fetchPollyAudio(url, hanzi);
@@ -38,8 +37,6 @@ export default function Polly() {
           icon: ToastIcon.AbNormal,
           remove: true,
         });
-      } finally {
-        console.log('end:: ', new Date() - start);
       }
     },
     [fireToast],
