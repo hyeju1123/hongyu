@@ -12,7 +12,7 @@ import MatchingQuizPage from '../quiz/MatchingQuizPage';
 import PickingQuizPage from '../quiz/PickingQuizPage';
 import ListeningQuizPage from '../quiz/ListeningQuizPage';
 import WritingQuizPage from '../quiz/WritingQuizPage';
-import QuizResultPage from '../quiz/QuizResultPage';
+import QuizResultPage, {ResultDataProps} from '../quiz/QuizResultPage';
 
 import {lightTheme} from '../styles/colors';
 import {Word} from '../recoil/WordListState';
@@ -22,8 +22,7 @@ export type QuizServiceStackParamList = {
   PickLevelPage: {quizType: keyof QuizPageStackParamList};
   PickCategoryPage: {level: number; quizType: keyof QuizPageStackParamList};
   QuizResultPage: {
-    words: Word[];
-    corrected: number[];
+    resultData: ResultDataProps[];
     quizType: keyof QuizPageStackParamList;
   };
 };

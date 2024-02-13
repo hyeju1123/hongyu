@@ -1,6 +1,5 @@
 import React, {memo} from 'react';
 import {Text, View} from 'react-native';
-import SvgIcon from './SvgIcon';
 
 import Card from './Card';
 import SoundButton from './SoundButton';
@@ -26,22 +25,17 @@ function QuizResultCard({
   return (
     <Card key={_id} underdressing={false}>
       <View style={styles.dirRow}>
-        <View>
-          <SvgIcon
-            name={isCorrected ? 'Circle' : 'Cross'}
-            fill={isCorrected ? green : warning}
-            size={18}
-          />
-          <BookmarkButton
-            id={_id}
-            word={word}
-            bookmarked={bookmarked}
-            isBusu={false}
-          />
-        </View>
+        <BookmarkButton
+          id={_id}
+          word={word}
+          bookmarked={bookmarked}
+          isBusu={false}
+        />
         <SoundButton level={level} word={word} />
       </View>
-      <Text style={styles.hanzi}>{word}</Text>
+      <Text style={[styles.hanzi, {color: isCorrected ? green : warning}]}>
+        {word}
+      </Text>
       <WordCardContent isBusu meaning={meaning} intonation={intonation} />
     </Card>
   );

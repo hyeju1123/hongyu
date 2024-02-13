@@ -55,7 +55,7 @@ function Toast(): JSX.Element {
       <Text style={styles.text}>{text}</Text>
       <TouchableOpacity
         onPress={() => setToastData(prev => ({...prev, status: false}))}>
-        <SvgIcon name="Cross" size={20} fill={lightTheme.black} />
+        <SvgIcon name="Cross" size={10} fill={lightTheme.black} />
       </TouchableOpacity>
     </Animated.View>
   );

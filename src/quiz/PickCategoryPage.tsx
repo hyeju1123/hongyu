@@ -115,7 +115,9 @@ function PickCategoryPage({
               key={category}
               style={styles.labelButton}>
               <Text style={styles.label}>{category}</Text>
-              <SvgIcon name="Cross" size={12} fill={lightTheme.darkRed} />
+              <View style={styles.closeWrapper}>
+                <SvgIcon name="Cross" size={8} fill={lightTheme.darkRed} />
+              </View>
             </TouchableOpacity>
           ))}
         </View>

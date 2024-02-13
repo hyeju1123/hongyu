@@ -153,7 +153,7 @@ function EditVocaPage({
         <TouchableOpacity
           onPress={() => setShowWCTemplate(false)}
           style={styles.closeButton}>
-          <SvgIcon name="Cross" size={20} fill={lightTheme.white} />
+          <SvgIcon name="Cross" size={15} fill={lightTheme.white} />
         </TouchableOpacity>
         {getFilteredWC().map((wc: string) => (
           <TouchableOpacity

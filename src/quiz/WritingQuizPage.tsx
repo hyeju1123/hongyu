@@ -1,18 +1,28 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {HeaderBackButton} from '@react-navigation/elements';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {
+  TouchableOpacity,
+  ScrollView,
+  View,
+  Text,
+  BackHandler,
+} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {StackActions} from '@react-navigation/native';
 
-import {ScrollView, View, Text} from 'react-native';
+import useToast from '../hooks/toast';
+import {ToastIcon} from '../recoil/ToastState';
+import {ResultDataProps} from './QuizResultPage';
+import SvgIcon from '../module/SvgIcon';
 import Canvas, {SigningPathType} from '../module/Canvas';
 import WritingPreviewInfo from './WritingPreviewInfo';
+import CheckAnswerButton from './CheckAnswerButton';
 
-import * as Icons from '../styles/svgIndex';
 import styles from '../styles/quiz/WritingQuizPageStyle';
-import SvgIcon from '../module/SvgIcon';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 import {lightTheme} from '../styles/colors';
-import {StackActions} from '@react-navigation/native';
 
 type WritingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -24,44 +34,14 @@ type PageInfoType = {
   writings: SigningPathType[];
 };
 
-type ScoreButtonType = {
-  index: number;
-  oButton: boolean;
-  scoreCard: boolean[] | undefined;
-  setScoreCard: React.Dispatch<React.SetStateAction<boolean[] | undefined>>;
-};
-
-const ScoreButton = ({
-  index,
-  oButton,
-  scoreCard,
-  setScoreCard,
-}: ScoreButtonType): JSX.Element => {
-  const {green, warning, gray} = lightTheme;
-  const icon = (oButton ? 'Circle' : 'Cross') as keyof typeof Icons;
-  const iconColor = oButton ? green : warning;
-  const correctCheck = oButton && scoreCard?.[index] ? 'Checkbox' : 'Square';
-  const wrongCheck = !oButton && scoreCard?.[index] ? 'Square' : 'Checkbox';
-  const checkbox = (oButton ? correctCheck : wrongCheck) as keyof typeof Icons;
-
-  return (
-    <TouchableOpacity
-      style={styles.serviceButtonWrapper}
-      onPress={() =>
-        setScoreCard(prev => prev?.map((v, i) => (i === index ? !v : v)))
-      }>
-      <SvgIcon name={icon} fill={iconColor} size={20} />
-      <SvgIcon name={checkbox} fill={gray} size={14} />
-    </TouchableOpacity>
-  );
-};
-
 function WritingQuizPage({
-  navigation: {setOptions, dispatch},
+  navigation: {setOptions, dispatch, goBack},
   route: {
     params: {wordData},
   },
 }: WritingQuizPageProps): JSX.Element {
+  const {fireToast} = useToast();
+  const backEvent = useRef(0);
   const writingRef = useRef<SigningPathType>([]);
   const totalLen = useRef(wordData.length).current;
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
@@ -70,24 +50,20 @@ function WritingQuizPage({
   });
   const [showWord, setShowWord] = useState(false);
   const [keepVisible, setKeepVisible] = useState(false);
-  const [scoreCard, setScoreCard] = useState<boolean[]>();
+  const [quizResult, setQuizResult] = useState<ResultDataProps[]>(
+    wordData.map(word => ({...word, correct: false})),
+  );
 
   const {index, writings} = pageInfo;
 
   const moveToResult = useCallback(() => {
-    const corrected =
-      scoreCard
-        ?.map((v, i) => (v ? wordData?.[i]._id : -1))
-        .filter(v => v !== -1) || [];
-
     dispatch(
       StackActions.replace('QuizResultPage', {
-        words: wordData,
-        corrected,
+        resultData: quizResult,
         quizType: 'WritingQuizPage',
       }),
     );
-  }, [dispatch, scoreCard, wordData]);
+  }, [dispatch, quizResult]);
 
   const moveCallback = useCallback(
     (newIdx: number) => {
@@ -110,13 +86,50 @@ function WritingQuizPage({
     [index, writings, keepVisible, totalLen, moveToResult],
   );
 
+  const handleCheckAnswer = useCallback(() => {
+    setQuizResult(prev =>
+      prev.map((v, i) => (i === index ? {...v, correct: !v.correct} : v)),
+    );
+  }, [index]);
+
   useEffect(() => {
-    setScoreCard(Array.from({length: wordData.length}, () => false));
+    const backAction = () => {
+      setTimeout(() => {
+        backEvent.current = 0;
+      }, 2000);
+      if (backEvent.current === 0) {
+        backEvent.current += 1;
+        fireToast({
+          text: "'뒤로가기'를 한 번 더 누르면 시험이 종료됩니다",
+          icon: ToastIcon.AbNormal,
+          remove: true,
+        });
+      } else {
+        goBack();
+      }
+      return true;
+    };
+
+    const handleBackButton = (props: HeaderBackButtonProps) => (
+      <HeaderBackButton {...props} onPress={backAction} />
+    );
+
+    const handleHardwareBack = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    setOptions({
+      headerLeft: handleBackButton,
+    });
+
     setPageInfo(prev => ({
       ...prev,
       writings: Array.from({length: wordData.length}, () => []),
     }));
-  }, [wordData]);
+
+    return () => handleHardwareBack.remove();
+  }, [wordData, fireToast, setOptions, goBack]);
 
   useEffect(() => {
     setOptions({headerTitle: index + 1 + '/' + totalLen});
@@ -125,21 +138,21 @@ function WritingQuizPage({
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.serviceButtonWrapper}>
+          <CheckAnswerButton
+            oButton
+            index={index}
+            quizResult={quizResult}
+            handleCheckAnswer={handleCheckAnswer}
+          />
+          <CheckAnswerButton
+            oButton={false}
+            index={index}
+            quizResult={quizResult}
+            handleCheckAnswer={handleCheckAnswer}
+          />
+        </View>
         <View style={styles.infoContainer}>
-          <View style={styles.serviceButtonWrapper}>
-            <ScoreButton
-              oButton
-              index={index}
-              scoreCard={scoreCard}
-              setScoreCard={setScoreCard}
-            />
-            <ScoreButton
-              oButton={false}
-              index={index}
-              scoreCard={scoreCard}
-              setScoreCard={setScoreCard}
-            />
-          </View>
           {showWord && (
             <View style={styles.serviceButtonWrapper}>
               <Text style={styles.guideText}>

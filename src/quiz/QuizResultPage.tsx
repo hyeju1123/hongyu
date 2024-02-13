@@ -1,38 +1,43 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
-import {StackActions} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {FlashList} from '@shopify/flash-list';
+import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, TouchableOpacity, View} from 'react-native';
+import {StackActions} from '@react-navigation/native';
+import {FlashList} from '@shopify/flash-list';
+
 import SvgIcon from '../module/SvgIcon';
 import QuizResultCard from '../module/QuizResultCard';
 
 import useToast from '../hooks/toast';
+import {Word} from '../recoil/WordListState';
 import {ToastIcon} from '../recoil/ToastState';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/QuizResultPageStyle';
 import cardWrapperStyles from '../styles/module/CardWrapperStyle';
-import {Word} from '../recoil/WordListState';
-
-enum resultType {
-  CORRECT = 'correct',
-  WRONG = 'wrong',
-}
 
 type QuizResultPageProps = NativeStackScreenProps<
   QuizStackParamList,
   'QuizResultPage'
 >;
 
+enum ResultType {
+  CORRECT = 'correct',
+  WRONG = 'wrong',
+}
+
+export type ResultDataProps = Word & {
+  correct: boolean;
+};
+
+type ClassifiedDataProps = {
+  correct: Word[];
+  wrong: Word[];
+};
+
 type ItemsProps = {
   count: number;
   data: Word[];
-};
-
-type DataProps = {
-  correct: Word[];
-  wrong: Word[];
 };
 
 const LOAD_DATA_NUM = 15;
@@ -40,16 +45,16 @@ const LOAD_DATA_NUM = 15;
 function QuizResultPage({
   navigation: {dispatch},
   route: {
-    params: {words, corrected, quizType},
+    params: {resultData, quizType},
   },
 }: QuizResultPageProps) {
   const {green, warning, white} = lightTheme;
-  const {CORRECT, WRONG} = resultType;
+  const {CORRECT, WRONG} = ResultType;
 
   const {fireToast} = useToast();
 
-  const [nav, setNav] = useState<resultType>(CORRECT);
-  const [data, setData] = useState<DataProps>({
+  const [nav, setNav] = useState<ResultType>(CORRECT);
+  const [data, setData] = useState<ClassifiedDataProps>({
     correct: [],
     wrong: [],
   });
@@ -63,7 +68,7 @@ function QuizResultPage({
   }, [data]);
 
   const handleNav = useCallback(
-    (type: resultType) => {
+    (type: ResultType) => {
       setNav(type);
       setItems(() => ({
         count: LOAD_DATA_NUM,
@@ -113,10 +118,13 @@ function QuizResultPage({
   }, [dispatch, data, fireToast, quizType]);
 
   useEffect(() => {
-    const correct = words.filter(({_id}) => corrected.includes(_id));
-    const wrong = words.filter(({_id}) => !corrected.includes(_id));
+    const {correct, wrong}: ClassifiedDataProps = {correct: [], wrong: []};
+    resultData.map(word => {
+      word.correct ? correct.push(word) : wrong.push(word);
+    });
+
     setData({correct, wrong});
-  }, [words, corrected]);
+  }, [resultData]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
@@ -128,7 +136,7 @@ function QuizResultPage({
             styles.navButton,
             nav === CORRECT && styles.bottomLine,
           ]}>
-          <SvgIcon name="Circle" size={13} fill={green} />
+          <SvgIcon name="Circle" size={10} fill={green} />
           <Text style={[styles.text, {color: green}]}>
             정답 {lenInfo.correctLen}
           </Text>
@@ -140,7 +148,7 @@ function QuizResultPage({
             styles.navButton,
             nav === WRONG && styles.bottomLine,
           ]}>
-          <SvgIcon name="Cross" size={13} fill={warning} />
+          <SvgIcon name="Cross" size={10} fill={warning} />
           <Text style={[styles.text, {color: warning}]}>
             오답 {lenInfo.wrongLen}
           </Text>

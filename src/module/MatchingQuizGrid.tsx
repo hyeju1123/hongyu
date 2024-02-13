@@ -1,9 +1,15 @@
-import React, {PropsWithChildren, useRef, useState} from 'react';
+import React, {
+  MutableRefObject,
+  PropsWithChildren,
+  useRef,
+  useState,
+} from 'react';
 import {Text, View} from 'react-native';
 import {BaseButton} from 'react-native-gesture-handler';
 import {Word} from '../recoil/WordListState';
 import useQuiz from '../hooks/quiz';
 import useDidMountEffect from '../hooks/didMount';
+import {ResultDataProps} from '../quiz/QuizResultPage';
 
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/quiz/MatchingQuizGridStyle';
@@ -13,13 +19,13 @@ const CORRECT_VERIFIED_VALUE = '  ';
 
 type MatchingQuizGridProps = PropsWithChildren<{
   words: Word[];
-  correctedIds: number[];
+  quizResult: MutableRefObject<ResultDataProps[]>;
   handleAllClear: () => void;
 }>;
 
 function MatchingQuizGrid({
   words,
-  correctedIds,
+  quizResult,
   handleAllClear,
 }: MatchingQuizGridProps): JSX.Element {
   const correctedNum = useRef(0);
@@ -55,7 +61,9 @@ function MatchingQuizGrid({
   const checkAnswer = (pair: string[]) => {
     for (const {_id, word, meaning} of wordDict) {
       if ([word, meaning].every(item => pair.includes(item))) {
-        correctedIds.push(_id);
+        quizResult.current = quizResult.current.map(prev =>
+          prev._id === _id ? {...prev, correct: true} : prev,
+        );
         return true;
       }
     }

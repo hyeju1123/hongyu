@@ -1,11 +1,12 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
-import styles from '../styles/module/PickQuizTypeModalStyle';
-import SvgIcon from './SvgIcon';
-import {lightTheme} from '../styles/colors';
-import useQuiz from '../hooks/quiz';
-import CategoryCard from './CategoryCard';
 import {QuizPageStackParamList} from '../navigation/QuizNavigation';
+import useQuiz from '../hooks/quiz';
+import SvgIcon from './SvgIcon';
+import CategoryCard from './CategoryCard';
+
+import {lightTheme} from '../styles/colors';
+import styles from '../styles/module/PickQuizTypeModalStyle';
 
 type CardsProps = {
   handleMove: (quizType: keyof QuizPageStackParamList) => void;
@@ -39,7 +40,7 @@ function PickQuizTypeModal({
   return (
     <TouchableOpacity activeOpacity={1} style={styles.modal}>
       <TouchableOpacity onPress={handleModal} style={styles.closeButton}>
-        <SvgIcon name="Cross" fill={lightTheme.black} size={20} />
+        <SvgIcon name="Cross" fill={lightTheme.black} size={15} />
       </TouchableOpacity>
       <Text style={styles.guideText}>시험 유형을 선택해주세요</Text>
       <Cards handleMove={handleMove} />

@@ -39,7 +39,7 @@ const commonPart: Style = {
     justifyContent: 'space-evenly',
     height: '40%',
     width: '100%',
-    padding: 10,
+    padding: 15,
   },
   infoWrapper: {
     display: 'flex',
@@ -48,11 +48,12 @@ const commonPart: Style = {
     bottom: 0,
   },
   serviceButtonWrapper: {
+    minWidth: 27,
     display: 'flex',
     flexDirection: 'row',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginHorizontal: 5,
+    margin: 5,
   },
   guideText: {
     fontFamily: fonts.hanzi,

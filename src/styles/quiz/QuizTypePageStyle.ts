@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -17,10 +11,8 @@ type Style = {
   labelWrapper: ViewStyle;
   labelButton: ViewStyle;
   label: TextStyle;
-  closeImage: ImageStyle;
-  completeImage: ImageStyle;
+  closeWrapper: ViewStyle;
   dirRow: ViewStyle;
-  modalBack: ViewStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -72,26 +64,11 @@ const commonPart: Style = {
     paddingVertical: 3,
   },
   label: {
-    marginHorizontal: 2,
     fontFamily: fonts.mainBold,
     color: lightTheme.black,
   },
-  closeImage: {
+  closeWrapper: {
     marginLeft: 4,
-    width: width * 0.015,
-    height: width * 0.015,
-  },
-  completeImage: {
-    marginLeft: 4,
-    width: width * 0.03,
-    height: width * 0.03,
-  },
-  modalBack: {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    zIndex: 10,
-    backgroundColor: lightTheme.transBlack,
   },
 };
 
@@ -146,11 +123,6 @@ const handleStyles = () => {
       label: {
         ...commonPart.label,
         fontSize: width * 0.03,
-      },
-      closeImage: {
-        marginLeft: 5,
-        width: width * 0.013,
-        height: width * 0.013,
       },
     });
   }

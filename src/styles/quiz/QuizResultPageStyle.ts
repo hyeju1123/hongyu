@@ -44,6 +44,7 @@ const commonPart: Style = {
     fontFamily: fonts.pinyin,
     fontSize: 13,
     color: lightTheme.black,
+    marginHorizontal: 3,
   },
   retryButton: {
     position: 'absolute',

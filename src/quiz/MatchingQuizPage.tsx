@@ -6,6 +6,7 @@ import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
 import {StackActions} from '@react-navigation/native';
+import {ResultDataProps} from './QuizResultPage';
 import MatchingQuizGrid from '../module/MatchingQuizGrid';
 import Timer from '../module/Timer';
 import SvgIcon from '../module/SvgIcon';
@@ -21,7 +22,7 @@ type MatchingQuizPageProps = NativeStackScreenProps<
   'MatchingQuizPage'
 >;
 
-const TIMEOUT = 10000;
+const TIMEOUT = 5000;
 const PAGE_TRANSITION_DELAY = 1000;
 
 function MatchingQuizPage({
@@ -32,8 +33,8 @@ function MatchingQuizPage({
 }: MatchingQuizPageProps): JSX.Element {
   const {fireToast} = useToast();
 
-  const correctedIds: number[] = useMemo(() => [], []);
   const [words, setWords] = useState<Word[]>([]);
+  const quizResult = useRef<ResultDataProps[]>([]);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [notifyQuizEnd, setNotifyQuizEnd] = useState({
@@ -49,8 +50,7 @@ function MatchingQuizPage({
       if (currentPage === pageLength) {
         dispatch(
           StackActions.replace('QuizResultPage', {
-            words,
-            corrected: correctedIds,
+            resultData: quizResult.current,
             quizType: 'MatchingQuizPage',
           }),
         );
@@ -64,7 +64,7 @@ function MatchingQuizPage({
     }, TIMEOUT);
 
     timeoutId.current = timeout;
-  }, [currentPage, pageLength, words, dispatch, correctedIds]);
+  }, [currentPage, pageLength, dispatch, quizResult]);
 
   const handleAllClear = () => {
     timeoutId.current !== null && clearTimeout(timeoutId.current);
@@ -74,8 +74,7 @@ function MatchingQuizPage({
       if (currentPage === pageLength) {
         dispatch(
           StackActions.replace('QuizResultPage', {
-            words,
-            corrected: correctedIds,
+            resultData: quizResult.current,
             quizType: 'MatchingQuizPage',
           }),
         );
@@ -127,6 +126,8 @@ function MatchingQuizPage({
       headerLeft: handleBackButton,
     });
 
+    quizResult.current = wordData.map(word => ({...word, correct: false}));
+
     return () => handleHardwareBack.remove();
   }, [fireToast, setOptions, goBack, wordData]);
 
@@ -153,7 +154,7 @@ function MatchingQuizPage({
         </View>
         <MatchingQuizGrid
           handleAllClear={handleAllClear}
-          correctedIds={correctedIds}
+          quizResult={quizResult}
           words={currentPageWords}
         />
       </ScrollView>
