@@ -14,12 +14,6 @@ type PickingQuizPageProps = NativeStackScreenProps<
   'PickingQuizPage'
 >;
 
-export type PickDataProps = {
-  id: number;
-  picked: string;
-  correct: boolean;
-};
-
 function PickingQuizPage({
   navigation: {setOptions, dispatch},
   route: {
@@ -29,26 +23,9 @@ function PickingQuizPage({
   const {QUIZ} = PageType;
   const [page, setPage] = useState(0);
   const totalLen = useRef(wordData.length).current;
-  const [pickData, setPickData] = useState<PickDataProps[]>(
-    wordData.map(({_id}) => ({id: _id, picked: '', correct: false})),
-  );
-
-  const handlePick = useCallback(
-    (picked: string, answer: string) => {
-      if (pickData[page].picked !== '') {
-        return;
-      }
-
-      const correct = answer === picked || false;
-      setPickData(prev =>
-        prev.map((v, i) => (i === page ? {...v, picked, correct} : v)),
-      );
-    },
-    [page, pickData],
-  );
+  const corrected = useRef<number[]>([]).current;
 
   const moveToResult = useCallback(() => {
-    const corrected = pickData.map(({id, correct}) => (correct ? id : false));
     dispatch(
       StackActions.replace('QuizResultPage', {
         words: wordData,
@@ -56,7 +33,7 @@ function PickingQuizPage({
         quizType: 'PickingQuizPage',
       }),
     );
-  }, [dispatch, pickData, wordData]);
+  }, [dispatch, wordData, corrected]);
 
   const handleMove = useCallback(
     (newPage: number) => {
@@ -73,13 +50,7 @@ function PickingQuizPage({
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <Text style={styles.guideText}>한자에 맞는 뜻을 고르세요</Text>
-        <PickingPanel
-          index={page}
-          totalLen={totalLen}
-          wordData={wordData[page]}
-          pickData={pickData[page]}
-          handlePick={handlePick}
-        />
+        <PickingPanel index={page} wordData={wordData} corrected={corrected} />
         <BottomNav
           id={wordData[page]._id}
           page={page}

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {FlatList, TouchableOpacity, Text, View} from 'react-native';
 import {Word} from '../recoil/WordListState';
 
@@ -7,35 +7,61 @@ import useUtil from '../hooks/util';
 import styles from '../styles/quiz/PickingPanelStyle';
 import {useVoca} from '../providers/VocaProvider';
 import {lightTheme} from '../styles/colors';
-import {PickDataProps} from './PickingQuizPage';
 import SoundButton from '../module/SoundButton';
 
 type PickingPanelProps = {
   index: number;
-  totalLen: number;
-  wordData: Word;
-  pickData: PickDataProps;
+  wordData: Word[];
+  corrected: number[];
   listening?: boolean;
-  handlePick: (picked: string, answer: string) => void;
+};
+
+type PickDataProps = {
+  picked: string;
+  correct: boolean;
 };
 
 const CARD_NUM = 4;
 
 function PickingPanel({
   index,
-  totalLen,
-  wordData: {word, meaning, intonation, level},
-  pickData: {picked, correct},
+  wordData,
+  corrected,
   listening = false,
-  handlePick,
 }: PickingPanelProps): JSX.Element {
   const {mint, mildYellow} = lightTheme;
   const {shuffleArray} = useUtil();
   const {getVocasByLevel} = useVoca();
   const [layoutWidth, setLayoutWidth] = useState(0);
+
+  const [pickData, setPickData] = useState<PickDataProps[]>(
+    wordData.map(() => ({picked: '', correct: false})),
+  );
+  const totalLen = useRef(wordData.length).current;
   const [candidates, setCandidates] = useState<string[]>([]);
   const candidatesRef = useRef<string[][]>(
     Array.from({length: totalLen}, () => []),
+  );
+
+  const {picked, correct} = pickData[index];
+  const {_id, word, intonation, meaning, level} = wordData[index];
+
+  const handlePick = useCallback(
+    (pickedOne: string, answer: string) => {
+      if (picked !== '') {
+        return;
+      }
+
+      const result = answer === pickedOne || false;
+      result && corrected.push(_id);
+
+      setPickData(prev =>
+        prev.map((v, i) =>
+          i === index ? {picked: pickedOne, correct: result} : v,
+        ),
+      );
+    },
+    [index, picked, corrected, _id],
   );
 
   const setColor = (item: string) => {
@@ -52,19 +78,19 @@ function PickingPanel({
       const randomLevel = Math.floor(Math.random() * 6) + 1;
       const samples = getVocasByLevel(randomLevel);
 
-      const getCandidates = () => {
-        const candidatesIdx = [index];
-        const candidatesData = [meaning];
+      const getCandidates = (): string[] => {
+        const ids = [_id];
+        const meanings = [meaning];
 
-        while (candidatesIdx.length < CARD_NUM) {
+        while (ids.length < CARD_NUM) {
           let randomIdx = Math.floor(Math.random() * samples.length);
-          if (!candidatesIdx.includes(randomIdx)) {
-            candidatesIdx.push(randomIdx);
-            candidatesData.push(samples[randomIdx].meaning);
+          if (!ids.includes(samples[randomIdx]._id)) {
+            ids.push(randomIdx);
+            meanings.push(samples[randomIdx].meaning);
           }
         }
 
-        return shuffleArray(candidatesData);
+        return shuffleArray(meanings);
       };
       const candidatesData = getCandidates();
       candidatesRef.current = candidatesRef.current.map((v, i) =>
@@ -74,7 +100,15 @@ function PickingPanel({
     } else {
       setCandidates(candidatesRef.current[index]);
     }
-  }, [getVocasByLevel, shuffleArray, index, meaning, picked, candidatesRef]);
+  }, [
+    _id,
+    index,
+    meaning,
+    picked,
+    candidatesRef,
+    shuffleArray,
+    getVocasByLevel,
+  ]);
 
   return (
     <View style={styles.panel}>
