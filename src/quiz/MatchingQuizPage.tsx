@@ -1,21 +1,18 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ScrollView, Text, View, BackHandler} from 'react-native';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
-import {HeaderBackButton} from '@react-navigation/elements';
-import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {ScrollView, Text, View} from 'react-native';
 import {StackActions} from '@react-navigation/native';
 import {ResultDataProps} from './QuizResultPage';
-import MatchingQuizGrid from '../module/MatchingQuizGrid';
-import Timer from '../module/Timer';
-import SvgIcon from '../module/SvgIcon';
+import {Word} from '../recoil/WordListState';
 
-import useToast from '../hooks/toast';
+import MatchingQuizGrid from '../module/MatchingQuizGrid';
+import SvgIcon from '../module/SvgIcon';
+import BackButton from './BackButton';
+import Timer from '../module/Timer';
 
 import styles from '../styles/quiz/MatchingQuizPageStyle';
-import {ToastIcon} from '../recoil/ToastState';
-import {Word} from '../recoil/WordListState';
 
 type MatchingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -26,13 +23,12 @@ const TIMEOUT = 5000;
 const PAGE_TRANSITION_DELAY = 1000;
 
 function MatchingQuizPage({
-  navigation: {goBack, setOptions, dispatch},
+  navigation,
+  navigation: {setOptions, dispatch},
   route: {
     params: {wordData},
   },
 }: MatchingQuizPageProps): JSX.Element {
-  const {fireToast} = useToast();
-
   const [words, setWords] = useState<Word[]>([]);
   const quizResult = useRef<ResultDataProps[]>([]);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
@@ -41,7 +37,7 @@ function MatchingQuizPage({
     state: false,
     result: '',
   });
-  const backEvent = useRef(0);
+
   const pageLength = useMemo(() => Math.ceil(words.length / 5), [words.length]);
   const currentPageWords = words.slice(5 * (currentPage - 1), 5 * currentPage);
 
@@ -95,44 +91,13 @@ function MatchingQuizPage({
   }, [handleTimeover, setOptions, currentPage, pageLength]);
 
   useEffect(() => {
-    const backAction = () => {
-      setTimeout(() => {
-        backEvent.current = 0;
-      }, 2000);
-      if (backEvent.current === 0) {
-        backEvent.current += 1;
-        fireToast({
-          text: "'뒤로가기'를 한 번 더 누르면 시험이 종료됩니다",
-          icon: ToastIcon.AbNormal,
-          remove: true,
-        });
-      } else {
-        goBack();
-      }
-      return true;
-    };
-
-    const handleBackButton = (props: HeaderBackButtonProps) => (
-      <HeaderBackButton {...props} onPress={backAction} />
-    );
-
-    const handleHardwareBack = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
     setWords(wordData);
-    setOptions({
-      headerLeft: handleBackButton,
-    });
-
     quizResult.current = wordData.map(word => ({...word, correct: false}));
-
-    return () => handleHardwareBack.remove();
-  }, [fireToast, setOptions, goBack, wordData]);
+  }, [wordData]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
+      <BackButton navigation={navigation} />
       {notifyQuizEnd.state && (
         <View style={styles.endQuizContainer}>
           <View style={styles.endQuizWrapper}>

@@ -1,21 +1,12 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
-import {HeaderBackButton} from '@react-navigation/elements';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
-import {
-  TouchableOpacity,
-  ScrollView,
-  View,
-  Text,
-  BackHandler,
-} from 'react-native';
+import {TouchableOpacity, ScrollView, View, Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackActions} from '@react-navigation/native';
 
-import useToast from '../hooks/toast';
-import {ToastIcon} from '../recoil/ToastState';
 import {ResultDataProps} from './QuizResultPage';
+import BackButton from './BackButton';
 import SvgIcon from '../module/SvgIcon';
 import Canvas, {SigningPathType} from '../module/Canvas';
 import WritingPreviewInfo from './WritingPreviewInfo';
@@ -35,13 +26,12 @@ type PageInfoType = {
 };
 
 function WritingQuizPage({
-  navigation: {setOptions, dispatch, goBack},
+  navigation,
+  navigation: {setOptions, dispatch},
   route: {
     params: {wordData},
   },
 }: WritingQuizPageProps): JSX.Element {
-  const {fireToast} = useToast();
-  const backEvent = useRef(0);
   const writingRef = useRef<SigningPathType>([]);
   const totalLen = useRef(wordData.length).current;
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
@@ -93,43 +83,11 @@ function WritingQuizPage({
   }, [index]);
 
   useEffect(() => {
-    const backAction = () => {
-      setTimeout(() => {
-        backEvent.current = 0;
-      }, 2000);
-      if (backEvent.current === 0) {
-        backEvent.current += 1;
-        fireToast({
-          text: "'뒤로가기'를 한 번 더 누르면 시험이 종료됩니다",
-          icon: ToastIcon.AbNormal,
-          remove: true,
-        });
-      } else {
-        goBack();
-      }
-      return true;
-    };
-
-    const handleBackButton = (props: HeaderBackButtonProps) => (
-      <HeaderBackButton {...props} onPress={backAction} />
-    );
-
-    const handleHardwareBack = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction,
-    );
-
-    setOptions({
-      headerLeft: handleBackButton,
-    });
-
     setPageInfo(prev => ({
       ...prev,
       writings: Array.from({length: wordData.length}, () => []),
     }));
-
-    return () => handleHardwareBack.remove();
-  }, [wordData, fireToast, setOptions, goBack]);
+  }, [wordData]);
 
   useEffect(() => {
     setOptions({headerTitle: index + 1 + '/' + totalLen});
@@ -137,6 +95,7 @@ function WritingQuizPage({
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
+      <BackButton navigation={navigation} />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.serviceButtonWrapper}>
           <CheckAnswerButton
