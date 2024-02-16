@@ -1,7 +1,9 @@
 import React, {PropsWithChildren, memo} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
 import SvgIcon from './SvgIcon';
 import usePolly from '../hooks/polly';
+import styles from '../styles/module/SoundButtonStyle';
+import iconSize from '../styles/iconSize';
 
 type SoundButtonProps = PropsWithChildren<{
   level: number;
@@ -10,25 +12,16 @@ type SoundButtonProps = PropsWithChildren<{
 }>;
 
 function SoundButton({level, word, largeSize = false}: SoundButtonProps) {
+  const {largeVersionSound} = iconSize;
   const {setToggle} = usePolly();
 
   return (
     <TouchableOpacity
       style={[styles.button, largeSize && styles.alignCenter]}
       onPress={() => setToggle({word, level})}>
-      <SvgIcon name="Sound" size={largeSize ? 50 : 20} />
+      <SvgIcon name="Sound" size={largeSize ? largeVersionSound : 20} />
     </TouchableOpacity>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    alignSelf: 'flex-start',
-    padding: 5,
-  },
-  alignCenter: {
-    alignSelf: 'center',
-  },
-});
 
 export default memo(SoundButton);

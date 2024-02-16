@@ -19,6 +19,7 @@ function MainPage({navigation}: MainPageProps): JSX.Element {
         translucent={true}
       />
       <ScrollView
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.scrollViewContent}
         style={styles.scrollView}>
         <Header navigation={navigation} />

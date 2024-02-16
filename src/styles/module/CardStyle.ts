@@ -56,10 +56,6 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
-      card: {
-        ...commonPart.card,
-        padding: 5,
-      },
     });
   }
 

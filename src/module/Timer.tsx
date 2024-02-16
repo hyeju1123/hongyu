@@ -3,6 +3,7 @@ import {View, StyleSheet, Animated, Dimensions} from 'react-native';
 import SvgIcon from './SvgIcon';
 
 import {lightTheme} from '../styles/colors';
+import iconSize from '../styles/iconSize';
 
 type TimerProps = PropsWithChildren<{
   currentPage: number;
@@ -10,9 +11,10 @@ type TimerProps = PropsWithChildren<{
 }>;
 
 const width = Dimensions.get('screen').width;
-const URGENT_SECOND = 5000;
+const URGENT_SECOND = 3000;
 
 function Timer({currentPage, duration}: TimerProps) {
+  const {clock} = iconSize;
   const timer = useRef(new Animated.Value(width * 0.8));
   const urgentTimeout = useRef<NodeJS.Timeout | null>(null);
   const [urgent, setUrgent] = useState(false);
@@ -36,7 +38,7 @@ function Timer({currentPage, duration}: TimerProps) {
     <>
       <SvgIcon
         name="StopWatch"
-        size={25}
+        size={clock}
         fill={urgent ? lightTheme.darkRed : lightTheme.shadowGray}
       />
       <View style={styles.container}>

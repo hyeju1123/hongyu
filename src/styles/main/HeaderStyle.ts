@@ -13,7 +13,6 @@ const width = Dimensions.get('screen').width;
 
 type Style = {
   headerBox: ViewStyle;
-  logoImg: ImageStyle;
   inputSection: ViewStyle;
   text: TextStyle;
   pencilWithZhImg: ImageStyle;
@@ -24,10 +23,7 @@ const handleStyles = () => {
     headerBox: {
       display: 'flex',
       alignItems: 'center',
-    },
-    logoImg: {
-      width: 50,
-      height: 75,
+      paddingVertical: 5,
     },
     inputSection: {
       width: '100%',
@@ -54,10 +50,6 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
-      logoImg: {
-        width: 40,
-        height: 60,
-      },
       inputSection: {
         ...commonPart.inputSection,
         paddingVertical: 3,
@@ -76,11 +68,6 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
-      logoImg: {
-        ...commonPart.logoImg,
-        width: width * 0.1,
-        height: width * 0.15,
-      },
       inputSection: {
         ...commonPart.inputSection,
         borderWidth: 1.5,

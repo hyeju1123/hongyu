@@ -4,6 +4,7 @@ import Svg, {Path} from 'react-native-svg';
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/module/CanvasStyle';
 import SvgIcon from './SvgIcon';
+import iconSize from '../styles/iconSize';
 
 type PathType = {
   path: string[];
@@ -21,6 +22,7 @@ type CanvasProp = {
 };
 
 const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
+  const {writingReset} = iconSize;
   const stroke = STROKE_SIZE;
   const color = lightTheme.black;
   const [paths, setPaths] = useState<SigningPathType>([]);
@@ -65,13 +67,13 @@ const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
         <TouchableOpacity
           style={[styles.buttonWrapper, styles.resetButton, styles.shadow]}
           onPress={() => setPaths([])}>
-          <SvgIcon name="Sparkles" fill={lightTheme.red} size={20} />
+          <SvgIcon name="Sparkles" fill={lightTheme.red} size={writingReset} />
           <Text style={styles.resetButtonText}>전체 지우기</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.buttonWrapper, styles.resetButton, styles.shadow]}
           onPress={deleteOnePath}>
-          <SvgIcon name="Eraser" fill={lightTheme.red} size={20} />
+          <SvgIcon name="Eraser" fill={lightTheme.red} size={writingReset} />
           <Text style={styles.resetButtonText}>한 획 지우기</Text>
         </TouchableOpacity>
       </View>

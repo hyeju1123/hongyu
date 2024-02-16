@@ -20,7 +20,7 @@ const commonPart: Style = {
   },
   card: {
     width: (width - 60) / 2,
-    minHeight: width * 0.2,
+    minHeight: 75,
     borderRadius: 10,
     display: 'flex',
     justifyContent: 'center',
@@ -30,7 +30,7 @@ const commonPart: Style = {
   },
   cardText: {
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.035,
+    fontSize: 12,
     color: lightTheme.black,
   },
 };
@@ -41,11 +41,12 @@ const handleStyles = () => {
       ...commonPart,
       card: {
         ...commonPart.card,
+        minHeight: 60,
         borderRadius: 5,
       },
       cardText: {
         ...commonPart.cardText,
-        fontSize: 10,
+        fontSize: 8,
       },
     });
   }

@@ -19,13 +19,13 @@ function CategoryCard({title, desc, icon}: CategoryCardProps): JSX.Element {
       paddingHorizontal={15}
       marginVertical={getDisplaySize() === DisplaySize.Large ? 12 : 8}
       dirRow={true}>
-      <SvgIcon name={icon} fill={lightTheme.darkRed} />
+      <SvgIcon name={icon} fill={lightTheme.red} />
       <View
         style={[styles.typeTextWrapper, desc === '' && styles.justifyContent]}>
         <Text style={styles.title}>{title}</Text>
         {desc !== '' && <Text style={styles.desc}>{desc}</Text>}
       </View>
-      <SvgIcon name="LineArrow" fill={lightTheme.darkRed} />
+      <SvgIcon name="LineArrow" fill={lightTheme.red} />
     </Card>
   );
 }

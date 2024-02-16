@@ -8,6 +8,7 @@ import {useRecoilValue} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 import BookmarkButton, {ButtonSize} from './BookmarkButton';
 import {ToastIcon} from '../recoil/ToastState';
+import iconSize from '../styles/iconSize';
 
 export enum PageType {
   VOCA = 'voca',
@@ -33,6 +34,7 @@ function BottomNav({
   callback,
 }: BottomNavType): JSX.Element {
   const {BUSU, QUIZ} = PageType;
+  const {triangle, smallTrianle} = iconSize;
   const {fireToast} = useToast();
   const wordState = pageType === BUSU ? busuState : vocaState;
   const {word, bookmarked} = useRecoilValue(wordState(id));
@@ -68,7 +70,11 @@ function BottomNav({
       <TouchableOpacity
         style={styles.horizonFlip}
         onPress={() => handlePageMove(false)}>
-        <SvgIcon name="Play" size={large ? 40 : 25} fill={lightTheme.black} />
+        <SvgIcon
+          name="Play"
+          size={large ? triangle : smallTrianle}
+          fill={lightTheme.black}
+        />
       </TouchableOpacity>
       {large && (
         <BookmarkButton
@@ -80,7 +86,11 @@ function BottomNav({
         />
       )}
       <TouchableOpacity onPress={() => handlePageMove(true)}>
-        <SvgIcon name="Play" size={large ? 40 : 25} fill={lightTheme.black} />
+        <SvgIcon
+          name="Play"
+          size={large ? triangle : smallTrianle}
+          fill={lightTheme.black}
+        />
       </TouchableOpacity>
     </View>
   );

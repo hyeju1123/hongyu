@@ -5,6 +5,7 @@ import {lightTheme} from '../styles/colors';
 import * as Icons from '../styles/svgIndex';
 import styles from '../styles/quiz/WritingQuizPageStyle';
 import {ResultDataProps} from './QuizResultPage';
+import iconSize from '../styles/iconSize';
 
 type CheckAnswerButtonType = {
   index: number;
@@ -19,6 +20,7 @@ const CheckAnswerButton = ({
   quizResult,
   handleCheckAnswer,
 }: CheckAnswerButtonType): JSX.Element => {
+  const {checkBox, ox} = iconSize;
   const {green, warning, gray} = lightTheme;
   const icon = (oButton ? 'Circle' : 'Cross') as keyof typeof Icons;
   const iconColor = oButton ? green : warning;
@@ -31,8 +33,8 @@ const CheckAnswerButton = ({
     <TouchableOpacity
       style={styles.serviceButtonWrapper}
       onPress={handleCheckAnswer}>
-      <SvgIcon name={icon} fill={iconColor} size={10} />
-      <SvgIcon name={checkbox} fill={gray} size={14} />
+      <SvgIcon name={icon} fill={iconColor} size={ox} />
+      <SvgIcon name={checkbox} fill={gray} size={checkBox} />
     </TouchableOpacity>
   );
 };

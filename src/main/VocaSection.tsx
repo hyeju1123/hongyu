@@ -8,6 +8,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useSetRecoilState} from 'recoil';
 import {WordNav, wordNavState} from '../recoil/WordNavState';
 import SvgIcon from '../module/SvgIcon';
+import iconSize from '../styles/iconSize';
 
 type VocaSectionProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -18,6 +19,7 @@ type VocaSectionProps = PropsWithChildren<{
 }>;
 
 const LEVELS = [1, 2, 3, 4, 5, 6];
+const {vocaSectionLantern} = iconSize;
 
 function VocaSection({navigation: {navigate}}: VocaSectionProps) {
   const navTypeSetter = useSetRecoilState(wordNavState);
@@ -69,7 +71,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
         <Card theme={ThemeColor.Red}>
           <View style={styles.scrap}>
             <Text style={styles.scrapText}>내 단어장</Text>
-            <SvgIcon name="LanternOn" size={25} />
+            <SvgIcon name="LanternOn" size={vocaSectionLantern} />
           </View>
         </Card>
       </TouchableOpacity>

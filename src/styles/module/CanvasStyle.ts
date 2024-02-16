@@ -14,8 +14,6 @@ type Style = {
   canvas: ViewStyle;
   backHanziWrapper: ViewStyle;
   backHanzi: TextStyle;
-  shortLenHanzi: TextStyle;
-  longLenHanzi: TextStyle;
   buttonWrapper: ViewStyle;
   resetButton: ViewStyle;
   resetButtonText: TextStyle;
@@ -58,12 +56,6 @@ const commonPart: Style = {
     fontFamily: fonts.hanzi,
     color: lightTheme.ligthGray,
   },
-  shortLenHanzi: {
-    fontSize: width * 0.3,
-  },
-  longLenHanzi: {
-    fontSize: width * 0.23,
-  },
   buttonWrapper: {
     display: 'flex',
     flexDirection: 'row',
@@ -77,6 +69,7 @@ const commonPart: Style = {
   },
   resetButtonText: {
     fontFamily: fonts.hanzi,
+    fontSize: 13,
     color: lightTheme.red,
     marginLeft: 5,
   },
@@ -109,6 +102,16 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
+      resetButton: {
+        ...commonPart.resetButton,
+        borderRadius: 5,
+        padding: 5,
+        margin: 7,
+      },
+      resetButtonText: {
+        ...commonPart.resetButtonText,
+        fontSize: 8,
+      },
     });
   }
 

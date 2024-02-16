@@ -35,7 +35,6 @@ const commonPart: Style = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 20,
-
     borderWidth: 1,
     borderColor: 'black',
   },
@@ -45,6 +44,16 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      guideText: {
+        ...commonPart.guideText,
+        fontSize: 10,
+      },
+    });
+  }
+
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,

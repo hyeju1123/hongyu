@@ -6,6 +6,7 @@ import SvgIcon from '../module/SvgIcon';
 
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/main/HeaderStyle';
+import iconSize from '../styles/iconSize';
 
 type HeaderProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -16,16 +17,17 @@ type HeaderProps = PropsWithChildren<{
 }>;
 
 function Header({navigation: {navigate}}: HeaderProps): JSX.Element {
+  const {Hong, search} = iconSize;
   return (
     <View style={styles.headerBox}>
       <TouchableOpacity>
-        <SvgIcon name="Hong" size={65} />
+        <SvgIcon name="Hong" size={Hong} />
       </TouchableOpacity>
       <TouchableOpacity
         onPress={() => navigate('SearchNavigation')}
         style={styles.inputSection}>
         <Text style={styles.text}>단어를 검색해보세요!</Text>
-        <SvgIcon name="Search" size={15} fill={lightTheme.red} />
+        <SvgIcon name="Search" size={search} fill={lightTheme.red} />
       </TouchableOpacity>
     </View>
   );

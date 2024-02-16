@@ -7,6 +7,7 @@ import CategoryCard from './CategoryCard';
 
 import {lightTheme} from '../styles/colors';
 import styles from '../styles/module/PickQuizTypeModalStyle';
+import {ScrollView} from 'react-native-gesture-handler';
 
 type CardsProps = {
   handleMove: (quizType: keyof QuizPageStackParamList) => void;
@@ -40,10 +41,14 @@ function PickQuizTypeModal({
   return (
     <TouchableOpacity activeOpacity={1} style={styles.modal}>
       <TouchableOpacity onPress={handleModal} style={styles.closeButton}>
-        <SvgIcon name="Cross" fill={lightTheme.black} size={15} />
+        <SvgIcon name="Cross" fill={lightTheme.black} size={10} />
       </TouchableOpacity>
       <Text style={styles.guideText}>시험 유형을 선택해주세요</Text>
-      <Cards handleMove={handleMove} />
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={styles.scrollView}>
+        <Cards handleMove={handleMove} />
+      </ScrollView>
     </TouchableOpacity>
   );
 }

@@ -9,7 +9,7 @@ export enum DisplaySize {
 export const getDisplaySize = (): DisplaySize => {
   const width = Dimensions.get('screen').width;
   if (width <= 320) {
-    return DisplaySize.Medium;
+    return DisplaySize.Small;
   }
   if (width <= 480) {
     return DisplaySize.Medium;

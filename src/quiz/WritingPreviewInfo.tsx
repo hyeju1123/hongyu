@@ -6,6 +6,7 @@ import SvgIcon from '../module/SvgIcon';
 import {Word} from '../recoil/WordListState';
 import {lightTheme} from '../styles/colors';
 import BottomNav, {PageType} from '../module/BottomNav';
+import iconSize from '../styles/iconSize';
 
 type WordInformationProps = {
   index: number;
@@ -24,6 +25,7 @@ const WritingPreviewInfo: FC<WordInformationProps> = ({
   handleShowWord,
   moveCallback,
 }) => {
+  const {lock, questionSquare} = iconSize;
   const {QUIZ} = PageType;
   const {word, intonation, meaning} = data;
   return (
@@ -39,13 +41,17 @@ const WritingPreviewInfo: FC<WordInformationProps> = ({
         {showWord ? (
           <Text style={styles.hanzi}>{word}</Text>
         ) : (
-          <SvgIcon name={'QuestionSquare'} fill={lightTheme.red} size={30} />
+          <SvgIcon
+            name={'QuestionSquare'}
+            fill={lightTheme.red}
+            size={questionSquare}
+          />
         )}
         <TouchableOpacity style={styles.svgWrapper} onPress={handleShowWord}>
           <SvgIcon
             name={showWord ? 'Unlock' : 'Lock'}
             fill={lightTheme.black}
-            size={25}
+            size={lock}
           />
         </TouchableOpacity>
       </View>

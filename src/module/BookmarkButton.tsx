@@ -1,10 +1,11 @@
 import React, {memo} from 'react';
-import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, TouchableOpacity} from 'react-native';
 import useToast from '../hooks/toast';
 import {useVoca} from '../providers/VocaProvider';
 import {useSetRecoilState} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 
+import styles from '../styles/module/BookmarkButtonStyle';
 import images from '../styles/images';
 import {ToastIcon} from '../recoil/ToastState';
 
@@ -56,17 +57,3 @@ function BookmarkButton({
 }
 
 export default memo(BookmarkButton);
-
-const styles = StyleSheet.create({
-  buttonWrapper: {
-    padding: 5,
-  },
-  small: {
-    width: 20,
-    height: 20,
-  },
-  large: {
-    width: 50,
-    height: 50,
-  },
-});

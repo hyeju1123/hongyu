@@ -16,6 +16,7 @@ import styles from '../styles/quiz/QuizTypePageStyle';
 import {ToastIcon} from '../recoil/ToastState';
 import {useResetRecoilState, useSetRecoilState} from 'recoil';
 import {wordListState} from '../recoil/WordListState';
+import iconSize from '../styles/iconSize';
 
 const PICK_MAXIMUM = 5;
 
@@ -30,6 +31,7 @@ function PickCategoryPage({
     params: {level, quizType},
   },
 }: PickCategoryPageProps): JSX.Element {
+  const {pickCategoryClose} = iconSize;
   const {fireToast} = useToast();
   const {shuffleArray, convertToWord} = useUtil();
   const {countVocaByCategory, getVocasByMultipleCategory} = useVoca();
@@ -116,7 +118,11 @@ function PickCategoryPage({
               style={styles.labelButton}>
               <Text style={styles.label}>{category}</Text>
               <View style={styles.closeWrapper}>
-                <SvgIcon name="Cross" size={8} fill={lightTheme.darkRed} />
+                <SvgIcon
+                  name="Cross"
+                  size={pickCategoryClose}
+                  fill={lightTheme.darkRed}
+                />
               </View>
             </TouchableOpacity>
           ))}

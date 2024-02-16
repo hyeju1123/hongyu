@@ -16,6 +16,7 @@ import DebouncedTextInput from '../module/DebouncedTextInput';
 import styles from '../styles/search/SearchPageStyle';
 import {lightTheme} from '../styles/colors';
 import {FlashList} from '@shopify/flash-list';
+import iconSize from '../styles/iconSize';
 
 type SearchPageProps = NativeStackScreenProps<
   SearchStackParamList,
@@ -25,6 +26,7 @@ type SearchPageProps = NativeStackScreenProps<
 function SearchPage({
   navigation: {goBack, navigate},
 }: SearchPageProps): JSX.Element {
+  const {search} = iconSize;
   const {convertToWord} = useUtil();
   const {getVocasBySearch} = useVoca();
   const [searchedWords, setSearchedWords] = useRecoilState(wordListState);
@@ -78,7 +80,7 @@ function SearchPage({
           updateFn={handleSearch}
           placeholder="단어를 검색해보세요."
         />
-        <SvgIcon name="Search" size={15} fill={lightTheme.red} />
+        <SvgIcon name="Search" size={search} fill={lightTheme.red} />
       </View>
       <FlashList
         data={searchedWords}

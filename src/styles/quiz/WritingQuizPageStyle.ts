@@ -56,8 +56,8 @@ const commonPart: Style = {
     margin: 5,
   },
   guideText: {
-    fontFamily: fonts.hanzi,
-    fontSize: width * 0.035,
+    fontFamily: fonts.pinyin,
+    fontSize: 13,
     color: lightTheme.black,
   },
   dirRow: {
@@ -73,14 +73,14 @@ const commonPart: Style = {
   },
   intonation: {
     fontFamily: fonts.pinyin,
-    fontSize: width * 0.04,
+    fontSize: 15,
     color: lightTheme.red,
   },
   meaning: {
     width: width * 0.6,
     textAlign: 'center',
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.04,
+    fontSize: 14,
     color: lightTheme.black,
   },
   buttonWrapper: {
@@ -105,6 +105,31 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      hanzi: {
+        ...commonPart.hanzi,
+        fontSize: 17,
+      },
+      intonation: {
+        ...commonPart.intonation,
+        fontSize: 10,
+      },
+      meaning: {
+        ...commonPart.meaning,
+        fontSize: 10,
+      },
+      guideText: {
+        ...commonPart.guideText,
+        fontSize: 10,
+      },
+      serviceButtonWrapper: {
+        ...commonPart.serviceButtonWrapper,
+        minWidth: 20,
+      },
+    });
+  }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,

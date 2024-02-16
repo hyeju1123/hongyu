@@ -68,6 +68,30 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      query: {
+        ...commonPart.query,
+        fontSize: 25,
+        marginVertical: 5,
+      },
+      pinyin: {
+        ...commonPart.pinyin,
+        fontSize: 9,
+        marginBottom: 15,
+      },
+      button: {
+        ...commonPart.button,
+        minHeight: 60,
+        borderRadius: 3,
+      },
+      buttonText: {
+        ...commonPart.buttonText,
+        fontSize: 9,
+      },
+    });
+  }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,

@@ -5,6 +5,7 @@ import {fonts} from '../fonts';
 
 type Style = {
   modal: ViewStyle;
+  scrollView: ViewStyle;
   buttonWrapper: ViewStyle;
   closeButton: ViewStyle;
   guideText: TextStyle;
@@ -26,6 +27,9 @@ export const commonPart: Style = {
     borderTopLeftRadius: 25,
     borderTopRightRadius: 25,
   },
+  scrollView: {
+    width: '100%',
+  },
   buttonWrapper: {
     width: '100%',
   },
@@ -40,12 +44,21 @@ export const commonPart: Style = {
     marginVertical: width * 0.05,
     marginBottom: width * 0.02,
     fontFamily: fonts.mainBold,
-    fontSize: width * 0.05,
+    fontSize: 18,
     color: lightTheme.black,
   },
 };
 
 export const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      guideText: {
+        ...commonPart.guideText,
+        fontSize: 13,
+      },
+    });
+  }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,

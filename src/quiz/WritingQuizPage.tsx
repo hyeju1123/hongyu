@@ -14,6 +14,7 @@ import CheckAnswerButton from './CheckAnswerButton';
 
 import styles from '../styles/quiz/WritingQuizPageStyle';
 import {lightTheme} from '../styles/colors';
+import iconSize from '../styles/iconSize';
 
 type WritingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -32,6 +33,7 @@ function WritingQuizPage({
     params: {wordData},
   },
 }: WritingQuizPageProps): JSX.Element {
+  const {checkBox} = iconSize;
   const writingRef = useRef<SigningPathType>([]);
   const totalLen = useRef(wordData.length).current;
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
@@ -123,7 +125,7 @@ function WritingQuizPage({
                 <SvgIcon
                   name={keepVisible ? 'Checkbox' : 'Square'}
                   fill={lightTheme.gray}
-                  size={14}
+                  size={checkBox}
                 />
               </TouchableOpacity>
             </View>

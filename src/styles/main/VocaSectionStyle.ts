@@ -1,15 +1,7 @@
-import {
-  Dimensions,
-  StyleSheet,
-  ViewStyle,
-  TextStyle,
-  ImageStyle,
-} from 'react-native';
+import {StyleSheet, ViewStyle, TextStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {fonts} from '../fonts';
 import {getDisplaySize, DisplaySize} from '../screen';
-
-const width = Dimensions.get('screen').width;
 
 type Style = {
   sectionText: TextStyle;
@@ -21,8 +13,6 @@ type Style = {
   levelText: TextStyle;
   scrap: ViewStyle;
   scrapText: TextStyle;
-  scrapImg: ImageStyle;
-  img: ImageStyle;
 };
 
 const handleStyles = () => {
@@ -56,7 +46,7 @@ const handleStyles = () => {
     levelText: {
       color: lightTheme.white,
       fontFamily: fonts.mainBold,
-      fontSize: 20,
+      fontSize: 18,
       alignSelf: 'center',
       marginVertical: 10,
     },
@@ -73,36 +63,26 @@ const handleStyles = () => {
       fontSize: 15,
       marginRight: 10,
     },
-    scrapImg: {
-      width: 25,
-      height: 25,
-      marginLeft: 10,
-    },
-    img: {
-      width: width * 0.4,
-      height: width * 0.24,
-    },
   };
 
+  console.log(getDisplaySize());
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
-      // contents: {
-      //   width: (width - 40) / 2 - width * 0.075,
-      // },
-      // levelText: {
-      //   ...commonPart.levelText,
-      //   fontSize: 15,
-      // },
-      // scrapText: {
-      //   ...commonPart.scrapText,
-      //   fontSize: 13,
-      // },
-      // scrapImg: {
-      //   width: 20,
-      //   height: 20,
-      //   marginLeft: 8,
-      // },
+      whiteDot: {
+        ...commonPart.whiteDot,
+        width: 4,
+        height: 4,
+        borderRadius: 2,
+      },
+      levelText: {
+        ...commonPart.levelText,
+        fontSize: 15,
+      },
+      scrapText: {
+        ...commonPart.scrapText,
+        fontSize: 12,
+      },
     });
   }
 
