@@ -1,5 +1,5 @@
-import React, {PropsWithChildren} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
+import {View, Text, TouchableOpacity, FlatList} from 'react-native';
 import Card, {ThemeColor} from '../module/Card';
 import styles from '../styles/main/VocaSectionStyle';
 import {RootStackParamList} from '../navigation/RootNavigation';
@@ -21,26 +21,45 @@ const LEVELS = [1, 2, 3, 4, 5, 6];
 
 function VocaSection({navigation: {navigate}}: VocaSectionProps) {
   const navTypeSetter = useSetRecoilState(wordNavState);
+  const [layoutWidth, setLayoutWidth] = useState(0);
+  const numCols = useMemo(() => (layoutWidth >= 480 ? 3 : 2), [layoutWidth]);
+
+  const renderItem = useCallback(
+    ({item}: {item: number}) => {
+      return (
+        <TouchableOpacity
+          style={{width: layoutWidth / numCols - 3}}
+          onPress={() => {
+            navTypeSetter(() => ({navType: WordNav.Voca, level: item}));
+            navigate('WordNavigation');
+          }}
+          key={item}>
+          <Card theme={ThemeColor.Red} marginVertical={3}>
+            <View style={styles.contents}>
+              <View style={styles.whiteDot} />
+              <Text style={[styles.levelText]}>{`${item} 급`}</Text>
+            </View>
+          </Card>
+        </TouchableOpacity>
+      );
+    },
+    [navTypeSetter, navigate, layoutWidth, numCols],
+  );
 
   return (
-    <View>
+    <>
       <Text style={styles.sectionText}>HSK 단어</Text>
       <View style={styles.cardsWrapper}>
-        {LEVELS.map(level => (
-          <TouchableOpacity
-            onPress={() => {
-              navTypeSetter(() => ({navType: WordNav.Voca, level}));
-              navigate('WordNavigation');
-            }}
-            key={level}>
-            <Card theme={ThemeColor.Red}>
-              <View style={styles.contents}>
-                <View style={styles.whiteDot} />
-                <Text style={[styles.levelText]}>{`${level} 급`}</Text>
-              </View>
-            </Card>
-          </TouchableOpacity>
-        ))}
+        <FlatList
+          data={LEVELS}
+          key={layoutWidth}
+          numColumns={numCols}
+          scrollEnabled={false}
+          renderItem={renderItem}
+          style={styles.flatlist}
+          columnWrapperStyle={[styles.columnWrapperStyle, {width: layoutWidth}]}
+          onLayout={e => setLayoutWidth(e.nativeEvent.layout.width)}
+        />
       </View>
       <TouchableOpacity
         onPress={() => {
@@ -54,7 +73,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
           </View>
         </Card>
       </TouchableOpacity>
-    </View>
+    </>
   );
 }
 
