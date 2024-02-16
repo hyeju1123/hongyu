@@ -31,7 +31,7 @@ function SearchPage({
   const resetWordList = useResetRecoilState(wordListState);
 
   const handleSearch = (val: string) => {
-    const result = getVocasBySearch(val).map(convertToWord);
+    const result = getVocasBySearch(val).map(convertToWord).slice(0, 20);
 
     setSearchedWords([...result]);
   };

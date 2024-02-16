@@ -185,7 +185,11 @@ export function VocaProvider({children}: PropsWithChildren) {
         .objects<Voca>('Voca')
         .filtered('word CONTAINS[c] $0', input)
         .slice();
-      return [...buses, ...vocas];
+      const vocasByMeaing = realm
+        .objects<Voca>('Voca')
+        .filtered('meaning CONTAINS[c] $0', input)
+        .slice();
+      return [...buses, ...vocas, ...vocasByMeaing];
     },
     [realm],
   );
