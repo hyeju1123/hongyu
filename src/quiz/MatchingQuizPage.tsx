@@ -19,7 +19,7 @@ type MatchingQuizPageProps = NativeStackScreenProps<
   'MatchingQuizPage'
 >;
 
-const TIMEOUT = 10000;
+const TIMEOUT = 1000000;
 const PAGE_TRANSITION_DELAY = 1000;
 
 function MatchingQuizPage({

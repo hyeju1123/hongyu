@@ -89,37 +89,20 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
-      // sectionText: {
-      //   ...commonPart.sectionText,
-      //   fontSize: width * 0.03,
-      //   marginTop: 20,
-      //   marginBottom: 5,
-      // },
-      // contents: {
-      //   ...commonPart.contents,
-      //   width: (width - 120) / 4 + width * 0.05,
-      // },
-      // whiteDot: {
-      //   ...commonPart.whiteDot,
-      //   width: width * 0.008,
-      //   height: width * 0.008,
-      //   borderRadius: (width * 0.008) / 2,
-      // },
-      // levelText: {
-      //   ...commonPart.levelText,
-      //   fontSize: width * 0.03,
-      //   marginVertical: width * 0.02,
-      // },
-      // scrapText: {
-      //   ...commonPart.scrapText,
-      //   fontSize: width * 0.025,
-      //   paddingVertical: 5,
-      // },
-      // scrapImg: {
-      //   width: width * 0.035,
-      //   height: width * 0.035,
-      //   marginLeft: 10,
-      // },
+      sectionText: {
+        ...commonPart.sectionText,
+        fontSize: 16,
+        marginTop: 20,
+        marginBottom: 5,
+      },
+      levelText: {
+        ...commonPart.levelText,
+        fontSize: 20,
+      },
+      scrapText: {
+        ...commonPart.scrapText,
+        fontSize: 15,
+      },
     });
   }
 

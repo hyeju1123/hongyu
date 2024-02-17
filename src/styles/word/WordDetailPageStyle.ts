@@ -101,6 +101,33 @@ export const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      word: {
+        ...commonPart.word,
+        fontSize: 45,
+      },
+      longWord: {
+        ...commonPart.longWord,
+        fontSize: 40,
+      },
+      intonation: {
+        ...commonPart.intonation,
+        fontSize: 18,
+      },
+      xunyin: {
+        ...commonPart.xunyin,
+        fontSize: 17,
+        marginBottom: 5,
+      },
+      meaning: {
+        ...commonPart.meaning,
+        fontSize: 16,
+      },
+      busuSubTitle: {
+        ...commonPart.busuSubTitle,
+        fontSize: 17,
+        margin: 10,
+        marginBottom: 5,
+      },
     });
   }
   return StyleSheet.create({...commonPart});

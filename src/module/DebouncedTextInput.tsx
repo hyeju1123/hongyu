@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, StyleSheet, Text, TextInput} from 'react-native';
+import {Dimensions, StyleSheet, Text, TextInput, TextStyle} from 'react-native';
 
 import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
@@ -10,6 +10,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {fonts} from '../styles/fonts';
 import {lightTheme} from '../styles/colors';
 import {ToastIcon} from '../recoil/ToastState';
+import {DisplaySize, getDisplaySize} from '../styles/screen';
 
 type Props = {
   style: any;
@@ -68,13 +69,34 @@ function DebouncedTextInput({
 
 const width = Dimensions.get('screen').width;
 
-const styles = StyleSheet.create({
-  limitText: {
-    alignSelf: 'flex-end',
-    fontFamily: fonts.pinyin,
-    fontSize: width * 0.03,
-    color: lightTheme.black,
-  },
-});
+const handleStyle = () => {
+  const commonPart: {limitText: TextStyle} = {
+    limitText: {
+      alignSelf: 'flex-end',
+      fontFamily: fonts.pinyin,
+      fontSize: width * 0.03,
+      color: lightTheme.black,
+    },
+  };
+  if (getDisplaySize() === DisplaySize.Large) {
+    return StyleSheet.create({
+      limitText: {
+        ...commonPart.limitText,
+        fontSize: 16,
+      },
+    });
+  }
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      limitText: {
+        ...commonPart.limitText,
+        fontSize: 15,
+      },
+    });
+  }
+  return StyleSheet.create(commonPart);
+};
+
+const styles = handleStyle();
 
 export default DebouncedTextInput;

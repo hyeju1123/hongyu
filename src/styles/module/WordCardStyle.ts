@@ -1,11 +1,10 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
 type Style = {
   dirRow: ViewStyle;
-  lantern: ImageStyle;
   hanzi: TextStyle;
   meaningText: TextStyle;
   redText: TextStyle;
@@ -22,10 +21,6 @@ const commonPart: Style = {
     display: 'flex',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
-  },
-  lantern: {
-    width: 20,
-    height: 20,
   },
   hanzi: {
     marginVertical: 8,
@@ -70,6 +65,24 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      hanzi: {
+        ...commonPart.hanzi,
+        marginVertical: 10,
+        fontSize: 25,
+      },
+      meaningText: {
+        ...commonPart.meaningText,
+        fontSize: 15,
+      },
+      content: {
+        ...commonPart.content,
+        marginTop: 5,
+        padding: 7,
+      },
+      notTouched: {
+        ...commonPart.notTouched,
+        padding: 5,
+      },
     });
   }
   return StyleSheet.create({...commonPart});

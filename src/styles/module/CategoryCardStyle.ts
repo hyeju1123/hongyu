@@ -66,11 +66,12 @@ const handleStyles = () => {
       },
       title: {
         ...commonPart.title,
-        fontSize: width * 0.03,
+        fontSize: 16,
+        marginBottom: 5,
       },
       desc: {
         ...commonPart.desc,
-        fontSize: width * 0.02,
+        fontSize: 12,
       },
     });
   }

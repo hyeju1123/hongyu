@@ -124,6 +124,21 @@ export const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      textInput: {
+        ...commonPart.textInput,
+        fontSize: 16,
+        borderWidth: 1,
+        padding: 13,
+      },
+      flexDirRow: {
+        ...commonPart.flexDirRow,
+        borderWidth: 1,
+        padding: 13,
+      },
+      completeText: {
+        ...commonPart.completeText,
+        fontSize: 18,
+      },
     });
   }
   return StyleSheet.create({...commonPart});

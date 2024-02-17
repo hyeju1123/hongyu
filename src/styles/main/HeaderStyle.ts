@@ -53,14 +53,18 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      headerBox: {
+        ...commonPart.headerBox,
+        paddingVertical: 10,
+      },
       inputSection: {
         ...commonPart.inputSection,
         borderWidth: 1.5,
-        paddingVertical: 3,
+        paddingVertical: 5,
       },
       text: {
         ...commonPart.text,
-        fontSize: 13,
+        fontSize: 14,
       },
     });
   }

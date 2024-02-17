@@ -65,10 +65,12 @@ const handleStyles = () => {
       },
       title: {
         ...commonPart.title,
+        fontSize: 18,
       },
       desc: {
         ...commonPart.desc,
-        marginTop: 5,
+        fontSize: 12,
+        marginTop: 8,
       },
     });
   }

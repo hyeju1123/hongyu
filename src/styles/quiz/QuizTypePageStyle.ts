@@ -57,7 +57,7 @@ const commonPart: Style = {
     alignItems: 'center',
     borderRadius: 5,
     borderWidth: 1,
-    borderColor: lightTheme.darkRed,
+    borderColor: lightTheme.red,
     marginHorizontal: 3,
     marginVertical: 3,
     paddingHorizontal: 5,
@@ -114,15 +114,17 @@ const handleStyles = () => {
       },
       labelButton: {
         ...commonPart.labelButton,
-        paddingHorizontal: width * 0.01,
-        marginHorizontal: width * 0.01,
+        paddingHorizontal: 8,
+        marginHorizontal: 4,
         paddingVertical: 3,
         alignSelf: 'center',
-        borderRadius: 8,
       },
       label: {
         ...commonPart.label,
-        fontSize: width * 0.03,
+        fontSize: 18,
+      },
+      closeWrapper: {
+        marginLeft: 7,
       },
     });
   }

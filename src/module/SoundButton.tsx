@@ -12,14 +12,17 @@ type SoundButtonProps = PropsWithChildren<{
 }>;
 
 function SoundButton({level, word, largeSize = false}: SoundButtonProps) {
-  const {largeVersionSound} = iconSize;
+  const {largeVersionSound, smallVersionSound} = iconSize;
   const {setToggle} = usePolly();
 
   return (
     <TouchableOpacity
       style={[styles.button, largeSize && styles.alignCenter]}
       onPress={() => setToggle({word, level})}>
-      <SvgIcon name="Sound" size={largeSize ? largeVersionSound : 20} />
+      <SvgIcon
+        name="Sound"
+        size={largeSize ? largeVersionSound : smallVersionSound}
+      />
     </TouchableOpacity>
   );
 }

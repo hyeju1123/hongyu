@@ -8,6 +8,7 @@ import {useSetRecoilState} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 
 import styles from '../styles/module/BookmarkButtonStyle';
+import iconSize from '../styles/iconSize';
 
 export enum ButtonSize {
   Small = 's',
@@ -29,6 +30,7 @@ function BookmarkButton({
   bookmarked,
   size = ButtonSize.Small,
 }: BookmarkButtonProps) {
+  const {smallVersionBookmark, largeVersionBookmark} = iconSize;
   const {fireToast} = useToast();
   const {updateBookmark, updateBusuBookmark} = useVoca();
   const wordState = isBusu ? busuState : vocaState;
@@ -49,7 +51,11 @@ function BookmarkButton({
     <TouchableOpacity style={styles.buttonWrapper} onPress={handleBookmark}>
       <SvgIcon
         name={bookmarked ? 'LanternOn' : 'LanternOff'}
-        size={size === ButtonSize.Small ? 20 : 45}
+        size={
+          size === ButtonSize.Small
+            ? smallVersionBookmark
+            : largeVersionBookmark
+        }
       />
     </TouchableOpacity>
   );

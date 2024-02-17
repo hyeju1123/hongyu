@@ -54,15 +54,20 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      cardWrapper: {
+        ...commonPart.cardWrapper,
+        marginTop: 20,
+      },
       card: {
         ...commonPart.card,
         width: (width - 120) / 2,
+        minHeight: 90,
         margin: width * 0.01,
-        padding: width * 0.015,
+        padding: 30,
       },
       cardText: {
         ...commonPart.cardText,
-        fontSize: width * 0.025,
+        fontSize: 15,
       },
     });
   }
