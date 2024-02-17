@@ -71,7 +71,7 @@ function SearchPage({
       />
       <View style={styles.inputWrapper}>
         <TouchableOpacity style={styles.backButton} onPress={goBack}>
-          <SvgIcon name="LineArrow" size={20} fill={lightTheme.red} />
+          <SvgIcon name="MainArrow" size={18} fill={lightTheme.red} />
         </TouchableOpacity>
         <DebouncedTextInput
           textVal={''}

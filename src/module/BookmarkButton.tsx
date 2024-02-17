@@ -1,13 +1,13 @@
 import React, {memo} from 'react';
-import {Image, TouchableOpacity} from 'react-native';
+import {TouchableOpacity} from 'react-native';
+import SvgIcon from './SvgIcon';
 import useToast from '../hooks/toast';
+import {ToastIcon} from '../recoil/ToastState';
 import {useVoca} from '../providers/VocaProvider';
 import {useSetRecoilState} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 
 import styles from '../styles/module/BookmarkButtonStyle';
-import images from '../styles/images';
-import {ToastIcon} from '../recoil/ToastState';
 
 export enum ButtonSize {
   Small = 's',
@@ -29,7 +29,6 @@ function BookmarkButton({
   bookmarked,
   size = ButtonSize.Small,
 }: BookmarkButtonProps) {
-  const {lanternOn, lanternOff} = images.module;
   const {fireToast} = useToast();
   const {updateBookmark, updateBusuBookmark} = useVoca();
   const wordState = isBusu ? busuState : vocaState;
@@ -48,9 +47,9 @@ function BookmarkButton({
 
   return (
     <TouchableOpacity style={styles.buttonWrapper} onPress={handleBookmark}>
-      <Image
-        source={bookmarked ? lanternOn : lanternOff}
-        style={size === ButtonSize.Small ? styles.small : styles.large}
+      <SvgIcon
+        name={bookmarked ? 'LanternOn' : 'LanternOff'}
+        size={size === ButtonSize.Small ? 20 : 45}
       />
     </TouchableOpacity>
   );

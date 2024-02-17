@@ -1,29 +1,24 @@
-import React, {PropsWithChildren} from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import React, {FC, PropsWithChildren} from 'react';
+import {Text, TouchableOpacity, View} from 'react-native';
 import styles from '../styles/module/FlatCardStyle';
-import images from '../styles/images';
+import SvgIcon from './SvgIcon';
+import {SvgProps} from 'react-native-svg';
+import {lightTheme} from '../styles/colors';
 
 type FlatCardProps = PropsWithChildren<{
   marginVertical?: number;
   navFn: () => void;
-  imgSrc: ImageSourcePropType;
+  Icon: FC<SvgProps>;
   title: string;
   desc: string;
 }>;
 
-function FlatCard({navFn, imgSrc, title, desc}: FlatCardProps): JSX.Element {
-  const {arrow} = images.module;
+function FlatCard({navFn, Icon, title, desc}: FlatCardProps): JSX.Element {
   return (
     <TouchableOpacity onPress={navFn} style={[styles.card]}>
-      <Image style={styles.img} source={imgSrc} />
+      <Icon width={140} height={85} />
       <View style={styles.textWrapper}>
-        <Image style={styles.arrow} source={arrow} />
+        <SvgIcon name="MainArrow" size={18} fill={lightTheme.white} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.desc}>{desc}</Text>
       </View>

@@ -6,6 +6,7 @@ type Style = {
   container: ViewStyle;
   flashlistContent: ViewStyle;
   modalBack: ViewStyle;
+  quizModalButton: ViewStyle;
 };
 
 export const commonPart: Style = {
@@ -22,6 +23,10 @@ export const commonPart: Style = {
     width: '100%',
     height: '100%',
     zIndex: 10,
+  },
+  quizModalButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 5,
   },
 };
 

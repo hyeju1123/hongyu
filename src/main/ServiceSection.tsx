@@ -1,12 +1,14 @@
 import React, {PropsWithChildren} from 'react';
-import {View, Text} from 'react-native';
-import FlatCard from '../module/FlatCard';
-import styles from '../styles/main/VocaSectionStyle';
-import images from '../styles/images';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/RootNavigation';
 import {useSetRecoilState} from 'recoil';
 import {WordNav, wordNavState} from '../recoil/WordNavState';
+
+import {View, Text} from 'react-native';
+import FlatCard from '../module/FlatCard';
+import Vocatest from '../../svg/main/vocatest.svg';
+import RadicalDict from '../../svg/main/radicalDict.svg';
+import styles from '../styles/main/VocaSectionStyle';
 
 type ServiceSectionProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -17,7 +19,6 @@ type ServiceSectionProps = PropsWithChildren<{
 }>;
 
 function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
-  const {vocatest, radicalDict} = images.module;
   const navTypeSetter = useSetRecoilState(wordNavState);
 
   return (
@@ -27,7 +28,7 @@ function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
         navFn={() => {
           navigate('QuizNavigation');
         }}
-        imgSrc={vocatest}
+        Icon={Vocatest}
         title="단어 암기 시험"
         desc="다양한 시험을 통해 암기 학습을 해보세요."
       />
@@ -36,7 +37,7 @@ function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
           navTypeSetter(prev => ({...prev, navType: WordNav.Busu}));
           navigate('WordNavigation');
         }}
-        imgSrc={radicalDict}
+        Icon={RadicalDict}
         title="부수 사전"
         desc="한자를 구성하는 부수의 뜻을 살펴보세요."
       />

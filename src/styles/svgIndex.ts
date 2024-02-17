@@ -1,6 +1,9 @@
 // main
 export {default as Hong} from '../../svg/main/hong.svg';
 export {default as Man} from '../../svg/main/man.svg';
+export {default as Vocatest} from '../../svg/main/vocatest.svg';
+export {default as RadicalDict} from '../../svg/main/radicalDict.svg';
+export {default as MainArrow} from '../../svg/main/mainArrow.svg';
 
 // module
 export {default as LineArrow} from '../../svg/module/lineArrow.svg';

@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -15,7 +9,6 @@ type Style = {
   headerBox: ViewStyle;
   inputSection: ViewStyle;
   text: TextStyle;
-  pencilWithZhImg: ImageStyle;
 };
 
 const handleStyles = () => {
@@ -41,10 +34,6 @@ const handleStyles = () => {
       fontSize: 12,
       color: lightTheme.ligthGray,
     },
-    pencilWithZhImg: {
-      width: 20,
-      height: 23,
-    },
   };
 
   if (getDisplaySize() === DisplaySize.Small) {
@@ -57,10 +46,6 @@ const handleStyles = () => {
       text: {
         ...commonPart.text,
         fontSize: width * 0.03,
-      },
-      pencilWithZhImg: {
-        width: 15,
-        height: 18,
       },
     });
   }
@@ -76,10 +61,6 @@ const handleStyles = () => {
       text: {
         ...commonPart.text,
         fontSize: 13,
-      },
-      pencilWithZhImg: {
-        width: width * 0.02,
-        height: width * 0.024,
       },
     });
   }

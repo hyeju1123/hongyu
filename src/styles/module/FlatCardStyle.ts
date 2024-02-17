@@ -1,24 +1,14 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
 type Style = {
   card: ViewStyle;
-  img: ImageStyle;
-  arrow: ImageStyle;
   textWrapper: ViewStyle;
   title: TextStyle;
   desc: TextStyle;
 };
-
-const width = Dimensions.get('screen').width;
 
 const handleStyles = () => {
   const commonPart: Style = {
@@ -31,32 +21,21 @@ const handleStyles = () => {
       padding: 10,
       marginVertical: 5,
     },
-    img: {
-      width: width * 0.4,
-      height: width * 0.24,
-    },
     textWrapper: {
       flex: 1,
-    },
-    arrow: {
-      width: width * 0.04,
-      height: width * 0.02,
-      alignSelf: 'flex-end',
-      transform: [{rotate: '180deg'}],
-      marginBottom: width * 0.045,
+      display: 'flex',
+      alignItems: 'flex-end',
     },
     title: {
       color: lightTheme.white,
       fontFamily: fonts.mainBold,
-      fontSize: width * 0.045,
-      alignSelf: 'flex-end',
+      fontSize: 15,
+      marginTop: 12,
     },
     desc: {
       color: lightTheme.white,
       fontFamily: fonts.main,
-      fontSize: width * 0.023,
-      alignSelf: 'flex-end',
-      textAlign: 'right',
+      fontSize: 9,
       marginTop: 5,
     },
   };
@@ -84,23 +63,12 @@ const handleStyles = () => {
         marginVertical: 7,
         borderRadius: 10,
       },
-      img: {
-        width: width * 0.2,
-        height: width * 0.12,
-      },
       title: {
         ...commonPart.title,
-        fontSize: width * 0.03,
       },
       desc: {
         ...commonPart.desc,
-        fontSize: width * 0.015,
         marginTop: 5,
-      },
-      arrow: {
-        ...commonPart.arrow,
-        width: width * 0.03,
-        height: width * 0.015,
       },
     });
   }
