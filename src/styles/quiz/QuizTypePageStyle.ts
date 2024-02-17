@@ -7,7 +7,6 @@ type Style = {
   container: ViewStyle;
   guideText: TextStyle;
   themePanel: ViewStyle;
-  themePanelText: TextStyle;
   labelWrapper: ViewStyle;
   labelButton: ViewStyle;
   label: TextStyle;
@@ -27,22 +26,18 @@ const commonPart: Style = {
     marginTop: width * 0.15,
     marginBottom: width * 0.02,
     fontFamily: fonts.mainBold,
-    fontSize: width * 0.05,
+    fontSize: 18,
     color: lightTheme.black,
   },
   themePanel: {
     minHeight: width * 0.25,
     paddingHorizontal: 20,
+    display: 'flex',
+    alignItems: 'flex-end',
   },
   dirRow: {
     display: 'flex',
     flexDirection: 'row',
-  },
-  themePanelText: {
-    fontFamily: fonts.mainBold,
-    fontSize: width * 0.05,
-    color: lightTheme.white,
-    flex: 1,
   },
   labelWrapper: {
     display: 'flex',
@@ -64,6 +59,7 @@ const commonPart: Style = {
     paddingVertical: 3,
   },
   label: {
+    fontSize: 14,
     fontFamily: fonts.mainBold,
     color: lightTheme.black,
   },
@@ -79,10 +75,6 @@ const handleStyles = () => {
       guideText: {
         ...commonPart.guideText,
         marginTop: 20,
-        fontSize: 13,
-      },
-      themePanelText: {
-        ...commonPart.themePanelText,
         fontSize: 13,
       },
       labelButton: {
@@ -105,12 +97,7 @@ const handleStyles = () => {
       },
       guideText: {
         ...commonPart.guideText,
-        fontSize: width * 0.04,
-      },
-      themePanelText: {
-        ...commonPart.themePanelText,
-        fontSize: width * 0.04,
-        padding: 10,
+        fontSize: 22,
       },
       labelButton: {
         ...commonPart.labelButton,

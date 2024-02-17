@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -10,8 +10,6 @@ type Style = {
   text: TextStyle;
 };
 
-const width = Dimensions.get('screen').width;
-
 const commonPart: Style = {
   container: {
     position: 'absolute',
@@ -19,8 +17,7 @@ const commonPart: Style = {
     backgroundColor: lightTheme.white,
     alignSelf: 'center',
     minWidth: '65%',
-    paddingVertical: width * 0.025,
-    paddingHorizontal: width * 0.028,
+    padding: 11,
     borderRadius: 10,
     flexDirection: 'row',
     alignItems: 'center',
@@ -42,9 +39,9 @@ const commonPart: Style = {
   text: {
     flex: 1,
     flexWrap: 'wrap',
-    marginHorizontal: width * 0.02,
+    marginHorizontal: 12,
     fontFamily: fonts.pinyin,
-    fontSize: width * 0.03,
+    fontSize: 11,
     color: lightTheme.black,
   },
 };
@@ -53,6 +50,16 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
+      container: {
+        ...commonPart.container,
+        marginTop: 70,
+        padding: 9,
+      },
+      text: {
+        ...commonPart.text,
+        fontSize: 9,
+        marginHorizontal: 10,
+      },
     });
   }
 
@@ -61,22 +68,13 @@ const handleStyles = () => {
       ...commonPart,
       container: {
         ...commonPart.container,
-        marginTop: width * 0.2,
-        paddingVertical: width * 0.01,
-        borderRadius: 10,
+        marginTop: 130,
+        padding: 14,
       },
       text: {
         ...commonPart.text,
-        fontSize: width * 0.018,
-        color: lightTheme.black,
-      },
-      icon: {
-        width: width * 0.02,
-        height: width * 0.02,
-      },
-      closeImage: {
-        width: width * 0.01,
-        height: width * 0.01,
+        fontSize: 15,
+        marginHorizontal: 15,
       },
     });
   }

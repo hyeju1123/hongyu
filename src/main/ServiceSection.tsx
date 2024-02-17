@@ -30,7 +30,7 @@ function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
         }}
         Icon={Vocatest}
         title="단어 암기 시험"
-        desc="다양한 시험을 통해 암기 학습을 해보세요."
+        desc="다양한 시험을 통해 암기 학습을 해보세요"
       />
       <FlatCard
         navFn={() => {
@@ -39,7 +39,7 @@ function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
         }}
         Icon={RadicalDict}
         title="부수 사전"
-        desc="한자를 구성하는 부수의 뜻을 살펴보세요."
+        desc="한자를 구성하는 부수의 뜻을 살펴보세요"
       />
     </View>
   );

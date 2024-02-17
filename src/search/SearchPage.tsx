@@ -26,7 +26,7 @@ type SearchPageProps = NativeStackScreenProps<
 function SearchPage({
   navigation: {goBack, navigate},
 }: SearchPageProps): JSX.Element {
-  const {search} = iconSize;
+  const {search, mainArrow} = iconSize;
   const {convertToWord} = useUtil();
   const {getVocasBySearch} = useVoca();
   const [searchedWords, setSearchedWords] = useRecoilState(wordListState);
@@ -71,14 +71,14 @@ function SearchPage({
       />
       <View style={styles.inputWrapper}>
         <TouchableOpacity style={styles.backButton} onPress={goBack}>
-          <SvgIcon name="MainArrow" size={18} fill={lightTheme.red} />
+          <SvgIcon name="MainArrow" size={mainArrow} fill={lightTheme.red} />
         </TouchableOpacity>
         <DebouncedTextInput
           textVal={''}
           forSearch={true}
           style={styles.input}
           updateFn={handleSearch}
-          placeholder="단어를 검색해보세요."
+          placeholder="단어를 검색해보세요"
         />
         <SvgIcon name="Search" size={search} fill={lightTheme.red} />
       </View>

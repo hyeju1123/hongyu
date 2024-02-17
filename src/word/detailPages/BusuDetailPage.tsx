@@ -49,6 +49,7 @@ function BusuDetailPage({
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
         <Card shadow underdressing={false} marginVertical={8}>

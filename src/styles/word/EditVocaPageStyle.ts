@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -25,8 +19,6 @@ type Style = {
   closeButton: ViewStyle;
 };
 
-const width = Dimensions.get('screen').width;
-
 export const commonPart: Style = {
   container: {
     flex: 1,
@@ -42,10 +34,10 @@ export const commonPart: Style = {
   },
   textInput: {
     borderRadius: 8,
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: lightTheme.shadowGray,
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.04,
+    fontSize: 15,
     color: lightTheme.black,
     padding: 10,
     marginVertical: 10,
@@ -55,7 +47,7 @@ export const commonPart: Style = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     borderRadius: 8,
-    borderWidth: 0.5,
+    borderWidth: 1,
     borderColor: lightTheme.shadowGray,
     padding: 10,
     marginVertical: 10,
@@ -91,7 +83,7 @@ export const commonPart: Style = {
   },
   completeText: {
     fontFamily: fonts.mainBold,
-    fontSize: width * 0.03,
+    fontSize: 12,
     color: lightTheme.white,
   },
   wordclassBox: {
@@ -114,25 +106,47 @@ export const commonPart: Style = {
   },
   closeButton: {
     position: 'absolute',
-    top: width * 0.015,
-    right: width * 0.015,
+    top: 8,
+    right: 6,
     padding: 10,
   },
 };
 
 export const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      textInput: {
+        ...commonPart.textInput,
+        fontSize: 12,
+        padding: 8,
+      },
+      flexDirRow: {
+        ...commonPart.flexDirRow,
+        borderWidth: 1,
+        padding: 8,
+      },
+      completeButton: {
+        ...commonPart.completeButton,
+        padding: 8,
+        borderRadius: 6,
+      },
+      completeText: {
+        ...commonPart.completeText,
+        fontSize: 10,
+      },
+    });
+  }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
       textInput: {
         ...commonPart.textInput,
         fontSize: 16,
-        borderWidth: 1,
         padding: 13,
       },
       flexDirRow: {
         ...commonPart.flexDirRow,
-        borderWidth: 1,
         padding: 13,
       },
       completeText: {

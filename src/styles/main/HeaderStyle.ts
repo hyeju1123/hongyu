@@ -1,9 +1,7 @@
-import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
-
-const width = Dimensions.get('screen').width;
 
 type Style = {
   headerBox: ViewStyle;
@@ -45,7 +43,7 @@ const handleStyles = () => {
       },
       text: {
         ...commonPart.text,
-        fontSize: width * 0.03,
+        fontSize: 9,
       },
     });
   }

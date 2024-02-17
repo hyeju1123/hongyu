@@ -99,12 +99,11 @@ function PickCategoryPage({
       />
       <View style={styles.themePanel}>
         <View style={styles.dirRow}>
-          <Text style={styles.themePanelText}>테마를 선택해주세요</Text>
           {selectedCategory.length > 0 && (
             <TouchableOpacity
               onPress={moveToQuizPage}
               style={styles.labelButton}>
-              <Text style={[styles.label, {color: lightTheme.darkRed}]}>
+              <Text style={[styles.label, {color: lightTheme.red}]}>
                 선택완료
               </Text>
             </TouchableOpacity>
@@ -121,7 +120,7 @@ function PickCategoryPage({
                 <SvgIcon
                   name="Cross"
                   size={pickCategoryClose}
-                  fill={lightTheme.darkRed}
+                  fill={lightTheme.red}
                 />
               </View>
             </TouchableOpacity>

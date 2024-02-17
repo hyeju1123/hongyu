@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Dimensions, StyleSheet, Text, TextInput, TextStyle} from 'react-native';
+import {StyleSheet, Text, TextInput, TextStyle} from 'react-native';
 
 import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
@@ -67,14 +67,12 @@ function DebouncedTextInput({
   );
 }
 
-const width = Dimensions.get('screen').width;
-
 const handleStyle = () => {
   const commonPart: {limitText: TextStyle} = {
     limitText: {
       alignSelf: 'flex-end',
       fontFamily: fonts.pinyin,
-      fontSize: width * 0.03,
+      fontSize: 12,
       color: lightTheme.black,
     },
   };
@@ -90,7 +88,7 @@ const handleStyle = () => {
     return StyleSheet.create({
       limitText: {
         ...commonPart.limitText,
-        fontSize: 15,
+        fontSize: 10,
       },
     });
   }

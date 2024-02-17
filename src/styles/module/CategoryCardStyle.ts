@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -9,8 +9,6 @@ type Style = {
   title: TextStyle;
   desc: TextStyle;
 };
-
-const width = Dimensions.get('screen').width;
 
 const commonPart: Style = {
   typeTextWrapper: {
@@ -25,13 +23,13 @@ const commonPart: Style = {
   title: {
     fontFamily: fonts.mainBold,
     color: lightTheme.black,
-    fontSize: width * 0.035,
+    fontSize: 13,
     marginBottom: 3,
   },
   desc: {
     fontFamily: fonts.pinyin,
     color: lightTheme.gray,
-    fontSize: width * 0.025,
+    fontSize: 10,
   },
 };
 

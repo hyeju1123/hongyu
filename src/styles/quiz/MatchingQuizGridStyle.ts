@@ -1,4 +1,4 @@
-import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -11,14 +11,13 @@ type Style = {
   cardText: TextStyle;
 };
 
-const width = Dimensions.get('screen').width;
-
 const commonPart: Style = {
   cardWrapper: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    marginTop: 15,
   },
   flatList: {
     width: '100%',
@@ -26,7 +25,7 @@ const commonPart: Style = {
   columnWrapperStyle: {
     display: 'flex',
     justifyContent: 'space-between',
-    marginBottom: 5,
+    marginBottom: 10,
   },
   card: {
     minHeight: 75,
@@ -34,8 +33,6 @@ const commonPart: Style = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    margin: width * 0.01,
-    padding: width * 0.03,
   },
   cardText: {
     fontFamily: fonts.hanzi,
@@ -48,9 +45,13 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
+      cardWrapper: {
+        ...commonPart.cardWrapper,
+        marginTop: 7,
+      },
       card: {
         ...commonPart.card,
-        minHeight: 60,
+        minHeight: 55,
         borderRadius: 5,
       },
       cardText: {
@@ -70,8 +71,6 @@ const handleStyles = () => {
       card: {
         ...commonPart.card,
         minHeight: 90,
-        margin: 10,
-        padding: 30,
       },
       cardText: {
         ...commonPart.cardText,

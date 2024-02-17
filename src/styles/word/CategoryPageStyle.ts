@@ -21,7 +21,7 @@ export const commonPart: Style = {
     width: '10%',
     height: 3,
     alignSelf: 'center',
-    backgroundColor: lightTheme.darkRed,
+    backgroundColor: lightTheme.red,
     borderRadius: 100,
     marginVertical: 10,
   },

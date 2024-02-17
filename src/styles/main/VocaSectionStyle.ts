@@ -65,7 +65,6 @@ const handleStyles = () => {
     },
   };
 
-  console.log(getDisplaySize());
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,

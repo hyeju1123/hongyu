@@ -15,12 +15,12 @@ type FlatCardProps = PropsWithChildren<{
 }>;
 
 function FlatCard({navFn, Icon, title, desc}: FlatCardProps): JSX.Element {
-  const {serviceSectionHeight, serviceSectionWidth} = iconSize;
+  const {serviceSectionHeight, serviceSectionWidth, mainArrow} = iconSize;
   return (
     <TouchableOpacity onPress={navFn} style={[styles.card]}>
       <Icon width={serviceSectionWidth} height={serviceSectionHeight} />
       <View style={styles.textWrapper}>
-        <SvgIcon name="MainArrow" size={18} fill={lightTheme.white} />
+        <SvgIcon name="MainArrow" size={mainArrow} fill={lightTheme.white} />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.desc}>{desc}</Text>
       </View>

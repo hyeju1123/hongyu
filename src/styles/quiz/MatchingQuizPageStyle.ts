@@ -50,15 +50,15 @@ const commonPart: Style = {
     backgroundColor: lightTheme.darkRed,
   },
   endQuizText: {
-    padding: 10,
     fontFamily: fonts.mainBold,
     color: lightTheme.white,
   },
   largeText: {
-    fontSize: width * 0.06,
+    fontSize: 23,
+    padding: 10,
   },
   smallText: {
-    fontSize: width * 0.025,
+    fontSize: 9,
   },
   timerWrapper: {
     display: 'flex',
@@ -67,6 +67,21 @@ const commonPart: Style = {
 };
 
 const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      endQuizText: {
+        ...commonPart.endQuizText,
+      },
+      largeText: {
+        fontSize: 18,
+        padding: 8,
+      },
+      smallText: {
+        fontSize: 7,
+      },
+    });
+  }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,

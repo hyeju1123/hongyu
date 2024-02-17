@@ -39,16 +39,14 @@ function Timer({currentPage, duration}: TimerProps) {
       <SvgIcon
         name="StopWatch"
         size={clock}
-        fill={urgent ? lightTheme.darkRed : lightTheme.shadowGray}
+        fill={urgent ? lightTheme.red : lightTheme.shadowGray}
       />
       <View style={styles.container}>
         <View
           style={[
             styles.bottomBar,
             {
-              backgroundColor: urgent
-                ? lightTheme.darkRed
-                : lightTheme.ligthGray,
+              backgroundColor: urgent ? lightTheme.red : lightTheme.ligthGray,
             },
           ]}
         />

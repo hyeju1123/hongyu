@@ -94,6 +94,7 @@ function EditVocaPage({
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <ScrollView
+        showsVerticalScrollIndicator={false}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
         <TextInput

@@ -109,7 +109,6 @@ export function VocaProvider({children}: PropsWithChildren) {
    */
   const getVoca = useCallback(
     (_id: number) => {
-      console.log('getVoca called');
       const voca = realm.objects<Voca>('Voca').filtered('_id == $0', _id)[0];
       return voca || getDefaultWord();
     },

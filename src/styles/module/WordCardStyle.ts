@@ -59,6 +59,23 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
+      hanzi: {
+        ...commonPart.hanzi,
+        fontSize: 18,
+        marginVertical: 7,
+      },
+      meaningText: {
+        ...commonPart.meaningText,
+        fontSize: 10,
+      },
+      content: {
+        ...commonPart.content,
+        padding: 3,
+      },
+      notTouched: {
+        ...commonPart.notTouched,
+        padding: 1,
+      },
     });
   }
 

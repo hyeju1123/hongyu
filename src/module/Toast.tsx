@@ -6,6 +6,7 @@ import styles from '../styles/module/ToastStyle';
 
 import SvgIcon from './SvgIcon';
 import {lightTheme} from '../styles/colors';
+import iconSize from '../styles/iconSize';
 
 function Toast(): JSX.Element {
   const [toastData, setToastData] = useRecoilState(toastState);
@@ -39,6 +40,7 @@ function Toast(): JSX.Element {
   }, [status, fadeIn, fadeOut]);
 
   const {green, warning} = lightTheme;
+  const {toast, toastClose} = iconSize;
 
   return (
     <Animated.View
@@ -48,14 +50,14 @@ function Toast(): JSX.Element {
         {opacity: fadeAnim},
       ]}>
       <SvgIcon
-        name={icon === ToastIcon.Normal ? 'CheckCircle' : 'Warning'}
-        size={15}
+        size={toast}
         fill={icon === ToastIcon.Normal ? green : warning}
+        name={icon === ToastIcon.Normal ? 'CheckCircle' : 'Warning'}
       />
       <Text style={styles.text}>{text}</Text>
       <TouchableOpacity
         onPress={() => setToastData(prev => ({...prev, status: false}))}>
-        <SvgIcon name="Cross" size={10} fill={lightTheme.black} />
+        <SvgIcon name="Cross" size={toastClose} fill={lightTheme.black} />
       </TouchableOpacity>
     </Animated.View>
   );

@@ -4,19 +4,20 @@ const handleSize = () => {
   // SMALL
   if (getDisplaySize() === DisplaySize.Small) {
     return {
-      Hong: 45,
-      Man: 80,
-      serviceSectionWidth: 140,
-      serviceSectionHeight: 85,
+      Hong: 50,
+      Man: 60,
+      serviceSectionWidth: 120,
+      serviceSectionHeight: 72,
+      mainArrow: 16,
       category: 20,
       search: 12,
       vocaSectionLantern: 18,
       clock: 20,
       triangle: 25,
       smallTrianle: 20,
-      smallVersionBookmark: 20,
-      largeVersionBookmark: 45,
-      smallVersionSound: 20,
+      smallVersionBookmark: 16,
+      largeVersionBookmark: 35,
+      smallVersionSound: 16,
       largeVersionSound: 30,
       pickCategoryClose: 4,
       checkBox: 10,
@@ -24,6 +25,8 @@ const handleSize = () => {
       lock: 15,
       ox: 7,
       writingReset: 13,
+      toast: 12,
+      toastClose: 8,
     };
   }
 
@@ -34,6 +37,7 @@ const handleSize = () => {
       Man: 100,
       serviceSectionWidth: 160,
       serviceSectionHeight: 97,
+      mainArrow: 18,
       category: 25,
       search: 15,
       vocaSectionLantern: 25,
@@ -50,6 +54,8 @@ const handleSize = () => {
       lock: 25,
       ox: 10,
       writingReset: 20,
+      toast: 18,
+      toastClose: 12,
     };
   }
 
@@ -59,6 +65,7 @@ const handleSize = () => {
     Man: 80,
     serviceSectionWidth: 140,
     serviceSectionHeight: 85,
+    mainArrow: 18,
     category: 24,
     search: 15,
     vocaSectionLantern: 25,
@@ -75,6 +82,8 @@ const handleSize = () => {
     lock: 25,
     ox: 10,
     writingReset: 20,
+    toast: 15,
+    toastClose: 10,
   };
 };
 

@@ -1,10 +1,4 @@
-import {
-  Dimensions,
-  ImageStyle,
-  StyleSheet,
-  TextStyle,
-  ViewStyle,
-} from 'react-native';
+import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
@@ -24,8 +18,6 @@ type Style = {
   bookmarkButtonWrapper: ViewStyle;
 };
 
-const width = Dimensions.get('screen').width;
-
 export const commonPart: Style = {
   container: {
     flex: 1,
@@ -41,25 +33,25 @@ export const commonPart: Style = {
   },
   word: {
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.13,
+    fontSize: 50,
     color: lightTheme.black,
   },
   longWord: {
     fontFamily: fonts.hanzi,
-    fontSize: width * 0.1,
+    fontSize: 38,
     color: lightTheme.black,
   },
   intonation: {
     fontFamily: fonts.pinyin,
-    fontSize: width * 0.04,
-    color: lightTheme.darkRed,
+    fontSize: 15,
+    color: lightTheme.red,
     marginTop: 15,
     marginBottom: 8,
   },
   xunyin: {
     fontFamily: fonts.pinyin,
     color: lightTheme.black,
-    fontSize: width * 0.03,
+    fontSize: 12,
   },
   flexDirRow: {
     width: '100%',
@@ -77,15 +69,15 @@ export const commonPart: Style = {
   meaning: {
     width: '95%',
     fontFamily: fonts.pinyin,
-    fontSize: width * 0.035,
+    fontSize: 13,
     color: lightTheme.black,
     margin: 5,
   },
   busuSubTitle: {
     fontFamily: fonts.mainBold,
-    fontSize: width * 0.035,
-    color: lightTheme.darkRed,
-    marginBottom: width * 0.02,
+    fontSize: 13,
+    color: lightTheme.red,
+    margin: 3,
     alignSelf: 'flex-start',
   },
   bookmarkButtonWrapper: {
@@ -98,6 +90,37 @@ export const commonPart: Style = {
 };
 
 export const handleStyles = () => {
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      word: {
+        ...commonPart.word,
+        fontSize: 30,
+      },
+      longWord: {
+        ...commonPart.longWord,
+        fontSize: 22,
+      },
+      intonation: {
+        ...commonPart.intonation,
+        marginTop: 10,
+        marginBottom: 4,
+        fontSize: 11,
+      },
+      xunyin: {
+        ...commonPart.xunyin,
+        fontSize: 10,
+      },
+      meaning: {
+        ...commonPart.meaning,
+        fontSize: 11,
+      },
+      busuSubTitle: {
+        ...commonPart.busuSubTitle,
+        fontSize: 11,
+      },
+    });
+  }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
