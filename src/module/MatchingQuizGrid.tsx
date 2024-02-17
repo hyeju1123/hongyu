@@ -4,7 +4,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {Text, View} from 'react-native';
+import {FlatList, Text, View} from 'react-native';
 import {BaseButton} from 'react-native-gesture-handler';
 import {Word} from '../recoil/WordListState';
 import useQuiz from '../hooks/quiz';
@@ -35,6 +35,7 @@ function MatchingQuizGrid({
   const [wordList, setWordList] = useState(getWordList(words));
   const [correctPair, setCorrectPair] = useState<string[]>([]);
   const [wrongPair, setWrongPair] = useState<string[]>([]);
+  const [layoutWidth, setLayoutWidth] = useState(0);
 
   const indicateCorrect = (pair: string[]) => {
     correctedNum.current += 1;
@@ -104,18 +105,32 @@ function MatchingQuizGrid({
 
   return (
     <View style={styles.cardWrapper}>
-      {wordList.map((value, idx) => (
-        <BaseButton
-          key={idx}
-          exclusive={false}
-          enabled={value !== CORRECT_VERIFIED_VALUE}
-          onPress={() => tryMatching(value)}
-          style={[styles.card, {backgroundColor: setCardColor(value)}]}>
-          <View accessible accessibilityRole="button">
-            <Text style={styles.cardText}>{value}</Text>
-          </View>
-        </BaseButton>
-      ))}
+      <FlatList
+        data={wordList}
+        style={styles.flatList}
+        columnWrapperStyle={[styles.columnWrapperStyle, {width: layoutWidth}]}
+        onLayout={e => setLayoutWidth(e.nativeEvent.layout.width)}
+        renderItem={({item, index}: {item: string; index: number}) => (
+          <BaseButton
+            key={index}
+            exclusive={false}
+            enabled={item !== CORRECT_VERIFIED_VALUE}
+            onPress={() => tryMatching(item)}
+            style={[
+              styles.card,
+              {
+                width: layoutWidth / 2 - 5,
+                backgroundColor: setCardColor(item),
+              },
+            ]}>
+            <View accessible accessibilityRole="button">
+              <Text style={styles.cardText}>{item}</Text>
+            </View>
+          </BaseButton>
+        )}
+        numColumns={2}
+        scrollEnabled={false}
+      />
     </View>
   );
 }

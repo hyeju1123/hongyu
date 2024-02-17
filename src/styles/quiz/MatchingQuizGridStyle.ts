@@ -5,6 +5,8 @@ import {fonts} from '../fonts';
 
 type Style = {
   cardWrapper: ViewStyle;
+  flatList: ViewStyle;
+  columnWrapperStyle: ViewStyle;
   card: ViewStyle;
   cardText: TextStyle;
 };
@@ -18,8 +20,15 @@ const commonPart: Style = {
     flexWrap: 'wrap',
     justifyContent: 'center',
   },
+  flatList: {
+    width: '100%',
+  },
+  columnWrapperStyle: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: 5,
+  },
   card: {
-    width: (width - 60) / 2,
     minHeight: 75,
     borderRadius: 10,
     display: 'flex',
@@ -60,9 +69,8 @@ const handleStyles = () => {
       },
       card: {
         ...commonPart.card,
-        width: (width - 120) / 2,
         minHeight: 90,
-        margin: width * 0.01,
+        margin: 10,
         padding: 30,
       },
       cardText: {

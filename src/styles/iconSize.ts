@@ -5,6 +5,7 @@ const handleSize = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return {
       Hong: 45,
+      Man: 80,
       serviceSectionWidth: 140,
       serviceSectionHeight: 85,
       category: 20,
@@ -30,6 +31,7 @@ const handleSize = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return {
       Hong: 95,
+      Man: 100,
       serviceSectionWidth: 160,
       serviceSectionHeight: 97,
       category: 25,
@@ -54,9 +56,10 @@ const handleSize = () => {
   // MEDIUM
   return {
     Hong: 60,
+    Man: 80,
     serviceSectionWidth: 140,
     serviceSectionHeight: 85,
-    category: 20,
+    category: 24,
     search: 15,
     vocaSectionLantern: 25,
     clock: 25,

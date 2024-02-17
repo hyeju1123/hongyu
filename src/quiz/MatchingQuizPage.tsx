@@ -13,13 +13,14 @@ import BackButton from './BackButton';
 import Timer from '../module/Timer';
 
 import styles from '../styles/quiz/MatchingQuizPageStyle';
+import iconSize from '../styles/iconSize';
 
 type MatchingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
   'MatchingQuizPage'
 >;
 
-const TIMEOUT = 1000000;
+const TIMEOUT = 10000;
 const PAGE_TRANSITION_DELAY = 1000;
 
 function MatchingQuizPage({
@@ -29,6 +30,7 @@ function MatchingQuizPage({
     params: {wordData},
   },
 }: MatchingQuizPageProps): JSX.Element {
+  const {Man} = iconSize;
   const [words, setWords] = useState<Word[]>([]);
   const quizResult = useRef<ResultDataProps[]>([]);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
@@ -101,7 +103,7 @@ function MatchingQuizPage({
       {notifyQuizEnd.state && (
         <View style={styles.endQuizContainer}>
           <View style={styles.endQuizWrapper}>
-            <SvgIcon name="Man" size={80} />
+            <SvgIcon name="Man" size={Man} />
             <Text style={[styles.endQuizText, styles.largeText]}>
               {notifyQuizEnd.result}
             </Text>
