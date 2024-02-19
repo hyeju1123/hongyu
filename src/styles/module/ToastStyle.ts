@@ -14,7 +14,7 @@ const commonPart: Style = {
   container: {
     position: 'absolute',
     marginTop: 100,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
     alignSelf: 'center',
     minWidth: '65%',
     padding: 11,
@@ -42,7 +42,7 @@ const commonPart: Style = {
     marginHorizontal: 12,
     fontFamily: fonts.pinyin,
     fontSize: 11,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
 };
 

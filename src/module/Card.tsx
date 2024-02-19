@@ -4,9 +4,9 @@ import styles from '../styles/module/CardStyle';
 import {lightTheme} from '../styles/colors';
 
 export enum ThemeColor {
-  Red = 'red',
-  DarkRed = 'darkRed',
-  White = 'white',
+  Primary = 'primary',
+  Secondary = 'secondary',
+  Background = 'background',
 }
 
 type CardProps = PropsWithChildren<{
@@ -27,13 +27,13 @@ function Card({
   marginVertical = 5,
   paddingVertical = 10,
   paddingHorizontal = 10,
-  theme = ThemeColor.White,
+  theme = ThemeColor.Background,
 }: CardProps): JSX.Element {
   return (
     <View
       style={[
         styles.underdressing,
-        theme === ThemeColor.Red && styles.redUnderdressing,
+        theme === ThemeColor.Primary && styles.redUnderdressing,
         !underdressing && styles.noUnderdressing,
         shadow && styles.shadow,
         {marginVertical},

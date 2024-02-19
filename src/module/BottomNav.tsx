@@ -73,7 +73,7 @@ function BottomNav({
         <SvgIcon
           name="Play"
           size={large ? triangle : smallTrianle}
-          fill={lightTheme.black}
+          fill={lightTheme.textPrimary}
         />
       </TouchableOpacity>
       {large && (
@@ -89,7 +89,7 @@ function BottomNav({
         <SvgIcon
           name="Play"
           size={large ? triangle : smallTrianle}
-          fill={lightTheme.black}
+          fill={lightTheme.textPrimary}
         />
       </TouchableOpacity>
     </View>

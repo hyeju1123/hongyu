@@ -71,7 +71,11 @@ function SearchPage({
       />
       <View style={styles.inputWrapper}>
         <TouchableOpacity style={styles.backButton} onPress={goBack}>
-          <SvgIcon name="MainArrow" size={mainArrow} fill={lightTheme.red} />
+          <SvgIcon
+            name="MainArrow"
+            size={mainArrow}
+            fill={lightTheme.primary}
+          />
         </TouchableOpacity>
         <DebouncedTextInput
           textVal={''}
@@ -80,7 +84,7 @@ function SearchPage({
           updateFn={handleSearch}
           placeholder="단어를 검색해보세요"
         />
-        <SvgIcon name="Search" size={search} fill={lightTheme.red} />
+        <SvgIcon name="Search" size={search} fill={lightTheme.primary} />
       </View>
       <FlashList
         data={searchedWords}

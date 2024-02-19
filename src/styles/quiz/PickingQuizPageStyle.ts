@@ -14,7 +14,7 @@ type Style = {
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
   },
   scrollViewContent: {
     display: 'flex',
@@ -25,7 +25,7 @@ const commonPart: Style = {
     flex: 1,
     fontFamily: fonts.hanzi,
     fontSize: 15,
-    color: lightTheme.gray,
+    color: lightTheme.deepShadow,
     textAlignVertical: 'center',
     textAlign: 'center',
     padding: 20,
@@ -35,8 +35,6 @@ const commonPart: Style = {
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingVertical: 20,
-    borderWidth: 1,
-    borderColor: 'black',
   },
   horizonFlip: {
     transform: [{rotateY: '180deg'}],

@@ -26,16 +26,16 @@ const commonPart: Style = {
     marginVertical: 8,
     fontFamily: fonts.hanzi,
     fontSize: 20,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
   meaningText: {
     marginVertical: 2,
     fontFamily: fonts.pinyin,
     fontSize: 12,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
   redText: {
-    color: lightTheme.red,
+    color: lightTheme.primary,
   },
   content: {
     marginTop: 3,
@@ -46,12 +46,12 @@ const commonPart: Style = {
   },
   notTouched: {
     padding: 3,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
     borderWidth: 1,
-    borderColor: lightTheme.red,
+    borderColor: lightTheme.primary,
   },
   touched: {
-    backgroundColor: lightTheme.oatmeal,
+    backgroundColor: lightTheme.contentBackground,
   },
 };
 

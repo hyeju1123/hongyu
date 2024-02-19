@@ -32,7 +32,7 @@ function SearchNavigation({}: SearchNavigationProps): JSX.Element {
       screenOptions={{
         headerTitleAlign: 'center',
         headerShadowVisible: false,
-        headerTintColor: lightTheme.black,
+        headerTintColor: lightTheme.textPrimary,
       }}>
       <Stack.Screen
         name="SearchPage"

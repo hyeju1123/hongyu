@@ -22,7 +22,7 @@ const handleStyles = () => {
       alignItems: 'center',
       flexDirection: 'row',
       borderWidth: 1,
-      borderColor: lightTheme.red,
+      borderColor: lightTheme.primary,
       borderRadius: 25,
       paddingVertical: 5,
       paddingHorizontal: 15,
@@ -30,7 +30,7 @@ const handleStyles = () => {
     text: {
       fontFamily: fonts.mainBold,
       fontSize: 12,
-      color: lightTheme.ligthGray,
+      color: lightTheme.ongoingState,
     },
   };
 

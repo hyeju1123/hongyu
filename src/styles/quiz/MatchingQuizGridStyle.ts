@@ -37,7 +37,7 @@ const commonPart: Style = {
   cardText: {
     fontFamily: fonts.hanzi,
     fontSize: 12,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
 };
 

@@ -60,7 +60,7 @@ function DebouncedTextInput({
         onChangeText={setText}
         placeholder={placeholder}
         autoFocus={forSearch ? true : false}
-        placeholderTextColor={lightTheme.gray}
+        placeholderTextColor={lightTheme.deepShadow}
       />
       {!forSearch && <Text style={styles.limitText}>{text.length} / 250</Text>}
     </>
@@ -73,7 +73,7 @@ const handleStyle = () => {
       alignSelf: 'flex-end',
       fontFamily: fonts.pinyin,
       fontSize: 12,
-      color: lightTheme.black,
+      color: lightTheme.textPrimary,
     },
   };
   if (getDisplaySize() === DisplaySize.Large) {

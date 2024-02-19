@@ -78,7 +78,7 @@ function WordPage({
   useEffect(() => {
     const moveQuizPage = () => (
       <TouchableOpacity style={styles.quizModalButton} onPress={handleModal}>
-        <SvgIcon name="Assessment" fill={lightTheme.black} size={20} />
+        <SvgIcon name="Assessment" fill={lightTheme.textPrimary} size={20} />
       </TouchableOpacity>
     );
 

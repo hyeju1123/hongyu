@@ -64,8 +64,8 @@ function WordNavigation({}: WordNavigationProps): JSX.Element {
       screenOptions={{
         headerTitleAlign: 'center',
         headerShadowVisible: false,
-        headerTintColor: lightTheme.black,
-        headerStyle: {backgroundColor: lightTheme.white},
+        headerTintColor: lightTheme.textPrimary,
+        headerStyle: {backgroundColor: lightTheme.background},
       }}>
       <Stack.Screen name="CategoryBranchPage" component={CategoryBranchPage} />
       <Stack.Screen name="WordPage" component={WordPage} />

@@ -87,12 +87,12 @@ function MatchingQuizGrid({
   };
 
   const setCardColor = (value: string) => {
-    let color: string = lightTheme.transGray;
+    let color: string = lightTheme.unselectedState;
 
-    color = tempText === value ? lightTheme.transBlack : color;
+    color = tempText === value ? lightTheme.selectedState : color;
     color = value === '  ' ? lightTheme.transparent : color;
-    color = correctPair.includes(value) ? lightTheme.mint : color;
-    color = wrongPair.includes(value) ? lightTheme.mildYellow : color;
+    color = correctPair.includes(value) ? lightTheme.mildHealthy : color;
+    color = wrongPair.includes(value) ? lightTheme.mildWarning : color;
 
     return color;
   };

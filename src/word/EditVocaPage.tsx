@@ -138,7 +138,7 @@ function EditVocaPage({
           value={textVal.explanation}
           onChangeText={value => handleChangeText('explanation', value)}
           placeholder="메모를 입력하세요"
-          placeholderTextColor={lightTheme.shadowGray}
+          placeholderTextColor={lightTheme.shadow}
           onFocus={() => setShowWCTemplate(false)}
         />
         <View style={styles.buttonWrapper}>
@@ -154,7 +154,7 @@ function EditVocaPage({
         <TouchableOpacity
           onPress={() => setShowWCTemplate(false)}
           style={styles.closeButton}>
-          <SvgIcon name="Cross" size={15} fill={lightTheme.white} />
+          <SvgIcon name="Cross" size={15} fill={lightTheme.background} />
         </TouchableOpacity>
         {getFilteredWC().map((wc: string) => (
           <TouchableOpacity

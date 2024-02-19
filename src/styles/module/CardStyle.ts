@@ -18,13 +18,13 @@ const commonPart: Style = {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: lightTheme.ligthGray,
+    borderColor: lightTheme.ongoingState,
   },
   underdressing: {
-    backgroundColor: lightTheme.shadowGray,
+    backgroundColor: lightTheme.shadow,
     borderRadius: 10,
     paddingBottom: 3,
   },
@@ -35,13 +35,13 @@ const commonPart: Style = {
     flexDirection: 'row',
   },
   backgroundRed: {
-    backgroundColor: lightTheme.red,
+    backgroundColor: lightTheme.primary,
   },
   redUnderdressing: {
-    backgroundColor: lightTheme.darkRed,
+    backgroundColor: lightTheme.secondary,
   },
   shadow: {
-    shadowColor: lightTheme.shadowGray,
+    shadowColor: lightTheme.shadow,
     shadowOffset: {
       width: 0,
       height: 2,

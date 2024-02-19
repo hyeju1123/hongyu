@@ -35,11 +35,11 @@ const commonPart: Style = {
     display: 'flex',
     flex: 1,
     alignItems: 'center',
-    backgroundColor: lightTheme.oatmeal,
+    backgroundColor: lightTheme.contentBackground,
   },
   canvas: {
     width: width,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
@@ -54,14 +54,14 @@ const commonPart: Style = {
   },
   backHanzi: {
     fontFamily: fonts.hanzi,
-    color: lightTheme.ligthGray,
+    color: lightTheme.ongoingState,
   },
   buttonWrapper: {
     display: 'flex',
     flexDirection: 'row',
   },
   resetButton: {
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
     borderRadius: 10,
     alignSelf: 'flex-start',
     padding: 10,
@@ -70,7 +70,7 @@ const commonPart: Style = {
   resetButtonText: {
     fontFamily: fonts.hanzi,
     fontSize: 13,
-    color: lightTheme.red,
+    color: lightTheme.primary,
     marginLeft: 5,
   },
   shadow: {
@@ -86,7 +86,7 @@ const commonPart: Style = {
   auxiliaryLine: {
     position: 'absolute',
     borderStyle: 'dashed',
-    borderColor: lightTheme.ligthGray,
+    borderColor: lightTheme.ongoingState,
   },
   horizonLine: {
     width: '100%',

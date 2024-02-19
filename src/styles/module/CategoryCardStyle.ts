@@ -22,13 +22,13 @@ const commonPart: Style = {
   },
   title: {
     fontFamily: fonts.mainBold,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
     fontSize: 13,
     marginBottom: 3,
   },
   desc: {
     fontFamily: fonts.pinyin,
-    color: lightTheme.gray,
+    color: lightTheme.deepShadow,
     fontSize: 10,
   },
 };

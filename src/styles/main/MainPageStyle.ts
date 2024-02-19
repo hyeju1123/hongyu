@@ -11,7 +11,7 @@ type Style = {
 export const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
   },
   scrollView: {
     marginHorizontal: 20,

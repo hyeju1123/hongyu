@@ -20,7 +20,7 @@ function QuizResultCard({
 }): JSX.Element {
   const vocaItem = useRecoilValue(vocaState(id));
   const {_id, word, bookmarked, level, meaning, intonation} = vocaItem;
-  const {green, warning} = lightTheme;
+  const {healthy, warning} = lightTheme;
 
   return (
     <Card key={_id} underdressing={false}>
@@ -33,7 +33,7 @@ function QuizResultCard({
         />
         <SoundButton level={level} word={word} />
       </View>
-      <Text style={[styles.hanzi, {color: isCorrected ? green : warning}]}>
+      <Text style={[styles.hanzi, {color: isCorrected ? healthy : warning}]}>
         {word}
       </Text>
       <WordCardContent isBusu meaning={meaning} intonation={intonation} />

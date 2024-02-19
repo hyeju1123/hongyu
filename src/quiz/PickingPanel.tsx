@@ -33,7 +33,7 @@ function PickingPanel({
   quizResult,
   listening = false,
 }: PickingPanelProps): JSX.Element {
-  const {mint, mildYellow} = lightTheme;
+  const {mildHealthy, mildWarning} = lightTheme;
   const {shuffleArray} = useUtil();
   const {getVocasByLevel} = useVoca();
   const [layoutWidth, setLayoutWidth] = useState(0);
@@ -75,10 +75,10 @@ function PickingPanel({
 
   const setColor = (item: string) => {
     if (picked !== '' && item === meaning) {
-      return {backgroundColor: mint};
+      return {backgroundColor: mildHealthy};
     }
     if (item === picked && !correct) {
-      return {backgroundColor: mildYellow};
+      return {backgroundColor: mildWarning};
     }
   };
 

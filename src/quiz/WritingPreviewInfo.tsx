@@ -43,14 +43,14 @@ const WritingPreviewInfo: FC<WordInformationProps> = ({
         ) : (
           <SvgIcon
             name={'QuestionSquare'}
-            fill={lightTheme.red}
+            fill={lightTheme.primary}
             size={questionSquare}
           />
         )}
         <TouchableOpacity style={styles.svgWrapper} onPress={handleShowWord}>
           <SvgIcon
             name={showWord ? 'Unlock' : 'Lock'}
-            fill={lightTheme.black}
+            fill={lightTheme.textPrimary}
             size={lock}
           />
         </TouchableOpacity>

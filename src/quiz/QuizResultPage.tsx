@@ -48,7 +48,7 @@ function QuizResultPage({
     params: {resultData, quizType},
   },
 }: QuizResultPageProps) {
-  const {green, warning, white} = lightTheme;
+  const {healthy, warning, background} = lightTheme;
   const {CORRECT, WRONG} = ResultType;
 
   const {fireToast} = useToast();
@@ -136,8 +136,8 @@ function QuizResultPage({
             styles.navButton,
             nav === CORRECT && styles.bottomLine,
           ]}>
-          <SvgIcon name="Circle" size={10} fill={green} />
-          <Text style={[styles.text, {color: green}]}>
+          <SvgIcon name="Circle" size={10} fill={healthy} />
+          <Text style={[styles.text, {color: healthy}]}>
             정답 {lenInfo.correctLen}
           </Text>
         </TouchableOpacity>
@@ -154,7 +154,8 @@ function QuizResultPage({
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={[cardWrapperStyles.cardWrapper, {backgroundColor: white}]}>
+      <View
+        style={[cardWrapperStyles.cardWrapper, {backgroundColor: background}]}>
         <FlashList
           data={items.data}
           estimatedItemSize={90}

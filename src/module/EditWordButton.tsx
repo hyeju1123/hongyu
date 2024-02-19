@@ -15,12 +15,12 @@ type EditWordButtonProps = PropsWithChildren<{
 }>;
 
 function EditWordButton({navigation: {navigate}, id}: EditWordButtonProps) {
-  const {black} = lightTheme;
+  const {textPrimary} = lightTheme;
   return (
     <TouchableOpacity
       style={styles.buttonWrapper}
       onPress={() => navigate('EditVocaPage', {id})}>
-      <Pencil fill={black} stroke={black} width={18} height={18} />
+      <Pencil fill={textPrimary} stroke={textPrimary} width={18} height={18} />
     </TouchableOpacity>
   );
 }

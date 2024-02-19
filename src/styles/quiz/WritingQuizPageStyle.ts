@@ -25,7 +25,7 @@ const width = Dimensions.get('screen').width;
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
   },
   scrollViewContent: {
     display: 'flex',
@@ -58,7 +58,7 @@ const commonPart: Style = {
   guideText: {
     fontFamily: fonts.pinyin,
     fontSize: 13,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
   dirRow: {
     display: 'flex',
@@ -69,19 +69,19 @@ const commonPart: Style = {
   hanzi: {
     fontFamily: fonts.hanzi,
     fontSize: 30,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
   intonation: {
     fontFamily: fonts.pinyin,
     fontSize: 15,
-    color: lightTheme.red,
+    color: lightTheme.primary,
   },
   meaning: {
     width: width * 0.6,
     textAlign: 'center',
     fontFamily: fonts.hanzi,
     fontSize: 14,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
   buttonWrapper: {
     position: 'absolute',

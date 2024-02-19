@@ -20,7 +20,7 @@ const handleStyles = () => {
     sectionText: {
       fontFamily: fonts.mainBold,
       fontSize: 14,
-      color: lightTheme.black,
+      color: lightTheme.textPrimary,
       marginTop: 10,
       marginLeft: 5,
     },
@@ -38,13 +38,13 @@ const handleStyles = () => {
       width: '100%',
     },
     whiteDot: {
-      backgroundColor: lightTheme.white,
+      backgroundColor: lightTheme.background,
       width: 5,
       height: 5,
       borderRadius: 2.5,
     },
     levelText: {
-      color: lightTheme.white,
+      color: lightTheme.background,
       fontFamily: fonts.mainBold,
       fontSize: 18,
       alignSelf: 'center',
@@ -59,7 +59,7 @@ const handleStyles = () => {
     },
     scrapText: {
       fontFamily: fonts.mainBold,
-      color: lightTheme.white,
+      color: lightTheme.background,
       fontSize: 15,
       marginRight: 10,
     },

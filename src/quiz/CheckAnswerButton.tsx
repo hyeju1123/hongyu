@@ -21,9 +21,9 @@ const CheckAnswerButton = ({
   handleCheckAnswer,
 }: CheckAnswerButtonType): JSX.Element => {
   const {checkBox, ox} = iconSize;
-  const {green, warning, gray} = lightTheme;
+  const {healthy, warning, deepShadow} = lightTheme;
   const icon = (oButton ? 'Circle' : 'Cross') as keyof typeof Icons;
-  const iconColor = oButton ? green : warning;
+  const iconColor = oButton ? healthy : warning;
   const currentState = quizResult[index];
   const correctCheck = oButton && currentState.correct ? 'Checkbox' : 'Square';
   const wrongCheck = !oButton && currentState.correct ? 'Square' : 'Checkbox';
@@ -34,7 +34,7 @@ const CheckAnswerButton = ({
       style={styles.serviceButtonWrapper}
       onPress={handleCheckAnswer}>
       <SvgIcon name={icon} fill={iconColor} size={ox} />
-      <SvgIcon name={checkbox} fill={gray} size={checkBox} />
+      <SvgIcon name={checkbox} fill={deepShadow} size={checkBox} />
     </TouchableOpacity>
   );
 };

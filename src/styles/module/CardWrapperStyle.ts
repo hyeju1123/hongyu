@@ -12,7 +12,7 @@ const commonPart: Style = {
     width: '100%',
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
-    shadowColor: lightTheme.shadowGray,
+    shadowColor: lightTheme.shadow,
     shadowOffset: {
       width: 0,
       height: 5,
@@ -24,7 +24,7 @@ const commonPart: Style = {
     top: 10,
     paddingTop: 10,
     paddingHorizontal: 20,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
   },
   flashlistContent: {
     paddingBottom: 10,

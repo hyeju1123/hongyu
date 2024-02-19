@@ -27,7 +27,7 @@ function Header({navigation: {navigate}}: HeaderProps): JSX.Element {
         onPress={() => navigate('SearchNavigation')}
         style={styles.inputSection}>
         <Text style={styles.text}>단어를 검색해보세요!</Text>
-        <SvgIcon name="Search" size={search} fill={lightTheme.red} />
+        <SvgIcon name="Search" size={search} fill={lightTheme.primary} />
       </TouchableOpacity>
     </View>
   );

@@ -18,7 +18,7 @@ type Style = {
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
   },
   navTab: {
     padding: 20,
@@ -35,7 +35,7 @@ const commonPart: Style = {
   },
   bottomLine: {
     borderBottomWidth: 2,
-    borderBottomColor: lightTheme.oatmeal,
+    borderBottomColor: lightTheme.contentBackground,
   },
   flatlistContent: {
     paddingVertical: 10,
@@ -43,12 +43,12 @@ const commonPart: Style = {
   text: {
     fontFamily: fonts.pinyin,
     fontSize: 13,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
     marginHorizontal: 3,
   },
   retryButton: {
     position: 'absolute',
-    backgroundColor: lightTheme.transWhite,
+    backgroundColor: lightTheme.transparentBack,
     borderWidth: 1,
     borderColor: lightTheme.warning,
     padding: 5,

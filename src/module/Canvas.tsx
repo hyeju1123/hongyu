@@ -24,7 +24,7 @@ type CanvasProp = {
 const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
   const {writingReset} = iconSize;
   const stroke = STROKE_SIZE;
-  const color = lightTheme.black;
+  const color = lightTheme.textPrimary;
   const [paths, setPaths] = useState<SigningPathType>([]);
 
   const setNewPath = useCallback(
@@ -67,13 +67,21 @@ const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
         <TouchableOpacity
           style={[styles.buttonWrapper, styles.resetButton, styles.shadow]}
           onPress={() => setPaths([])}>
-          <SvgIcon name="Sparkles" fill={lightTheme.red} size={writingReset} />
+          <SvgIcon
+            name="Sparkles"
+            fill={lightTheme.primary}
+            size={writingReset}
+          />
           <Text style={styles.resetButtonText}>전체 지우기</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.buttonWrapper, styles.resetButton, styles.shadow]}
           onPress={deleteOnePath}>
-          <SvgIcon name="Eraser" fill={lightTheme.red} size={writingReset} />
+          <SvgIcon
+            name="Eraser"
+            fill={lightTheme.primary}
+            size={writingReset}
+          />
           <Text style={styles.resetButtonText}>한 획 지우기</Text>
         </TouchableOpacity>
       </View>

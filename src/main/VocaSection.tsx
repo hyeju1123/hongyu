@@ -36,7 +36,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
             navigate('WordNavigation');
           }}
           key={item}>
-          <Card theme={ThemeColor.Red} marginVertical={3}>
+          <Card theme={ThemeColor.Primary} marginVertical={3}>
             <View style={styles.contents}>
               <View style={styles.whiteDot} />
               <Text style={[styles.levelText]}>{`${item} 급`}</Text>
@@ -68,7 +68,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
           navTypeSetter(prev => ({...prev, navType: WordNav.Book}));
           navigate('WordNavigation');
         }}>
-        <Card theme={ThemeColor.Red}>
+        <Card theme={ThemeColor.Primary}>
           <View style={styles.scrap}>
             <Text style={styles.scrapText}>내 단어장</Text>
             <SvgIcon name="LanternOn" size={vocaSectionLantern} />

@@ -20,7 +20,11 @@ function FlatCard({navFn, Icon, title, desc}: FlatCardProps): JSX.Element {
     <TouchableOpacity onPress={navFn} style={[styles.card]}>
       <Icon width={serviceSectionWidth} height={serviceSectionHeight} />
       <View style={styles.textWrapper}>
-        <SvgIcon name="MainArrow" size={mainArrow} fill={lightTheme.white} />
+        <SvgIcon
+          name="MainArrow"
+          size={mainArrow}
+          fill={lightTheme.background}
+        />
         <Text style={styles.title}>{title}</Text>
         <Text style={styles.desc}>{desc}</Text>
       </View>

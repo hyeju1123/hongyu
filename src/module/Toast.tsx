@@ -39,7 +39,7 @@ function Toast(): JSX.Element {
     status ? fadeIn() : fadeOut();
   }, [status, fadeIn, fadeOut]);
 
-  const {green, warning} = lightTheme;
+  const {healthy, warning} = lightTheme;
   const {toast, toastClose} = iconSize;
 
   return (
@@ -51,13 +51,13 @@ function Toast(): JSX.Element {
       ]}>
       <SvgIcon
         size={toast}
-        fill={icon === ToastIcon.Normal ? green : warning}
+        fill={icon === ToastIcon.Normal ? healthy : warning}
         name={icon === ToastIcon.Normal ? 'CheckCircle' : 'Warning'}
       />
       <Text style={styles.text}>{text}</Text>
       <TouchableOpacity
         onPress={() => setToastData(prev => ({...prev, status: false}))}>
-        <SvgIcon name="Cross" size={toastClose} fill={lightTheme.black} />
+        <SvgIcon name="Cross" size={toastClose} fill={lightTheme.textPrimary} />
       </TouchableOpacity>
     </Animated.View>
   );

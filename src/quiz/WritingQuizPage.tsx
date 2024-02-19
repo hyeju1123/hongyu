@@ -124,7 +124,7 @@ function WritingQuizPage({
                 onPress={() => setKeepVisible(prev => !prev)}>
                 <SvgIcon
                   name={keepVisible ? 'Checkbox' : 'Square'}
-                  fill={lightTheme.gray}
+                  fill={lightTheme.deepShadow}
                   size={checkBox}
                 />
               </TouchableOpacity>

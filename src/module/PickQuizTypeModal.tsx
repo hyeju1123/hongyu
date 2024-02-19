@@ -41,7 +41,7 @@ function PickQuizTypeModal({
   return (
     <TouchableOpacity activeOpacity={1} style={styles.modal}>
       <TouchableOpacity onPress={handleModal} style={styles.closeButton}>
-        <SvgIcon name="Cross" fill={lightTheme.black} size={10} />
+        <SvgIcon name="Cross" fill={lightTheme.textPrimary} size={10} />
       </TouchableOpacity>
       <Text style={styles.guideText}>시험 유형을 선택해주세요</Text>
       <ScrollView

@@ -20,7 +20,7 @@ const width = Dimensions.get('screen').width;
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
   },
   scrollView: {
     marginHorizontal: 20,
@@ -39,7 +39,7 @@ const commonPart: Style = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.white,
+    backgroundColor: lightTheme.background,
   },
   endQuizWrapper: {
     width: width * 0.6,
@@ -47,11 +47,11 @@ const commonPart: Style = {
     borderRadius: width * 0.3,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.darkRed,
+    backgroundColor: lightTheme.secondary,
   },
   endQuizText: {
     fontFamily: fonts.mainBold,
-    color: lightTheme.white,
+    color: lightTheme.background,
   },
   largeText: {
     fontSize: 23,

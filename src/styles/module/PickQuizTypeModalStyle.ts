@@ -21,7 +21,7 @@ export const commonPart: Style = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.transOatmeal,
+    backgroundColor: lightTheme.transparentContentBack,
     bottom: 0,
     padding: 20,
     borderTopLeftRadius: 25,
@@ -45,7 +45,7 @@ export const commonPart: Style = {
     marginBottom: width * 0.02,
     fontFamily: fonts.mainBold,
     fontSize: 18,
-    color: lightTheme.black,
+    color: lightTheme.textPrimary,
   },
 };
 

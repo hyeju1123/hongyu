@@ -103,7 +103,7 @@ function PickCategoryPage({
             <TouchableOpacity
               onPress={moveToQuizPage}
               style={styles.labelButton}>
-              <Text style={[styles.label, {color: lightTheme.red}]}>
+              <Text style={[styles.label, {color: lightTheme.primary}]}>
                 선택완료
               </Text>
             </TouchableOpacity>
@@ -120,7 +120,7 @@ function PickCategoryPage({
                 <SvgIcon
                   name="Cross"
                   size={pickCategoryClose}
-                  fill={lightTheme.red}
+                  fill={lightTheme.primary}
                 />
               </View>
             </TouchableOpacity>

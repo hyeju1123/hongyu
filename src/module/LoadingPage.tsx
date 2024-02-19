@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
   },
   fonts: {
     fontFamily: fonts.mainBold,
-    color: lightTheme.white,
+    color: lightTheme.background,
     fontSize: 25,
   },
 });
