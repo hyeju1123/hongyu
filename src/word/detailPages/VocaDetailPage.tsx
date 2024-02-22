@@ -7,6 +7,7 @@ import {Image, ScrollView, Text, View} from 'react-native';
 
 import Card from '../../module/Card';
 import SoundButton from '../../module/SoundButton';
+import EditWordButton from '../../module/EditWordButton';
 import DebouncedTextInput from '../../module/DebouncedTextInput';
 import BookmarkButton, {ButtonSize} from '../../module/BookmarkButton';
 
@@ -15,8 +16,8 @@ import {vocaState} from '../../recoil/WordListState';
 import {useVoca} from '../../providers/VocaProvider';
 
 import images from '../../styles/images';
+import {useTheme} from '@react-navigation/native';
 import styles from '../../styles/word/WordDetailPageStyle';
-import EditWordButton from '../../module/EditWordButton';
 
 type VocaDetailPageProps = NativeStackScreenProps<
   WordStackParamList | SearchStackParamList,
@@ -29,6 +30,9 @@ function VocaDetailPage({
     params: {id},
   },
 }: VocaDetailPageProps): JSX.Element {
+  const {
+    colors: {transparent, textPrimary, iconPrimary},
+  } = useTheme();
   const wordItem = useRecoilValue(vocaState(id));
   const {
     word,
@@ -69,14 +73,21 @@ function VocaDetailPage({
         showsVerticalScrollIndicator={false}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
-        <Card shadow underdressing={false} marginVertical={8}>
+        <Card showShadow underColor={transparent} marginVertical={8}>
           <SoundButton level={level} word={word} />
-          <Text style={word.length > 3 ? styles.longWord : styles.word}>
+          <Text
+            style={
+              word.length > 3
+                ? {...styles.longWord, color: textPrimary}
+                : {...styles.word, color: textPrimary}
+            }>
             {word}
           </Text>
-          <Text style={styles.intonation}>{intonation}</Text>
+          <Text style={[styles.intonation, {color: iconPrimary}]}>
+            {intonation}
+          </Text>
         </Card>
-        <Card shadow underdressing={false} marginVertical={8}>
+        <Card showShadow underColor={transparent} marginVertical={8}>
           <View style={styles.flexDirRow}>
             {wordclass.split(', ').map((wc: string) => (
               <Image
@@ -87,12 +98,12 @@ function VocaDetailPage({
             ))}
           </View>
         </Card>
-        <Card shadow underdressing={false} marginVertical={8}>
-          <Text style={styles.meaning}>{meaning}</Text>
+        <Card showShadow underColor={transparent} marginVertical={8}>
+          <Text style={[styles.meaning, {color: textPrimary}]}>{meaning}</Text>
         </Card>
-        <Card shadow underdressing={false} marginVertical={8}>
+        <Card showShadow underColor={transparent} marginVertical={8}>
           <DebouncedTextInput
-            style={styles.meaning}
+            style={[styles.meaning, {color: textPrimary}]}
             textVal={explanation || ''}
             placeholder="# 메모를 남겨보세요."
             updateFn={val => handleExplanation(val)}

@@ -1,12 +1,11 @@
 import React, {FC} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import styles from '../styles/quiz/WritingQuizPageStyle';
-import SvgIcon from '../module/SvgIcon';
 
+import SvgIcon from '../module/SvgIcon';
 import {Word} from '../recoil/WordListState';
-import {lightTheme} from '../styles/colors';
 import BottomNav, {PageType} from '../module/BottomNav';
-import iconSize from '../styles/iconSize';
+import {useTheme} from '@react-navigation/native';
+import styles from '../styles/quiz/WritingQuizPageStyle';
 
 type WordInformationProps = {
   index: number;
@@ -25,7 +24,9 @@ const WritingPreviewInfo: FC<WordInformationProps> = ({
   handleShowWord,
   moveCallback,
 }) => {
-  const {lock, questionSquare} = iconSize;
+  const {
+    colors: {iconPrimary, textPrimary},
+  } = useTheme();
   const {QUIZ} = PageType;
   const {word, intonation, meaning} = data;
   return (
@@ -39,27 +40,29 @@ const WritingPreviewInfo: FC<WordInformationProps> = ({
       />
       <View style={styles.dirRow}>
         {showWord ? (
-          <Text style={styles.hanzi}>{word}</Text>
+          <Text style={[styles.hanzi, {color: textPrimary}]}>{word}</Text>
         ) : (
           <SvgIcon
             name={'QuestionSquare'}
-            fill={lightTheme.primary}
-            size={questionSquare}
+            fill={iconPrimary}
+            size={styles.questionSquare.width}
           />
         )}
         <TouchableOpacity style={styles.svgWrapper} onPress={handleShowWord}>
           <SvgIcon
             name={showWord ? 'Unlock' : 'Lock'}
-            fill={lightTheme.textPrimary}
-            size={lock}
+            fill={textPrimary}
+            size={styles.lock.width}
           />
         </TouchableOpacity>
       </View>
-      <Text style={styles.intonation}>{intonation}</Text>
+      <Text style={[styles.intonation, {color: iconPrimary}]}>
+        {intonation}
+      </Text>
       <Text
         textBreakStrategy="balanced"
         lineBreakStrategyIOS="hangul-word"
-        style={styles.meaning}>
+        style={[styles.meaning, {color: textPrimary}]}>
         {meaning}
       </Text>
     </View>

@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -8,6 +7,7 @@ type Style = {
   justifyContent: ViewStyle;
   title: TextStyle;
   desc: TextStyle;
+  icon: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -22,14 +22,15 @@ const commonPart: Style = {
   },
   title: {
     fontFamily: fonts.mainBold,
-    color: lightTheme.textPrimary,
     fontSize: 13,
     marginBottom: 3,
   },
   desc: {
     fontFamily: fonts.pinyin,
-    color: lightTheme.deepShadow,
     fontSize: 10,
+  },
+  icon: {
+    width: 24,
   },
 };
 
@@ -48,6 +49,9 @@ const handleStyles = () => {
       desc: {
         ...commonPart.desc,
         fontSize: 7,
+      },
+      icon: {
+        width: 25,
       },
     });
   }
@@ -70,6 +74,9 @@ const handleStyles = () => {
       desc: {
         ...commonPart.desc,
         fontSize: 12,
+      },
+      icon: {
+        width: 20,
       },
     });
   }

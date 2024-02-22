@@ -11,6 +11,7 @@ import Busu from '../../model/Busu';
 import CategoryCard from '../../module/CategoryCard';
 
 import * as Icons from '../../styles/svgIndex';
+import {useTheme} from '@react-navigation/native';
 import styles from '../../styles/word/CategoryPageStyle';
 import {useSetRecoilState} from 'recoil';
 import {BookedNav, bookedNavState} from '../../recoil/WordNavState';
@@ -29,6 +30,9 @@ const HSK_ALL_CATEGORY_KEY = 0;
 function BookedCategoryPage({
   navigation: {navigate},
 }: BookedCategoryPagepProps): JSX.Element {
+  const {
+    colors: {iconPrimary},
+  } = useTheme();
   const bookedNavSetter = useSetRecoilState(bookedNavState);
   const {getBookmarkedVocas, getBookmarkedBusues} = useVoca();
   const [vocas, setVocas] = useState<Voca[]>([]);
@@ -76,7 +80,7 @@ function BookedCategoryPage({
       <ScrollView style={styles.scrollView}>
         {injectContent('부수', busues.length, BUSU_CATEGORY_KEY)}
         {injectContent('HSK 모든 단어', vocas.length, HSK_ALL_CATEGORY_KEY)}
-        <View style={styles.line} />
+        <View style={[styles.line, {backgroundColor: iconPrimary}]} />
         {Object.entries(countedLevelWords).map(([key, value]) =>
           injectContent(`HSK ${key}급`, value, Number(key)),
         )}

@@ -13,8 +13,7 @@ import WritingPreviewInfo from './WritingPreviewInfo';
 import CheckAnswerButton from './CheckAnswerButton';
 
 import styles from '../styles/quiz/WritingQuizPageStyle';
-import {lightTheme} from '../styles/colors';
-import iconSize from '../styles/iconSize';
+import {useTheme} from '@react-navigation/native';
 
 type WritingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -33,7 +32,9 @@ function WritingQuizPage({
     params: {wordData},
   },
 }: WritingQuizPageProps): JSX.Element {
-  const {checkBox} = iconSize;
+  const {
+    colors: {textPrimary, deepShadow},
+  } = useTheme();
   const writingRef = useRef<SigningPathType>([]);
   const totalLen = useRef(wordData.length).current;
   const [pageInfo, setPageInfo] = useState<PageInfoType>({
@@ -116,16 +117,16 @@ function WritingQuizPage({
         <View style={styles.infoContainer}>
           {showWord && (
             <View style={styles.serviceButtonWrapper}>
-              <Text style={styles.guideText}>
+              <Text style={[styles.guideText, {color: textPrimary}]}>
                 다음 페이지에서도 한자가 보이도록 유지
               </Text>
               <TouchableOpacity
                 style={styles.svgWrapper}
                 onPress={() => setKeepVisible(prev => !prev)}>
                 <SvgIcon
+                  fill={deepShadow}
                   name={keepVisible ? 'Checkbox' : 'Square'}
-                  fill={lightTheme.deepShadow}
-                  size={checkBox}
+                  size={styles.checkBox.width}
                 />
               </TouchableOpacity>
             </View>

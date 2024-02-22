@@ -3,11 +3,11 @@ import {SvgProps} from 'react-native-svg';
 
 import * as Icons from '../styles/svgIndex';
 import {DisplaySize, getDisplaySize} from '../styles/screen';
-import {Dimensions} from 'react-native';
+import {DimensionValue, Dimensions} from 'react-native';
 
 type IconProps = SvgProps & {
   name: keyof typeof Icons;
-  size?: number;
+  size?: DimensionValue;
 };
 
 const width = Dimensions.get('screen').width;
@@ -24,7 +24,8 @@ const defaultSize = getDefaultIconSize();
 
 function SvgIcon({name, size = defaultSize, fill, ...props}: IconProps) {
   const Icon = Icons[name];
-  return <Icon {...props} fill={fill} width={size} height={size} />;
+  const sizeNum = Number(size);
+  return <Icon {...props} fill={fill} width={sizeNum} height={sizeNum} />;
 }
 
 export default SvgIcon;

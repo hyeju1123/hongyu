@@ -1,7 +1,6 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
-import {lightTheme} from '../colors';
 
 type Style = {
   panel: ViewStyle;
@@ -41,29 +40,24 @@ const commonPart: Style = {
     justifyContent: 'center',
     minHeight: 100,
     borderWidth: 0.5,
-    borderColor: lightTheme.ongoingState,
     borderRadius: 5,
     padding: 10,
   },
   buttonText: {
     fontFamily: fonts.hanzi,
     fontSize: 13,
-    color: lightTheme.deepShadow,
     textAlign: 'center',
   },
   query: {
     fontFamily: fonts.hanzi,
     fontSize: 40,
-    color: lightTheme.textPrimary,
     marginVertical: 10,
   },
   pinyin: {
     fontFamily: fonts.hanzi,
     fontSize: 17,
-    color: lightTheme.primary,
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: lightTheme.transparent,
   },
 };
 

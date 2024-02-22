@@ -1,11 +1,10 @@
 import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import SvgIcon from '../module/SvgIcon';
-import {lightTheme} from '../styles/colors';
 import * as Icons from '../styles/svgIndex';
-import styles from '../styles/quiz/WritingQuizPageStyle';
 import {ResultDataProps} from './QuizResultPage';
-import iconSize from '../styles/iconSize';
+import {useTheme} from '@react-navigation/native';
+import styles from '../styles/quiz/WritingQuizPageStyle';
 
 type CheckAnswerButtonType = {
   index: number;
@@ -20,8 +19,10 @@ const CheckAnswerButton = ({
   quizResult,
   handleCheckAnswer,
 }: CheckAnswerButtonType): JSX.Element => {
-  const {checkBox, ox} = iconSize;
-  const {healthy, warning, deepShadow} = lightTheme;
+  const {
+    colors: {healthy, warning, deepShadow},
+  } = useTheme();
+
   const icon = (oButton ? 'Circle' : 'Cross') as keyof typeof Icons;
   const iconColor = oButton ? healthy : warning;
   const currentState = quizResult[index];
@@ -33,8 +34,8 @@ const CheckAnswerButton = ({
     <TouchableOpacity
       style={styles.serviceButtonWrapper}
       onPress={handleCheckAnswer}>
-      <SvgIcon name={icon} fill={iconColor} size={ox} />
-      <SvgIcon name={checkbox} fill={deepShadow} size={checkBox} />
+      <SvgIcon name={icon} fill={iconColor} size={styles.ox.width} />
+      <SvgIcon name={checkbox} fill={deepShadow} size={styles.checkBox.width} />
     </TouchableOpacity>
   );
 };

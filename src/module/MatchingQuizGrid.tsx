@@ -11,7 +11,7 @@ import useQuiz from '../hooks/quiz';
 import useDidMountEffect from '../hooks/didMount';
 import {ResultDataProps} from '../quiz/QuizResultPage';
 
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/MatchingQuizGridStyle';
 
 const MARKED_DURATION = 250;
@@ -28,6 +28,16 @@ function MatchingQuizGrid({
   quizResult,
   handleAllClear,
 }: MatchingQuizGridProps): JSX.Element {
+  const {
+    colors: {
+      transparent,
+      textPrimary,
+      mildHealthy,
+      mildWarning,
+      selectedState,
+      unselectedState,
+    },
+  } = useTheme();
   const correctedNum = useRef(0);
   const {getWordDict, getWordList} = useQuiz();
   const wordDict = getWordDict(words);
@@ -87,12 +97,12 @@ function MatchingQuizGrid({
   };
 
   const setCardColor = (value: string) => {
-    let color: string = lightTheme.unselectedState;
+    let color: string = unselectedState;
 
-    color = tempText === value ? lightTheme.selectedState : color;
-    color = value === '  ' ? lightTheme.transparent : color;
-    color = correctPair.includes(value) ? lightTheme.mildHealthy : color;
-    color = wrongPair.includes(value) ? lightTheme.mildWarning : color;
+    color = tempText === value ? selectedState : color;
+    color = value === '  ' ? transparent : color;
+    color = correctPair.includes(value) ? mildHealthy : color;
+    color = wrongPair.includes(value) ? mildWarning : color;
 
     return color;
   };
@@ -124,7 +134,9 @@ function MatchingQuizGrid({
               },
             ]}>
             <View accessible accessibilityRole="button">
-              <Text style={styles.cardText}>{item}</Text>
+              <Text style={[styles.cardText, {color: textPrimary}]}>
+                {item}
+              </Text>
             </View>
           </BaseButton>
         )}

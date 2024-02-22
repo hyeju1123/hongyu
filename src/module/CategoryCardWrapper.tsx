@@ -9,9 +9,9 @@ import {TouchableOpacity, View} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import CategoryCard from './CategoryCard';
 
-import styles from '../styles/module/CardWrapperStyle';
-
 import * as Icons from '../styles/svgIndex';
+import {useTheme} from '@react-navigation/native';
+import styles from '../styles/module/CardWrapperStyle';
 
 export type InfoType<T> = {
   title: string;
@@ -28,6 +28,9 @@ type CategoryCardWrapperProps<T> = PropsWithChildren<{
 const LOAD_DATA_NUM = 15;
 
 function CategoryCardWrapper<T>({nav, infos}: CategoryCardWrapperProps<T>) {
+  const {
+    colors: {shadow, background},
+  } = useTheme();
   const [items, setItems] = useState<{count: number; data: InfoType<T>[]}>({
     count: 0,
     data: [],
@@ -57,7 +60,11 @@ function CategoryCardWrapper<T>({nav, infos}: CategoryCardWrapperProps<T>) {
   );
 
   return (
-    <View style={styles.cardWrapper}>
+    <View
+      style={[
+        styles.cardWrapper,
+        {backgroundColor: background, shadowColor: shadow},
+      ]}>
       <FlashList
         data={items.data}
         renderItem={renderItem}

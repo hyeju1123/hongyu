@@ -7,7 +7,7 @@ import {
 import {RootStackParamList} from './RootNavigation';
 import SearchPage from '../search/SearchPage';
 
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
 import VocaDetailPage from '../word/detailPages/VocaDetailPage';
 import BusuDetailPage from '../word/detailPages/BusuDetailPage';
 import EditVocaPage from '../word/EditVocaPage';
@@ -27,12 +27,16 @@ type SearchNavigationProps = NativeStackScreenProps<
 >;
 
 function SearchNavigation({}: SearchNavigationProps): JSX.Element {
+  const {
+    colors: {textPrimary},
+  } = useTheme();
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
         headerShadowVisible: false,
-        headerTintColor: lightTheme.textPrimary,
+        headerTintColor: textPrimary,
       }}>
       <Stack.Screen
         name="SearchPage"

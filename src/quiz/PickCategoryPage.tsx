@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
-import {StatusBar, Text, TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -8,15 +8,15 @@ import {useVoca} from '../providers/VocaProvider';
 
 import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
-import * as Icons from '../styles/svgIndex';
 import SvgIcon from '../module/SvgIcon';
-
-import {lightTheme} from '../styles/colors';
-import styles from '../styles/quiz/QuizTypePageStyle';
+import * as Icons from '../styles/svgIndex';
 import {ToastIcon} from '../recoil/ToastState';
-import {useResetRecoilState, useSetRecoilState} from 'recoil';
+
 import {wordListState} from '../recoil/WordListState';
-import iconSize from '../styles/iconSize';
+import {useResetRecoilState, useSetRecoilState} from 'recoil';
+
+import {useTheme} from '@react-navigation/native';
+import styles from '../styles/quiz/QuizTypePageStyle';
 
 const PICK_MAXIMUM = 5;
 
@@ -31,7 +31,9 @@ function PickCategoryPage({
     params: {level, quizType},
   },
 }: PickCategoryPageProps): JSX.Element {
-  const {pickCategoryClose} = iconSize;
+  const {
+    colors: {textPrimary, iconPrimary},
+  } = useTheme();
   const {fireToast} = useToast();
   const {shuffleArray, convertToWord} = useUtil();
   const {countVocaByCategory, getVocasByMultipleCategory} = useVoca();
@@ -92,20 +94,13 @@ function PickCategoryPage({
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent={true}
-      />
       <View style={styles.themePanel}>
         <View style={styles.dirRow}>
           {selectedCategory.length > 0 && (
             <TouchableOpacity
               onPress={moveToQuizPage}
-              style={styles.labelButton}>
-              <Text style={[styles.label, {color: lightTheme.primary}]}>
-                선택완료
-              </Text>
+              style={[styles.labelButton, {borderColor: iconPrimary}]}>
+              <Text style={[styles.label, {color: iconPrimary}]}>선택완료</Text>
             </TouchableOpacity>
           )}
         </View>
@@ -114,13 +109,15 @@ function PickCategoryPage({
             <TouchableOpacity
               onPress={() => undoSelect(category)}
               key={category}
-              style={styles.labelButton}>
-              <Text style={styles.label}>{category}</Text>
+              style={[styles.labelButton, {borderColor: iconPrimary}]}>
+              <Text style={[styles.label, {color: textPrimary}]}>
+                {category}
+              </Text>
               <View style={styles.closeWrapper}>
                 <SvgIcon
                   name="Cross"
-                  size={pickCategoryClose}
-                  fill={lightTheme.primary}
+                  size={styles.close.width}
+                  fill={iconPrimary}
                 />
               </View>
             </TouchableOpacity>

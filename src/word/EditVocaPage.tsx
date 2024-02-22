@@ -20,8 +20,8 @@ import {ToastIcon} from '../recoil/ToastState';
 import {vocaState} from '../recoil/WordListState';
 import {useRecoilCallback, useRecoilValue} from 'recoil';
 
+import {useTheme} from '@react-navigation/native';
 import images from '../styles/images';
-import {lightTheme} from '../styles/colors';
 import styles from '../styles/word/EditVocaPageStyle';
 
 type EditVocaPageProps = NativeStackScreenProps<
@@ -42,6 +42,16 @@ function EditVocaPage({
     params: {id},
   },
 }: EditVocaPageProps) {
+  const {
+    colors: {
+      background,
+      textPrimary,
+      iconPrimary,
+      ongoingState,
+      cardBorderLine,
+      transparentContentBack,
+    },
+  } = useTheme();
   const {updateVoca} = useVoca();
   const vocaItem = useRecoilValue(vocaState(id));
   const memoizedVocaItem = useMemo(() => vocaItem, [vocaItem]);
@@ -98,14 +108,20 @@ function EditVocaPage({
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
         <TextInput
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            {color: textPrimary, borderColor: cardBorderLine},
+          ]}
           value={textVal.word}
           onChangeText={value => handleChangeText('word', value)}
           placeholder="단어를 입력하세요"
           onFocus={() => setShowWCTemplate(false)}
         />
         <TextInput
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            {color: textPrimary, borderColor: cardBorderLine},
+          ]}
           value={textVal.intonation}
           onChangeText={value => handleChangeText('intonation', value)}
           placeholder="발음을 입력하세요"
@@ -113,7 +129,7 @@ function EditVocaPage({
         />
         <TouchableOpacity
           onPress={() => setShowWCTemplate(true)}
-          style={styles.flexDirRow}>
+          style={[styles.flexDirRow, {borderColor: cardBorderLine}]}>
           {currentWC.map((wc: string) => (
             <TouchableOpacity
               key={wc}
@@ -126,7 +142,10 @@ function EditVocaPage({
         </TouchableOpacity>
         <TextInput
           multiline
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            {color: textPrimary, borderColor: cardBorderLine},
+          ]}
           value={textVal.meaning}
           onChangeText={value => handleChangeText('meaning', value)}
           placeholder="뜻을 입력하세요"
@@ -134,27 +153,36 @@ function EditVocaPage({
         />
         <TextInput
           multiline
-          style={styles.textInput}
+          style={[
+            styles.textInput,
+            {color: textPrimary, borderColor: cardBorderLine},
+          ]}
           value={textVal.explanation}
           onChangeText={value => handleChangeText('explanation', value)}
           placeholder="메모를 입력하세요"
-          placeholderTextColor={lightTheme.shadow}
+          placeholderTextColor={ongoingState}
           onFocus={() => setShowWCTemplate(false)}
         />
         <View style={styles.buttonWrapper}>
           <TouchableOpacity
             onPress={() => handleUpdateVoca(textVal, currentWC)}
-            style={styles.completeButton}>
-            <Text style={styles.completeText}>수정하기</Text>
+            style={[styles.completeButton, {backgroundColor: iconPrimary}]}>
+            <Text style={[styles.completeText, {color: background}]}>
+              수정하기
+            </Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
       <View
-        style={showWCTemplate ? styles.wordclassBox : styles.wordclassBoxNone}>
+        style={
+          showWCTemplate
+            ? {...styles.wordclassBox, backgroundColor: transparentContentBack}
+            : styles.wordclassBoxNone
+        }>
         <TouchableOpacity
           onPress={() => setShowWCTemplate(false)}
           style={styles.closeButton}>
-          <SvgIcon name="Cross" size={15} fill={lightTheme.background} />
+          <SvgIcon name="Cross" size={15} fill={textPrimary} />
         </TouchableOpacity>
         {getFilteredWC().map((wc: string) => (
           <TouchableOpacity

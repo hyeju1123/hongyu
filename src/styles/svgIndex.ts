@@ -13,6 +13,7 @@ export {default as CheckCircle} from '../../svg/module/check-circle.svg';
 export {default as Circle} from '../../svg/module/circle.svg';
 export {default as Warning} from '../../svg/module/warning.svg';
 export {default as Sound} from '../../svg/module/sound.svg';
+export {default as LanternOffDark} from '../../svg/module/lantern-off-dark.svg';
 export {default as LanternOff} from '../../svg/module/lantern-off.svg';
 export {default as LanternOn} from '../../svg/module/lantern-on.svg';
 export {default as Pencil} from '../../svg/module/pencil.svg';

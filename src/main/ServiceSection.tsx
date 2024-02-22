@@ -8,6 +8,7 @@ import {View, Text} from 'react-native';
 import FlatCard from '../module/FlatCard';
 import Vocatest from '../../svg/main/vocatest.svg';
 import RadicalDict from '../../svg/main/radicalDict.svg';
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/main/VocaSectionStyle';
 
 type ServiceSectionProps = PropsWithChildren<{
@@ -20,10 +21,13 @@ type ServiceSectionProps = PropsWithChildren<{
 
 function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
   const navTypeSetter = useSetRecoilState(wordNavState);
+  const {
+    colors: {textPrimary},
+  } = useTheme();
 
   return (
     <View>
-      <Text style={styles.sectionText}>학습 도구</Text>
+      <Text style={[styles.sectionText, {color: textPrimary}]}>학습 도구</Text>
       <FlatCard
         navFn={() => {
           navigate('QuizNavigation');

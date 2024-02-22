@@ -1,14 +1,15 @@
 import React, {memo, useCallback} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import SvgIcon from './SvgIcon';
-import useToast from '../hooks/toast';
-import styles from '../styles/module/BottomNavStyle';
-import {lightTheme} from '../styles/colors';
-import {useRecoilValue} from 'recoil';
-import {busuState, vocaState} from '../recoil/WordListState';
 import BookmarkButton, {ButtonSize} from './BookmarkButton';
+
+import {useRecoilValue} from 'recoil';
+import useToast from '../hooks/toast';
 import {ToastIcon} from '../recoil/ToastState';
-import iconSize from '../styles/iconSize';
+import {busuState, vocaState} from '../recoil/WordListState';
+
+import {useTheme} from '@react-navigation/native';
+import styles from '../styles/module/BottomNavStyle';
 
 export enum PageType {
   VOCA = 'voca',
@@ -33,8 +34,10 @@ function BottomNav({
   large = true,
   callback,
 }: BottomNavType): JSX.Element {
+  const {
+    colors: {textPrimary},
+  } = useTheme();
   const {BUSU, QUIZ} = PageType;
-  const {triangle, smallTrianle} = iconSize;
   const {fireToast} = useToast();
   const wordState = pageType === BUSU ? busuState : vocaState;
   const {word, bookmarked} = useRecoilValue(wordState(id));
@@ -72,8 +75,8 @@ function BottomNav({
         onPress={() => handlePageMove(false)}>
         <SvgIcon
           name="Play"
-          size={large ? triangle : smallTrianle}
-          fill={lightTheme.textPrimary}
+          size={large ? styles.largeVerPlay.width : styles.smallVerPlay.width}
+          fill={textPrimary}
         />
       </TouchableOpacity>
       {large && (
@@ -88,8 +91,8 @@ function BottomNav({
       <TouchableOpacity onPress={() => handlePageMove(true)}>
         <SvgIcon
           name="Play"
-          size={large ? triangle : smallTrianle}
-          fill={lightTheme.textPrimary}
+          size={large ? styles.largeVerPlay.width : styles.smallVerPlay.width}
+          fill={textPrimary}
         />
       </TouchableOpacity>
     </View>

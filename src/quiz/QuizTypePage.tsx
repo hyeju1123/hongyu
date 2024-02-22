@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar, Text} from 'react-native';
+import {Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   QuizPageStackParamList,
@@ -9,6 +9,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import useQuiz from '../hooks/quiz';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/QuizTypePageStyle';
 
 type QuizTypePageProps = NativeStackScreenProps<
@@ -16,10 +17,13 @@ type QuizTypePageProps = NativeStackScreenProps<
   'QuizTypePage'
 >;
 
-function QuizTypePage({navigation}: QuizTypePageProps): JSX.Element {
-  const {navigate} = navigation;
+function QuizTypePage({
+  navigation: {navigate},
+}: QuizTypePageProps): JSX.Element {
+  const {
+    colors: {textPrimary},
+  } = useTheme();
   const {getQuizTypeData} = useQuiz();
-
   const quizTypeData = getQuizTypeData();
 
   const moveToPickLevel = (quizType: keyof QuizPageStackParamList) => {
@@ -28,12 +32,9 @@ function QuizTypePage({navigation}: QuizTypePageProps): JSX.Element {
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent={true}
-      />
-      <Text style={styles.guideText}>시험 유형을 선택해주세요</Text>
+      <Text style={[styles.guideText, {color: textPrimary}]}>
+        시험 유형을 선택해주세요
+      </Text>
       <CategoryCardWrapper nav={moveToPickLevel} infos={quizTypeData} />
     </SafeAreaView>
   );

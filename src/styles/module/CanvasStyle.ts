@@ -5,7 +5,6 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -13,7 +12,6 @@ type Style = {
   canvasBackground: ViewStyle;
   canvas: ViewStyle;
   backHanziWrapper: ViewStyle;
-  backHanzi: TextStyle;
   buttonWrapper: ViewStyle;
   resetButton: ViewStyle;
   resetButtonText: TextStyle;
@@ -21,6 +19,7 @@ type Style = {
   auxiliaryLine: ViewStyle;
   horizonLine: ViewStyle;
   verticalLine: ViewStyle;
+  writingReset: ViewStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -35,11 +34,9 @@ const commonPart: Style = {
     display: 'flex',
     flex: 1,
     alignItems: 'center',
-    backgroundColor: lightTheme.contentBackground,
   },
   canvas: {
     width: width,
-    backgroundColor: lightTheme.background,
     borderTopLeftRadius: 10,
     borderTopRightRadius: 10,
   },
@@ -52,16 +49,11 @@ const commonPart: Style = {
     justifyContent: 'center',
     alignItems: 'center',
   },
-  backHanzi: {
-    fontFamily: fonts.hanzi,
-    color: lightTheme.ongoingState,
-  },
   buttonWrapper: {
     display: 'flex',
     flexDirection: 'row',
   },
   resetButton: {
-    backgroundColor: lightTheme.background,
     borderRadius: 10,
     alignSelf: 'flex-start',
     padding: 10,
@@ -70,7 +62,6 @@ const commonPart: Style = {
   resetButtonText: {
     fontFamily: fonts.hanzi,
     fontSize: 13,
-    color: lightTheme.primary,
     marginLeft: 5,
   },
   shadow: {
@@ -86,7 +77,6 @@ const commonPart: Style = {
   auxiliaryLine: {
     position: 'absolute',
     borderStyle: 'dashed',
-    borderColor: lightTheme.ongoingState,
   },
   horizonLine: {
     width: '100%',
@@ -95,6 +85,9 @@ const commonPart: Style = {
   verticalLine: {
     height: '100%',
     borderRightWidth: 1,
+  },
+  writingReset: {
+    width: 20,
   },
 };
 
@@ -112,12 +105,18 @@ const handleStyles = () => {
         ...commonPart.resetButtonText,
         fontSize: 8,
       },
+      writingReset: {
+        width: 13,
+      },
     });
   }
 
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      writingReset: {
+        width: 20,
+      },
     });
   }
   return StyleSheet.create({...commonPart});

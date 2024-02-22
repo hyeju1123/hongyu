@@ -12,7 +12,7 @@ import useUtil from '../hooks/util';
 import {useVoca} from '../providers/VocaProvider';
 import SoundButton from '../module/SoundButton';
 
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/PickingPanelStyle';
 
 type PickingPanelProps = {
@@ -33,7 +33,17 @@ function PickingPanel({
   quizResult,
   listening = false,
 }: PickingPanelProps): JSX.Element {
-  const {mildHealthy, mildWarning} = lightTheme;
+  const {
+    colors: {
+      mildHealthy,
+      mildWarning,
+      ongoingState,
+      deepShadow,
+      textPrimary,
+      iconPrimary,
+      transparent,
+    },
+  } = useTheme();
   const {shuffleArray} = useUtil();
   const {getVocasByLevel} = useVoca();
   const [layoutWidth, setLayoutWidth] = useState(0);
@@ -123,9 +133,15 @@ function PickingPanel({
         {listening ? (
           <SoundButton word={word} level={level} largeSize />
         ) : (
-          <Text style={styles.query}>{word}</Text>
+          <Text style={[styles.query, {color: textPrimary}]}>{word}</Text>
         )}
-        <Text style={styles.pinyin}>{intonation}</Text>
+        <Text
+          style={[
+            styles.pinyin,
+            {color: iconPrimary, borderColor: transparent},
+          ]}>
+          {intonation}
+        </Text>
       </View>
       <View style={styles.panelPart}>
         <FlatList
@@ -139,10 +155,12 @@ function PickingPanel({
               onPress={() => handlePick(item, meaning)}
               style={[
                 styles.button,
-                {width: (layoutWidth - 10) / 2},
+                {width: (layoutWidth - 10) / 2, borderColor: ongoingState},
                 setColor(item),
               ]}>
-              <Text style={styles.buttonText}>{item}</Text>
+              <Text style={[styles.buttonText, {color: deepShadow}]}>
+                {item}
+              </Text>
             </TouchableOpacity>
           )}
           numColumns={2}

@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -7,6 +6,8 @@ type Style = {
   headerBox: ViewStyle;
   inputSection: ViewStyle;
   text: TextStyle;
+  hongIcon: ViewStyle;
+  searchIcon: ViewStyle;
 };
 
 const handleStyles = () => {
@@ -22,7 +23,6 @@ const handleStyles = () => {
       alignItems: 'center',
       flexDirection: 'row',
       borderWidth: 1,
-      borderColor: lightTheme.primary,
       borderRadius: 25,
       paddingVertical: 5,
       paddingHorizontal: 15,
@@ -30,7 +30,12 @@ const handleStyles = () => {
     text: {
       fontFamily: fonts.mainBold,
       fontSize: 12,
-      color: lightTheme.ongoingState,
+    },
+    hongIcon: {
+      width: 60,
+    },
+    searchIcon: {
+      width: 15,
     },
   };
 
@@ -44,6 +49,12 @@ const handleStyles = () => {
       text: {
         ...commonPart.text,
         fontSize: 9,
+      },
+      hongIcon: {
+        width: 50,
+      },
+      searchIcon: {
+        width: 12,
       },
     });
   }
@@ -63,6 +74,12 @@ const handleStyles = () => {
       text: {
         ...commonPart.text,
         fontSize: 14,
+      },
+      hongIcon: {
+        width: 95,
+      },
+      searchIcon: {
+        width: 15,
       },
     });
   }

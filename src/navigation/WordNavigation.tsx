@@ -19,7 +19,7 @@ import ListeningQuizPage from '../quiz/ListeningQuizPage';
 import WritingQuizPage from '../quiz/WritingQuizPage';
 import QuizResultPage, {ResultDataProps} from '../quiz/QuizResultPage';
 
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
 import {Word} from '../recoil/WordListState';
 
 export type PureWordStackParamList = {
@@ -59,13 +59,17 @@ type WordNavigationProps = NativeStackScreenProps<
 >;
 
 function WordNavigation({}: WordNavigationProps): JSX.Element {
+  const {
+    colors: {textPrimary, background},
+  } = useTheme();
+
   return (
     <Stack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
         headerShadowVisible: false,
-        headerTintColor: lightTheme.textPrimary,
-        headerStyle: {backgroundColor: lightTheme.background},
+        headerTintColor: textPrimary,
+        headerStyle: {backgroundColor: background},
       }}>
       <Stack.Screen name="CategoryBranchPage" component={CategoryBranchPage} />
       <Stack.Screen name="WordPage" component={WordPage} />

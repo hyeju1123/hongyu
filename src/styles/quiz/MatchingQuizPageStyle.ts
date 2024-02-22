@@ -1,5 +1,4 @@
 import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -13,6 +12,7 @@ type Style = {
   largeText: TextStyle;
   smallText: TextStyle;
   timerWrapper: ViewStyle;
+  manIcon: ViewStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -20,7 +20,6 @@ const width = Dimensions.get('screen').width;
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.background,
   },
   scrollView: {
     marginHorizontal: 20,
@@ -39,7 +38,6 @@ const commonPart: Style = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.background,
   },
   endQuizWrapper: {
     width: width * 0.6,
@@ -47,11 +45,9 @@ const commonPart: Style = {
     borderRadius: width * 0.3,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.secondary,
   },
   endQuizText: {
     fontFamily: fonts.mainBold,
-    color: lightTheme.background,
   },
   largeText: {
     fontSize: 23,
@@ -63,6 +59,9 @@ const commonPart: Style = {
   timerWrapper: {
     display: 'flex',
     alignItems: 'center',
+  },
+  manIcon: {
+    width: 80,
   },
 };
 
@@ -80,6 +79,9 @@ const handleStyles = () => {
       smallText: {
         fontSize: 7,
       },
+      manIcon: {
+        width: 60,
+      },
     });
   }
   if (getDisplaySize() === DisplaySize.Large) {
@@ -87,6 +89,9 @@ const handleStyles = () => {
       ...commonPart,
       scrollView: {
         marginHorizontal: 35,
+      },
+      manIcon: {
+        width: 100,
       },
     });
   }

@@ -7,8 +7,8 @@ import {useVoca} from '../providers/VocaProvider';
 import {useSetRecoilState} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/module/BookmarkButtonStyle';
-import iconSize from '../styles/iconSize';
 
 export enum ButtonSize {
   Small = 's',
@@ -30,7 +30,7 @@ function BookmarkButton({
   bookmarked,
   size = ButtonSize.Small,
 }: BookmarkButtonProps) {
-  const {smallVersionBookmark, largeVersionBookmark} = iconSize;
+  const {dark} = useTheme();
   const {fireToast} = useToast();
   const {updateBookmark, updateBusuBookmark} = useVoca();
   const wordState = isBusu ? busuState : vocaState;
@@ -50,11 +50,11 @@ function BookmarkButton({
   return (
     <TouchableOpacity style={styles.buttonWrapper} onPress={handleBookmark}>
       <SvgIcon
-        name={bookmarked ? 'LanternOn' : 'LanternOff'}
+        name={bookmarked ? 'LanternOn' : dark ? 'LanternOffDark' : 'LanternOff'}
         size={
           size === ButtonSize.Small
-            ? smallVersionBookmark
-            : largeVersionBookmark
+            ? styles.smallVer.width
+            : styles.largeVer.width
         }
       />
     </TouchableOpacity>

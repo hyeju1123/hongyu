@@ -8,7 +8,8 @@ import useDidMountEffect from '../hooks/didMount';
 import {useIsFocused} from '@react-navigation/native';
 
 import {fonts} from '../styles/fonts';
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
+
 import {ToastIcon} from '../recoil/ToastState';
 import {DisplaySize, getDisplaySize} from '../styles/screen';
 
@@ -27,6 +28,9 @@ function DebouncedTextInput({
   forSearch = false,
   updateFn,
 }: Props): JSX.Element {
+  const {
+    colors: {ongoingState, textPrimary},
+  } = useTheme();
   const {fireToast} = useToast();
   const isFocused = useIsFocused();
   const {limitTextLength} = useUtil();
@@ -60,9 +64,13 @@ function DebouncedTextInput({
         onChangeText={setText}
         placeholder={placeholder}
         autoFocus={forSearch ? true : false}
-        placeholderTextColor={lightTheme.deepShadow}
+        placeholderTextColor={ongoingState}
       />
-      {!forSearch && <Text style={styles.limitText}>{text.length} / 250</Text>}
+      {!forSearch && (
+        <Text style={[styles.limitText, {color: textPrimary}]}>
+          {text.length} / 250
+        </Text>
+      )}
     </>
   );
 }
@@ -73,7 +81,6 @@ const handleStyle = () => {
       alignSelf: 'flex-end',
       fontFamily: fonts.pinyin,
       fontSize: 12,
-      color: lightTheme.textPrimary,
     },
   };
   if (getDisplaySize() === DisplaySize.Large) {

@@ -1,5 +1,4 @@
 import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -21,7 +20,6 @@ type Style = {
 export const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.background,
   },
   scrollView: {
     marginHorizontal: 20,
@@ -34,23 +32,19 @@ export const commonPart: Style = {
   word: {
     fontFamily: fonts.hanzi,
     fontSize: 50,
-    color: lightTheme.textPrimary,
   },
   longWord: {
     fontFamily: fonts.hanzi,
     fontSize: 38,
-    color: lightTheme.textPrimary,
   },
   intonation: {
     fontFamily: fonts.pinyin,
     fontSize: 15,
-    color: lightTheme.primary,
     marginTop: 15,
     marginBottom: 8,
   },
   xunyin: {
     fontFamily: fonts.pinyin,
-    color: lightTheme.textPrimary,
     fontSize: 12,
   },
   flexDirRow: {
@@ -70,13 +64,11 @@ export const commonPart: Style = {
     width: '95%',
     fontFamily: fonts.pinyin,
     fontSize: 13,
-    color: lightTheme.textPrimary,
     margin: 5,
   },
   busuSubTitle: {
     fontFamily: fonts.mainBold,
     fontSize: 13,
-    color: lightTheme.primary,
     margin: 3,
     alignSelf: 'flex-start',
   },

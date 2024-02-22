@@ -1,50 +1,53 @@
 import React, {PropsWithChildren} from 'react';
 import {View} from 'react-native';
 import styles from '../styles/module/CardStyle';
-import {lightTheme} from '../styles/colors';
-
-export enum ThemeColor {
-  Primary = 'primary',
-  Secondary = 'secondary',
-  Background = 'background',
-}
+import {useTheme} from '@react-navigation/native';
 
 type CardProps = PropsWithChildren<{
   paddingVertical?: number;
   paddingHorizontal?: number;
   marginVertical?: number;
-  theme?: ThemeColor;
-  shadow?: boolean;
-  underdressing?: boolean;
+  showShadow?: boolean;
   dirRow?: boolean;
+  color?: string;
+  underColor?: string;
 }>;
 
 function Card({
   children,
-  underdressing = true,
-  shadow = false,
+  color,
+  underColor,
   dirRow = false,
+  showShadow = false,
   marginVertical = 5,
   paddingVertical = 10,
   paddingHorizontal = 10,
-  theme = ThemeColor.Background,
 }: CardProps): JSX.Element {
+  const {
+    colors: {shadow, background, cardBorderLine},
+  } = useTheme();
+
   return (
     <View
       style={[
         styles.underdressing,
-        theme === ThemeColor.Primary && styles.redUnderdressing,
-        !underdressing && styles.noUnderdressing,
-        shadow && styles.shadow,
-        {marginVertical},
+        showShadow && styles.shadow,
+        {
+          marginVertical,
+          shadowColor: shadow,
+          backgroundColor: underColor || shadow,
+        },
       ]}>
       <View
         style={[
           styles.card,
           dirRow && styles.flexRow,
-          {backgroundColor: lightTheme[theme]},
-          {paddingVertical},
-          {paddingHorizontal},
+          {
+            paddingVertical,
+            paddingHorizontal,
+            borderColor: cardBorderLine,
+            backgroundColor: color || background,
+          },
         ]}>
         {children}
       </View>

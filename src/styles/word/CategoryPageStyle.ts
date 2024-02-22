@@ -1,5 +1,4 @@
 import {StyleSheet, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 
 type Style = {
@@ -11,7 +10,6 @@ type Style = {
 export const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.background,
   },
   scrollView: {
     flex: 1,
@@ -21,7 +19,6 @@ export const commonPart: Style = {
     width: '10%',
     height: 3,
     alignSelf: 'center',
-    backgroundColor: lightTheme.primary,
     borderRadius: 100,
     marginVertical: 10,
   },

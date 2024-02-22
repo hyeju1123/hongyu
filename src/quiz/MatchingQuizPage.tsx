@@ -12,8 +12,8 @@ import SvgIcon from '../module/SvgIcon';
 import BackButton from './BackButton';
 import Timer from '../module/Timer';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/MatchingQuizPageStyle';
-import iconSize from '../styles/iconSize';
 
 type MatchingQuizPageProps = NativeStackScreenProps<
   QuizStackParamList,
@@ -30,14 +30,16 @@ function MatchingQuizPage({
     params: {wordData},
   },
 }: MatchingQuizPageProps): JSX.Element {
-  const {Man} = iconSize;
+  const {
+    colors: {background, primary, textSecondary},
+  } = useTheme();
   const [words, setWords] = useState<Word[]>([]);
   const quizResult = useRef<ResultDataProps[]>([]);
   const timeoutId = useRef<NodeJS.Timeout | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [notifyQuizEnd, setNotifyQuizEnd] = useState({
     state: false,
-    result: '',
+    result: 'TIMEOVER',
   });
 
   const pageLength = useMemo(() => Math.ceil(words.length / 5), [words.length]);
@@ -101,13 +103,23 @@ function MatchingQuizPage({
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <BackButton navigation={navigation} />
       {notifyQuizEnd.state && (
-        <View style={styles.endQuizContainer}>
-          <View style={styles.endQuizWrapper}>
-            <SvgIcon name="Man" size={Man} />
-            <Text style={[styles.endQuizText, styles.largeText]}>
+        <View style={[styles.endQuizContainer, {backgroundColor: background}]}>
+          <View style={[styles.endQuizWrapper, {backgroundColor: primary}]}>
+            <SvgIcon name="Man" size={styles.manIcon.width} />
+            <Text
+              style={[
+                styles.largeText,
+                styles.endQuizText,
+                {color: textSecondary},
+              ]}>
               {notifyQuizEnd.result}
             </Text>
-            <Text style={[styles.endQuizText, styles.smallText]}>
+            <Text
+              style={[
+                styles.smallText,
+                styles.endQuizText,
+                {color: textSecondary},
+              ]}>
               곧 다음 페이지로 이동합니다
             </Text>
           </View>

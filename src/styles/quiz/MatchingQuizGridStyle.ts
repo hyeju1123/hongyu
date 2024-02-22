@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -33,11 +32,11 @@ const commonPart: Style = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    padding: 10,
   },
   cardText: {
     fontFamily: fonts.hanzi,
     fontSize: 12,
-    color: lightTheme.textPrimary,
   },
 };
 

@@ -7,14 +7,20 @@ import Header from './Header';
 import VocaSection from './VocaSection';
 import ServiceSection from './ServiceSection';
 import styles from '../styles/main/MainPageStyle';
+import {useTheme} from '@react-navigation/native';
 
 type MainPageProps = NativeStackScreenProps<RootStackParamList, 'MainPage'>;
 
 function MainPage({navigation}: MainPageProps): JSX.Element {
+  const {
+    dark,
+    colors: {background},
+  } = useTheme();
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, {backgroundColor: background}]}>
       <StatusBar
-        barStyle="dark-content"
+        barStyle={dark ? 'light-content' : 'dark-content'}
         backgroundColor="transparent"
         translucent={true}
       />

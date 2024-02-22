@@ -3,7 +3,6 @@ import {TouchableOpacity} from 'react-native';
 import SvgIcon from './SvgIcon';
 import usePolly from '../hooks/polly';
 import styles from '../styles/module/SoundButtonStyle';
-import iconSize from '../styles/iconSize';
 
 type SoundButtonProps = PropsWithChildren<{
   level: number;
@@ -12,7 +11,6 @@ type SoundButtonProps = PropsWithChildren<{
 }>;
 
 function SoundButton({level, word, largeSize = false}: SoundButtonProps) {
-  const {largeVersionSound, smallVersionSound} = iconSize;
   const {setToggle} = usePolly();
 
   return (
@@ -21,7 +19,7 @@ function SoundButton({level, word, largeSize = false}: SoundButtonProps) {
       onPress={() => setToggle({word, level})}>
       <SvgIcon
         name="Sound"
-        size={largeSize ? largeVersionSound : smallVersionSound}
+        size={largeSize ? styles.largeVer.width : styles.smallVer.width}
       />
     </TouchableOpacity>
   );

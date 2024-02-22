@@ -12,7 +12,7 @@ import QuizResultCard from '../module/QuizResultCard';
 import useToast from '../hooks/toast';
 import {Word} from '../recoil/WordListState';
 import {ToastIcon} from '../recoil/ToastState';
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/QuizResultPageStyle';
 import cardWrapperStyles from '../styles/module/CardWrapperStyle';
 
@@ -48,11 +48,12 @@ function QuizResultPage({
     params: {resultData, quizType},
   },
 }: QuizResultPageProps) {
-  const {healthy, warning, background} = lightTheme;
+  const {
+    colors: {healthy, warning, background, contentBackground, transparentBack},
+  } = useTheme();
   const {CORRECT, WRONG} = ResultType;
 
   const {fireToast} = useToast();
-
   const [nav, setNav] = useState<ResultType>(CORRECT);
   const [data, setData] = useState<ClassifiedDataProps>({
     correct: [],
@@ -134,7 +135,10 @@ function QuizResultPage({
           style={[
             styles.dirRow,
             styles.navButton,
-            nav === CORRECT && styles.bottomLine,
+            nav === CORRECT && {
+              ...styles.bottomLine,
+              borderBottomColor: contentBackground,
+            },
           ]}>
           <SvgIcon name="Circle" size={10} fill={healthy} />
           <Text style={[styles.text, {color: healthy}]}>
@@ -146,7 +150,10 @@ function QuizResultPage({
           style={[
             styles.dirRow,
             styles.navButton,
-            nav === WRONG && styles.bottomLine,
+            nav === WRONG && {
+              ...styles.bottomLine,
+              borderBottomColor: contentBackground,
+            },
           ]}>
           <SvgIcon name="Cross" size={10} fill={warning} />
           <Text style={[styles.text, {color: warning}]}>
@@ -166,8 +173,13 @@ function QuizResultPage({
           contentContainerStyle={styles.flatlistContent}
         />
       </View>
-      <TouchableOpacity style={styles.retryButton} onPress={retryWrongs}>
-        <Text style={[styles.text, styles.retryText]}>오답 다시 하기</Text>
+      <TouchableOpacity
+        style={[
+          styles.retryButton,
+          {backgroundColor: transparentBack, borderColor: warning},
+        ]}
+        onPress={retryWrongs}>
+        <Text style={[styles.text, {color: warning}]}>오답 다시 하기</Text>
       </TouchableOpacity>
     </SafeAreaView>
   );

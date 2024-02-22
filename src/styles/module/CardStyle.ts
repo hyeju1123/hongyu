@@ -1,14 +1,10 @@
 import {StyleSheet, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 
 type Style = {
   card: ViewStyle;
   underdressing: ViewStyle;
-  noUnderdressing: ViewStyle;
   flexRow: ViewStyle;
-  backgroundRed: ViewStyle;
-  redUnderdressing: ViewStyle;
   shadow: ViewStyle;
 };
 
@@ -18,30 +14,17 @@ const commonPart: Style = {
     width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.background,
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: lightTheme.ongoingState,
   },
   underdressing: {
-    backgroundColor: lightTheme.shadow,
     borderRadius: 10,
     paddingBottom: 3,
-  },
-  noUnderdressing: {
-    backgroundColor: 'rgba(0,0,0,0)',
   },
   flexRow: {
     flexDirection: 'row',
   },
-  backgroundRed: {
-    backgroundColor: lightTheme.primary,
-  },
-  redUnderdressing: {
-    backgroundColor: lightTheme.secondary,
-  },
   shadow: {
-    shadowColor: lightTheme.shadow,
     shadowOffset: {
       width: 0,
       height: 2,

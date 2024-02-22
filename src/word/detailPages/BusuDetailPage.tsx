@@ -12,6 +12,7 @@ import {useRecoilCallback, useRecoilValue} from 'recoil';
 import {busuState} from '../../recoil/WordListState';
 import {useVoca} from '../../providers/VocaProvider';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../../styles/word/WordDetailPageStyle';
 
 type BusuDetailPageProps = NativeStackScreenProps<
@@ -24,6 +25,9 @@ function BusuDetailPage({
     params: {id},
   },
 }: BusuDetailPageProps): JSX.Element {
+  const {
+    colors: {transparent, textPrimary, iconPrimary, primary},
+  } = useTheme();
   const wordItem = useRecoilValue(busuState(id));
   const {
     word,
@@ -52,24 +56,35 @@ function BusuDetailPage({
         showsVerticalScrollIndicator={false}
         style={styles.scrollView}
         contentContainerStyle={styles.scrollViewContent}>
-        <Card shadow underdressing={false} marginVertical={8}>
-          <Text style={word.length > 3 ? styles.longWord : styles.word}>
+        <Card showShadow underColor={transparent} marginVertical={8}>
+          <Text
+            style={
+              word.length > 3
+                ? {...styles.longWord, color: textPrimary}
+                : {...styles.word, color: textPrimary}
+            }>
             {word}
           </Text>
-          <Text style={styles.intonation}>{intonation}</Text>
-          <Text style={styles.xunyin}>{meaning}</Text>
+          <Text style={[styles.intonation, {color: iconPrimary}]}>
+            {intonation}
+          </Text>
+          <Text style={[styles.xunyin, {color: textPrimary}]}>{meaning}</Text>
         </Card>
-        <Card shadow underdressing={false} marginVertical={8}>
-          <Text style={styles.busuSubTitle}># 부수 정보</Text>
-          <Text style={styles.meaning}>{info}</Text>
+        <Card showShadow underColor={transparent} marginVertical={8}>
+          <Text style={[styles.busuSubTitle, {color: primary}]}>
+            # 부수 정보
+          </Text>
+          <Text style={[styles.meaning, {color: textPrimary}]}>{info}</Text>
         </Card>
-        <Card shadow underdressing={false} marginVertical={8}>
-          <Text style={styles.busuSubTitle}># 예시</Text>
-          <Text style={styles.meaning}>{wordclass}</Text>
+        <Card showShadow underColor={transparent} marginVertical={8}>
+          <Text style={[styles.busuSubTitle, {color: primary}]}># 예시</Text>
+          <Text style={[styles.meaning, {color: textPrimary}]}>
+            {wordclass}
+          </Text>
         </Card>
-        <Card shadow underdressing={false} marginVertical={8}>
+        <Card showShadow underColor={transparent} marginVertical={8}>
           <DebouncedTextInput
-            style={styles.meaning}
+            style={[styles.meaning, {color: textPrimary}]}
             textVal={explanation || ''}
             placeholder="# 메모를 남겨보세요."
             updateFn={val => handleExplanation(val)}

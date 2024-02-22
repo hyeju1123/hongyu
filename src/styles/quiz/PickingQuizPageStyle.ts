@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -14,7 +13,6 @@ type Style = {
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.background,
   },
   scrollViewContent: {
     display: 'flex',
@@ -25,7 +23,6 @@ const commonPart: Style = {
     flex: 1,
     fontFamily: fonts.hanzi,
     fontSize: 15,
-    color: lightTheme.deepShadow,
     textAlignVertical: 'center',
     textAlign: 'center',
     padding: 20,

@@ -1,5 +1,4 @@
 import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -21,7 +20,6 @@ export const commonPart: Style = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: lightTheme.transparentContentBack,
     bottom: 0,
     padding: 20,
     borderTopLeftRadius: 25,
@@ -45,7 +43,6 @@ export const commonPart: Style = {
     marginBottom: width * 0.02,
     fontFamily: fonts.mainBold,
     fontSize: 18,
-    color: lightTheme.textPrimary,
   },
 };
 

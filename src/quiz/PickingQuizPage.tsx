@@ -10,6 +10,7 @@ import BottomNav, {PageType} from '../module/BottomNav';
 import PickingPanel from './PickingPanel';
 import BackButton from './BackButton';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/PickingQuizPageStyle';
 
 type PickingQuizPageProps = NativeStackScreenProps<
@@ -24,6 +25,9 @@ function PickingQuizPage({
     params: {wordData},
   },
 }: PickingQuizPageProps): JSX.Element {
+  const {
+    colors: {deepShadow},
+  } = useTheme();
   const {QUIZ} = PageType;
   const [page, setPage] = useState(0);
   const totalLen = useRef(wordData.length).current;
@@ -55,7 +59,9 @@ function PickingQuizPage({
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <BackButton navigation={navigation} />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.guideText}>한자에 맞는 뜻을 고르세요</Text>
+        <Text style={[styles.guideText, {color: deepShadow}]}>
+          한자에 맞는 뜻을 고르세요
+        </Text>
         <PickingPanel index={page} quizResult={quizResult} />
         <BottomNav
           id={wordData[page]._id}

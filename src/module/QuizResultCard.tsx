@@ -3,13 +3,13 @@ import {Text, View} from 'react-native';
 
 import Card from './Card';
 import SoundButton from './SoundButton';
+import BookmarkButton from './BookmarkButton';
 import WordCardContent from './WordCardContent';
-
-import {lightTheme} from '../styles/colors';
-import styles from '../styles/module/WordCardStyle';
 import {useRecoilValue} from 'recoil';
 import {vocaState} from '../recoil/WordListState';
-import BookmarkButton from './BookmarkButton';
+
+import {useTheme} from '@react-navigation/native';
+import styles from '../styles/module/WordCardStyle';
 
 function QuizResultCard({
   id,
@@ -18,12 +18,14 @@ function QuizResultCard({
   id: number;
   isCorrected: boolean;
 }): JSX.Element {
+  const {
+    colors: {healthy, warning, transparent},
+  } = useTheme();
   const vocaItem = useRecoilValue(vocaState(id));
   const {_id, word, bookmarked, level, meaning, intonation} = vocaItem;
-  const {healthy, warning} = lightTheme;
 
   return (
-    <Card key={_id} underdressing={false}>
+    <Card key={_id} underColor={transparent}>
       <View style={styles.dirRow}>
         <BookmarkButton
           id={_id}

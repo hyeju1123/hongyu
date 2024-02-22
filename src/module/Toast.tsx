@@ -1,14 +1,18 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Text, TouchableOpacity, Animated} from 'react-native';
-import {useRecoilState} from 'recoil';
+import {useRecoilState, useRecoilValue} from 'recoil';
 import {ToastIcon, toastState} from '../recoil/ToastState';
 import styles from '../styles/module/ToastStyle';
 
 import SvgIcon from './SvgIcon';
-import {lightTheme} from '../styles/colors';
-import iconSize from '../styles/iconSize';
+import {themeState} from '../recoil/ThemeState';
+import {darkTheme, lightTheme} from '../styles/colors';
 
 function Toast(): JSX.Element {
+  const theme = useRecoilValue(themeState);
+  const {background, textPrimary, healthy, warning} =
+    theme === 'dark' ? darkTheme.colors : lightTheme.colors;
+
   const [toastData, setToastData] = useRecoilState(toastState);
   const {status, text, icon} = toastData;
 
@@ -39,25 +43,26 @@ function Toast(): JSX.Element {
     status ? fadeIn() : fadeOut();
   }, [status, fadeIn, fadeOut]);
 
-  const {healthy, warning} = lightTheme;
-  const {toast, toastClose} = iconSize;
-
   return (
     <Animated.View
       style={[
         styles.container,
         toastDisplay ? styles.displayFlex : styles.displayNone,
-        {opacity: fadeAnim},
+        {opacity: fadeAnim, backgroundColor: background},
       ]}>
       <SvgIcon
-        size={toast}
+        size={styles.icon.width}
         fill={icon === ToastIcon.Normal ? healthy : warning}
         name={icon === ToastIcon.Normal ? 'CheckCircle' : 'Warning'}
       />
-      <Text style={styles.text}>{text}</Text>
+      <Text style={[styles.text, {color: textPrimary}]}>{text}</Text>
       <TouchableOpacity
         onPress={() => setToastData(prev => ({...prev, status: false}))}>
-        <SvgIcon name="Cross" size={toastClose} fill={lightTheme.textPrimary} />
+        <SvgIcon
+          name="Cross"
+          fill={textPrimary}
+          size={styles.closeIcon.width}
+        />
       </TouchableOpacity>
     </Animated.View>
   );

@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -8,6 +7,8 @@ type Style = {
   textWrapper: ViewStyle;
   title: TextStyle;
   desc: TextStyle;
+  icon: ViewStyle;
+  mainArrow: ViewStyle;
 };
 
 const handleStyles = () => {
@@ -16,7 +17,6 @@ const handleStyles = () => {
       display: 'flex',
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: lightTheme.secondary,
       borderRadius: 8,
       padding: 10,
       marginVertical: 5,
@@ -27,16 +27,21 @@ const handleStyles = () => {
       alignItems: 'flex-end',
     },
     title: {
-      color: lightTheme.background,
       fontFamily: fonts.mainBold,
       fontSize: 15,
       marginTop: 12,
     },
     desc: {
-      color: lightTheme.background,
       fontFamily: fonts.main,
       fontSize: 9,
       marginTop: 5,
+    },
+    icon: {
+      width: 140,
+      height: 85,
+    },
+    mainArrow: {
+      width: 18,
     },
   };
 
@@ -50,6 +55,13 @@ const handleStyles = () => {
       desc: {
         ...commonPart.desc,
         fontSize: 6,
+      },
+      icon: {
+        width: 120,
+        height: 72,
+      },
+      mainArrow: {
+        width: 16,
       },
     });
   }
@@ -71,6 +83,13 @@ const handleStyles = () => {
         ...commonPart.desc,
         fontSize: 12,
         marginTop: 8,
+      },
+      icon: {
+        width: 160,
+        height: 97,
+      },
+      mainArrow: {
+        width: 18,
       },
     });
   }

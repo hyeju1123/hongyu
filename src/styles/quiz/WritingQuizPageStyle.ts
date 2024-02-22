@@ -1,5 +1,4 @@
 import {Dimensions, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -18,6 +17,10 @@ type Style = {
   svgWrapper: ViewStyle;
   moveButtonWrapper: ViewStyle;
   horizonFlip: ViewStyle;
+  lock: ViewStyle;
+  questionSquare: ViewStyle;
+  checkBox: ViewStyle;
+  ox: ViewStyle;
 };
 
 const width = Dimensions.get('screen').width;
@@ -25,7 +28,6 @@ const width = Dimensions.get('screen').width;
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.background,
   },
   scrollViewContent: {
     display: 'flex',
@@ -58,7 +60,6 @@ const commonPart: Style = {
   guideText: {
     fontFamily: fonts.pinyin,
     fontSize: 13,
-    color: lightTheme.textPrimary,
   },
   dirRow: {
     display: 'flex',
@@ -69,19 +70,16 @@ const commonPart: Style = {
   hanzi: {
     fontFamily: fonts.hanzi,
     fontSize: 30,
-    color: lightTheme.textPrimary,
   },
   intonation: {
     fontFamily: fonts.pinyin,
     fontSize: 15,
-    color: lightTheme.primary,
   },
   meaning: {
     width: width * 0.6,
     textAlign: 'center',
     fontFamily: fonts.hanzi,
     fontSize: 14,
-    color: lightTheme.textPrimary,
   },
   buttonWrapper: {
     position: 'absolute',
@@ -101,6 +99,18 @@ const commonPart: Style = {
   },
   horizonFlip: {
     transform: [{rotateY: '180deg'}],
+  },
+  lock: {
+    width: 25,
+  },
+  questionSquare: {
+    width: 25,
+  },
+  checkBox: {
+    width: 14,
+  },
+  ox: {
+    width: 10,
   },
 };
 
@@ -128,11 +138,35 @@ const handleStyles = () => {
         ...commonPart.serviceButtonWrapper,
         minWidth: 20,
       },
+      lock: {
+        width: 15,
+      },
+      questionSquare: {
+        width: 15,
+      },
+      checkBox: {
+        width: 10,
+      },
+      ox: {
+        width: 7,
+      },
     });
   }
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      lock: {
+        width: 25,
+      },
+      questionSquare: {
+        width: 25,
+      },
+      checkBox: {
+        width: 14,
+      },
+      ox: {
+        width: 10,
+      },
     });
   }
   return StyleSheet.create({...commonPart});

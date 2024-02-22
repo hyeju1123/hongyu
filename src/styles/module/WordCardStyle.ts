@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -7,10 +6,8 @@ type Style = {
   dirRow: ViewStyle;
   hanzi: TextStyle;
   meaningText: TextStyle;
-  redText: TextStyle;
   content: ViewStyle;
   notTouched: ViewStyle;
-  touched: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -26,16 +23,11 @@ const commonPart: Style = {
     marginVertical: 8,
     fontFamily: fonts.hanzi,
     fontSize: 20,
-    color: lightTheme.textPrimary,
   },
   meaningText: {
     marginVertical: 2,
     fontFamily: fonts.pinyin,
     fontSize: 12,
-    color: lightTheme.textPrimary,
-  },
-  redText: {
-    color: lightTheme.primary,
   },
   content: {
     marginTop: 3,
@@ -46,12 +38,7 @@ const commonPart: Style = {
   },
   notTouched: {
     padding: 3,
-    backgroundColor: lightTheme.background,
     borderWidth: 1,
-    borderColor: lightTheme.primary,
-  },
-  touched: {
-    backgroundColor: lightTheme.contentBackground,
   },
 };
 

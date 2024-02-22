@@ -15,7 +15,7 @@ import useWordData from '../hooks/wordData';
 import {useRecoilValue} from 'recoil';
 import {WordNav, wordNavState} from '../recoil/WordNavState';
 
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/word/WordPageStyle';
 
 type WordPageProps = NativeStackScreenProps<WordStackParamList, 'WordPage'>;
@@ -28,6 +28,9 @@ function WordPage({
     params: {category},
   },
 }: WordPageProps): JSX.Element {
+  const {
+    colors: {textPrimary},
+  } = useTheme();
   const {Busu} = WordNav;
   const {clearMp3File} = usePolly();
   const {navType} = useRecoilValue(wordNavState);
@@ -78,7 +81,7 @@ function WordPage({
   useEffect(() => {
     const moveQuizPage = () => (
       <TouchableOpacity style={styles.quizModalButton} onPress={handleModal}>
-        <SvgIcon name="Assessment" fill={lightTheme.textPrimary} size={20} />
+        <SvgIcon name="Assessment" fill={textPrimary} size={20} />
       </TouchableOpacity>
     );
 
@@ -89,7 +92,15 @@ function WordPage({
     return () => {
       clearMp3File();
     };
-  }, [clearMp3File, navType, Busu, setOptions, category, handleModal]);
+  }, [
+    clearMp3File,
+    navType,
+    Busu,
+    setOptions,
+    category,
+    handleModal,
+    textPrimary,
+  ]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>

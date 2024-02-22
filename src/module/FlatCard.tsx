@@ -1,10 +1,9 @@
 import React, {FC, PropsWithChildren} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
-import styles from '../styles/module/FlatCardStyle';
 import SvgIcon from './SvgIcon';
 import {SvgProps} from 'react-native-svg';
-import {lightTheme} from '../styles/colors';
-import iconSize from '../styles/iconSize';
+import {useTheme} from '@react-navigation/native';
+import styles from '../styles/module/FlatCardStyle';
 
 type FlatCardProps = PropsWithChildren<{
   marginVertical?: number;
@@ -15,18 +14,24 @@ type FlatCardProps = PropsWithChildren<{
 }>;
 
 function FlatCard({navFn, Icon, title, desc}: FlatCardProps): JSX.Element {
-  const {serviceSectionHeight, serviceSectionWidth, mainArrow} = iconSize;
+  const {
+    colors: {secondary, textSecondary},
+  } = useTheme();
+  const {width, height} = styles.icon;
+
   return (
-    <TouchableOpacity onPress={navFn} style={[styles.card]}>
-      <Icon width={serviceSectionWidth} height={serviceSectionHeight} />
+    <TouchableOpacity
+      onPress={navFn}
+      style={[styles.card, {backgroundColor: secondary}]}>
+      <Icon width={Number(width)} height={Number(height)} />
       <View style={styles.textWrapper}>
         <SvgIcon
           name="MainArrow"
-          size={mainArrow}
-          fill={lightTheme.background}
+          fill={textSecondary}
+          size={styles.mainArrow.width}
         />
-        <Text style={styles.title}>{title}</Text>
-        <Text style={styles.desc}>{desc}</Text>
+        <Text style={[styles.title, {color: textSecondary}]}>{title}</Text>
+        <Text style={[styles.desc, {color: textSecondary}]}>{desc}</Text>
       </View>
     </TouchableOpacity>
   );

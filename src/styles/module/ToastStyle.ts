@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -8,13 +7,14 @@ type Style = {
   displayFlex: ViewStyle;
   displayNone: ViewStyle;
   text: TextStyle;
+  icon: ViewStyle;
+  closeIcon: ViewStyle;
 };
 
 const commonPart: Style = {
   container: {
     position: 'absolute',
     marginTop: 100,
-    backgroundColor: lightTheme.background,
     alignSelf: 'center',
     minWidth: '65%',
     padding: 11,
@@ -42,7 +42,12 @@ const commonPart: Style = {
     marginHorizontal: 12,
     fontFamily: fonts.pinyin,
     fontSize: 11,
-    color: lightTheme.textPrimary,
+  },
+  icon: {
+    width: 15,
+  },
+  closeIcon: {
+    width: 10,
   },
 };
 
@@ -60,6 +65,12 @@ const handleStyles = () => {
         fontSize: 9,
         marginHorizontal: 10,
       },
+      icon: {
+        width: 12,
+      },
+      closeIcon: {
+        width: 8,
+      },
     });
   }
 
@@ -75,6 +86,12 @@ const handleStyles = () => {
         ...commonPart.text,
         fontSize: 15,
         marginHorizontal: 15,
+      },
+      icon: {
+        width: 18,
+      },
+      closeIcon: {
+        width: 12,
       },
     });
   }

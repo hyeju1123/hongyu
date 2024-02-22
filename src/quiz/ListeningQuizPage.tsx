@@ -10,6 +10,7 @@ import BackButton from './BackButton';
 import PickingPanel from './PickingPanel';
 import BottomNav, {PageType} from '../module/BottomNav';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/PickingQuizPageStyle';
 
 type ListeningQuizPageProps = NativeStackScreenProps<
@@ -24,6 +25,9 @@ function ListeningQuizPage({
     params: {wordData},
   },
 }: ListeningQuizPageProps): JSX.Element {
+  const {
+    colors: {deepShadow},
+  } = useTheme();
   const {QUIZ} = PageType;
   const [page, setPage] = useState(0);
   const {setToggle, clearMp3File} = usePolly();
@@ -64,7 +68,9 @@ function ListeningQuizPage({
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <BackButton navigation={navigation} />
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
-        <Text style={styles.guideText}>한자를 듣고 일치하는 뜻을 고르세요</Text>
+        <Text style={[styles.guideText, {color: deepShadow}]}>
+          한자를 듣고 일치하는 뜻을 고르세요
+        </Text>
         <PickingPanel index={page} listening={true} quizResult={quizResult} />
         <BottomNav
           id={wordData[page]._id}

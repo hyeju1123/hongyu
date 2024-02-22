@@ -7,6 +7,10 @@ import SearchNavigation from './SearchNavigation';
 import WordNavigation from './WordNavigation';
 import QuizNavigation from './QuizNavigation';
 
+import {useRecoilValue} from 'recoil';
+import {themeState} from '../recoil/ThemeState';
+import {darkTheme, lightTheme} from '../styles/colors';
+
 export type RootStackParamList = {
   MainPage: undefined;
   SearchNavigation: undefined;
@@ -17,8 +21,10 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigation(): JSX.Element {
+  const theme = useRecoilValue(themeState);
+
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={theme === 'dark' ? darkTheme : lightTheme}>
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="MainPage" component={MainPage} />
         <Stack.Screen name="SearchNavigation" component={SearchNavigation} />

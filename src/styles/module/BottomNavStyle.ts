@@ -5,6 +5,8 @@ type Style = {
   bottomNav: ViewStyle;
   smallSize: ViewStyle;
   horizonFlip: ViewStyle;
+  smallVerPlay: ViewStyle;
+  largeVerPlay: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -26,12 +28,35 @@ const commonPart: Style = {
   horizonFlip: {
     transform: [{rotateY: '180deg'}],
   },
+  smallVerPlay: {
+    width: 25,
+  },
+  largeVerPlay: {
+    width: 40,
+  },
 };
 
 const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      smallVerPlay: {
+        width: 25,
+      },
+      largeVerPlay: {
+        width: 40,
+      },
+    });
+  }
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      smallVerPlay: {
+        width: 20,
+      },
+      largeVerPlay: {
+        width: 25,
+      },
     });
   }
   return StyleSheet.create({...commonPart});

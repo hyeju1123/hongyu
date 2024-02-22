@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {commonPart as mainCommonPart} from '../main/MainPageStyle';
 import {fonts} from '../fonts';
@@ -14,6 +13,8 @@ type Style = {
   text: TextStyle;
   meaningText: TextStyle;
   levelText: TextStyle;
+  searchIcon: ViewStyle;
+  mainArrowIcon: ViewStyle;
 };
 
 export const commonPart: Style = {
@@ -26,13 +27,11 @@ export const commonPart: Style = {
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 15,
-    borderBottomColor: lightTheme.primary,
     borderBottomWidth: 1,
   },
   input: {
     flex: 1,
     fontFamily: fonts.hanzi,
-    color: lightTheme.textPrimary,
     paddingHorizontal: 10,
   },
   backButton: {
@@ -43,11 +42,9 @@ export const commonPart: Style = {
     display: 'flex',
     flexDirection: 'row',
     borderBottomWidth: 0.8,
-    borderBottomColor: lightTheme.ongoingState,
   },
   text: {
     fontFamily: fonts.hanzi,
-    color: lightTheme.textPrimary,
     marginHorizontal: 2,
     paddingVertical: 1,
   },
@@ -55,14 +52,17 @@ export const commonPart: Style = {
     flex: 1,
     marginHorizontal: 7,
     fontFamily: fonts.hanzi,
-    color: lightTheme.deepShadow,
   },
   levelText: {
     fontFamily: fonts.hanzi,
-    color: lightTheme.background,
-    backgroundColor: lightTheme.textPrimary,
     paddingHorizontal: 3,
     marginHorizontal: 2,
+  },
+  searchIcon: {
+    width: 15,
+  },
+  mainArrowIcon: {
+    width: 18,
   },
 };
 
@@ -70,6 +70,23 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      searchIcon: {
+        width: 15,
+      },
+      mainArrowIcon: {
+        width: 18,
+      },
+    });
+  }
+  if (getDisplaySize() === DisplaySize.Small) {
+    return StyleSheet.create({
+      ...commonPart,
+      searchIcon: {
+        width: 12,
+      },
+      mainArrowIcon: {
+        width: 16,
+      },
     });
   }
   return StyleSheet.create({...commonPart});

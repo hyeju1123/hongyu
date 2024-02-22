@@ -1,5 +1,4 @@
 import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {getDisplaySize, DisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -12,13 +11,11 @@ type Style = {
   flatlistContent: ViewStyle;
   text: TextStyle;
   retryButton: ViewStyle;
-  retryText: TextStyle;
 };
 
 const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.background,
   },
   navTab: {
     padding: 20,
@@ -35,7 +32,6 @@ const commonPart: Style = {
   },
   bottomLine: {
     borderBottomWidth: 2,
-    borderBottomColor: lightTheme.contentBackground,
   },
   flatlistContent: {
     paddingVertical: 10,
@@ -43,21 +39,15 @@ const commonPart: Style = {
   text: {
     fontFamily: fonts.pinyin,
     fontSize: 13,
-    color: lightTheme.textPrimary,
     marginHorizontal: 3,
   },
   retryButton: {
     position: 'absolute',
-    backgroundColor: lightTheme.transparentBack,
     borderWidth: 1,
-    borderColor: lightTheme.warning,
     padding: 5,
     borderRadius: 8,
     bottom: 30,
     left: 25,
-  },
-  retryText: {
-    color: lightTheme.warning,
   },
 };
 

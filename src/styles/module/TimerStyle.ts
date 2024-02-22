@@ -1,26 +1,33 @@
-import {StyleSheet, ViewStyle} from 'react-native';
+import {Dimensions, StyleSheet, ViewStyle} from 'react-native';
 import {DisplaySize, getDisplaySize} from '../screen';
 
 type Style = {
-  button: ViewStyle;
-  alignCenter: ViewStyle;
-  smallVer: ViewStyle;
-  largeVer: ViewStyle;
+  container: ViewStyle;
+  bottomBar: ViewStyle;
+  line: ViewStyle;
+  icon: ViewStyle;
 };
 
+const width = Dimensions.get('screen').width;
+
 const commonPart: Style = {
-  button: {
-    alignSelf: 'flex-start',
-    padding: 5,
+  container: {
+    marginVertical: 10,
   },
-  alignCenter: {
-    alignSelf: 'center',
+  bottomBar: {
+    width: width * 0.8,
+    height: 5,
+    borderRadius: 5,
   },
-  smallVer: {
+  line: {
+    top: 0,
+    position: 'absolute',
+    width: width,
+    zIndex: 10,
+    height: 5,
+  },
+  icon: {
     width: 20,
-  },
-  largeVer: {
-    width: 50,
   },
 };
 
@@ -28,25 +35,21 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Small) {
     return StyleSheet.create({
       ...commonPart,
-      smallVer: {
-        width: 16,
-      },
-      largeVer: {
-        width: 30,
+      icon: {
+        width: 25,
       },
     });
   }
+
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
-      smallVer: {
-        width: 22,
-      },
-      largeVer: {
-        width: 50,
+      icon: {
+        width: 25,
       },
     });
   }
+
   return StyleSheet.create({...commonPart});
 };
 

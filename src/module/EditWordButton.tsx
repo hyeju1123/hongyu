@@ -4,7 +4,7 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
 import {SearchStackParamList} from '../navigation/SearchNavigation';
 import Pencil from '../../svg/module/pencil.svg';
-import {lightTheme} from '../styles/colors';
+import {useTheme} from '@react-navigation/native';
 
 type EditWordButtonProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
@@ -15,7 +15,9 @@ type EditWordButtonProps = PropsWithChildren<{
 }>;
 
 function EditWordButton({navigation: {navigate}, id}: EditWordButtonProps) {
-  const {textPrimary} = lightTheme;
+  const {
+    colors: {textPrimary},
+  } = useTheme();
   return (
     <TouchableOpacity
       style={styles.buttonWrapper}

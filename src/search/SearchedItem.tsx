@@ -4,6 +4,7 @@ import {Text, TouchableOpacity} from 'react-native';
 import {useRecoilValue} from 'recoil';
 import {busuState, vocaState} from '../recoil/WordListState';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/search/SearchPageStyle';
 
 type SearchedItemProps = {
@@ -17,19 +18,29 @@ function SearchedItem({
   isBusu,
   moveToDetailPage,
 }: SearchedItemProps): JSX.Element {
+  const {
+    colors: {textPrimary, deepShadow, ongoingState, background},
+  } = useTheme();
   const wordItem = useRecoilValue(isBusu ? busuState(id) : vocaState(id));
   const {word, level, intonation, meaning} = wordItem;
 
   return (
     <TouchableOpacity
       onPress={() => moveToDetailPage(id, isBusu)}
-      style={styles.resultBar}>
-      <Text style={styles.text}>{word}</Text>
-      <Text style={styles.text}>{intonation}</Text>
-      <Text style={styles.meaningText} numberOfLines={1} ellipsizeMode="tail">
+      style={[styles.resultBar, {borderBottomColor: ongoingState}]}>
+      <Text style={[styles.text, {color: textPrimary}]}>{word}</Text>
+      <Text style={[styles.text, {color: textPrimary}]}>{intonation}</Text>
+      <Text
+        style={[styles.meaningText, {color: deepShadow}]}
+        numberOfLines={1}
+        ellipsizeMode="tail">
         {meaning}
       </Text>
-      <Text style={styles.levelText}>
+      <Text
+        style={[
+          styles.levelText,
+          {backgroundColor: textPrimary, color: background},
+        ]}>
         {level}
         {isBusu ? '획' : '급'}
       </Text>

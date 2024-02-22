@@ -1,5 +1,4 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {QuizStackParamList} from '../navigation/QuizNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -36,11 +35,6 @@ function PickLevelPage({
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent={true}
-      />
       <CategoryCardWrapper nav={moveToCategory} infos={levelData} />
     </SafeAreaView>
   );

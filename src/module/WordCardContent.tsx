@@ -1,31 +1,48 @@
 import React, {useState} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
+
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/module/WordCardStyle';
 
 type ContentProps = {
+  primary: string;
+  textPrimary: string;
   meaning: string;
   intonation: string;
 };
 
-type VocaCardContentProps = ContentProps & {isBusu: boolean};
+type WordCardContentProps = {
+  isBusu: boolean;
+  meaning: string;
+  intonation: string;
+};
 
-const Content = ({intonation, meaning}: ContentProps): JSX.Element => (
+const Content = ({
+  primary,
+  textPrimary,
+  intonation,
+  meaning,
+}: ContentProps): JSX.Element => (
   <>
-    <Text style={[styles.meaningText, styles.redText]}>{intonation}</Text>
+    <Text style={[styles.meaningText, {color: primary}]}>{intonation}</Text>
     <Text
       textBreakStrategy="balanced"
       lineBreakStrategyIOS="hangul-word"
-      style={styles.meaningText}>
+      style={[styles.meaningText, {color: textPrimary}]}>
       {meaning}
     </Text>
   </>
 );
 
-function VocaCardContent({
+function WordCardContent({
   isBusu,
   meaning,
   intonation,
-}: VocaCardContentProps): JSX.Element {
+}: WordCardContentProps): JSX.Element {
+  const {
+    colors: {primary, textPrimary, iconPrimary, background, contentBackground},
+  } = useTheme();
+
   const [touched, setTouched] = useState(isBusu);
 
   const handleTouch = () => {
@@ -36,13 +53,29 @@ function VocaCardContent({
     <TouchableOpacity
       onPress={isBusu ? undefined : handleTouch}
       activeOpacity={isBusu ? 1 : 0.2}
-      style={[styles.content, touched ? styles.touched : styles.notTouched]}>
-      {touched && <Content intonation={intonation} meaning={meaning} />}
+      style={[
+        styles.content,
+        touched
+          ? {backgroundColor: contentBackground}
+          : {
+              ...styles.notTouched,
+              borderColor: iconPrimary,
+              backgroundColor: background,
+            },
+      ]}>
+      {touched && (
+        <Content
+          primary={primary}
+          textPrimary={textPrimary}
+          intonation={intonation}
+          meaning={meaning}
+        />
+      )}
       {!isBusu && !touched && (
-        <Text style={[styles.meaningText, styles.redText]}>touch</Text>
+        <Text style={[styles.meaningText, {color: iconPrimary}]}>touch</Text>
       )}
     </TouchableOpacity>
   );
 }
 
-export default VocaCardContent;
+export default WordCardContent;

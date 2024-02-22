@@ -1,5 +1,4 @@
 import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
-import {lightTheme} from '../colors';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -22,7 +21,6 @@ type Style = {
 export const commonPart: Style = {
   container: {
     flex: 1,
-    backgroundColor: lightTheme.background,
   },
   scrollView: {
     flex: 1,
@@ -35,10 +33,8 @@ export const commonPart: Style = {
   textInput: {
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: lightTheme.shadow,
     fontFamily: fonts.hanzi,
     fontSize: 15,
-    color: lightTheme.textPrimary,
     padding: 10,
     marginVertical: 10,
   },
@@ -48,7 +44,6 @@ export const commonPart: Style = {
     flexWrap: 'wrap',
     borderRadius: 8,
     borderWidth: 1,
-    borderColor: lightTheme.shadow,
     padding: 10,
     marginVertical: 10,
   },
@@ -70,21 +65,12 @@ export const commonPart: Style = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: lightTheme.primary,
     padding: 10,
-    borderRadius: 10,
-    shadowOffset: {
-      width: 0,
-      height: 5,
-    },
-    shadowOpacity: 0.34,
-    shadowRadius: 6.27,
-    elevation: 8,
+    borderRadius: 8,
   },
   completeText: {
     fontFamily: fonts.mainBold,
     fontSize: 12,
-    color: lightTheme.background,
   },
   wordclassBox: {
     position: 'absolute',

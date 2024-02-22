@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {StatusBar, TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {SearchStackParamList} from '../navigation/SearchNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -11,12 +11,11 @@ import {useRecoilState, useResetRecoilState} from 'recoil';
 
 import SvgIcon from '../module/SvgIcon';
 import SearchedItem from './SearchedItem';
+import {FlashList} from '@shopify/flash-list';
 import DebouncedTextInput from '../module/DebouncedTextInput';
 
+import {useTheme} from '@react-navigation/native';
 import styles from '../styles/search/SearchPageStyle';
-import {lightTheme} from '../styles/colors';
-import {FlashList} from '@shopify/flash-list';
-import iconSize from '../styles/iconSize';
 
 type SearchPageProps = NativeStackScreenProps<
   SearchStackParamList,
@@ -26,7 +25,9 @@ type SearchPageProps = NativeStackScreenProps<
 function SearchPage({
   navigation: {goBack, navigate},
 }: SearchPageProps): JSX.Element {
-  const {search, mainArrow} = iconSize;
+  const {
+    colors: {background, iconPrimary, textPrimary},
+  } = useTheme();
   const {convertToWord} = useUtil();
   const {getVocasBySearch} = useVoca();
   const [searchedWords, setSearchedWords] = useRecoilState(wordListState);
@@ -63,28 +64,27 @@ function SearchPage({
   }, [resetWordList]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
-        translucent={true}
-      />
-      <View style={styles.inputWrapper}>
+    <SafeAreaView style={[styles.container, {backgroundColor: background}]}>
+      <View style={[styles.inputWrapper, {borderBottomColor: iconPrimary}]}>
         <TouchableOpacity style={styles.backButton} onPress={goBack}>
           <SvgIcon
             name="MainArrow"
-            size={mainArrow}
-            fill={lightTheme.primary}
+            fill={iconPrimary}
+            size={styles.mainArrowIcon.width}
           />
         </TouchableOpacity>
         <DebouncedTextInput
           textVal={''}
           forSearch={true}
-          style={styles.input}
+          style={[styles.input, {color: textPrimary}]}
           updateFn={handleSearch}
           placeholder="단어를 검색해보세요"
         />
-        <SvgIcon name="Search" size={search} fill={lightTheme.primary} />
+        <SvgIcon
+          name="Search"
+          fill={iconPrimary}
+          size={styles.searchIcon.width}
+        />
       </View>
       <FlashList
         data={searchedWords}
