@@ -12,7 +12,15 @@ import WordCardContent from './WordCardContent';
 import {useTheme} from '@react-navigation/native';
 import styles from '../styles/module/WordCardStyle';
 
-function WordCard({id, isBusu}: {id: number; isBusu: boolean}): JSX.Element {
+function WordCard({
+  id,
+  isBusu,
+  priorTouched,
+}: {
+  id: number;
+  isBusu: boolean;
+  priorTouched: number[];
+}): JSX.Element {
   const {
     colors: {transparent, textPrimary},
   } = useTheme();
@@ -32,9 +40,11 @@ function WordCard({id, isBusu}: {id: number; isBusu: boolean}): JSX.Element {
       </View>
       <Text style={[styles.hanzi, {color: textPrimary}]}>{word}</Text>
       <WordCardContent
+        id={id}
         isBusu={isBusu}
         meaning={meaning}
         intonation={intonation}
+        priorTouched={priorTouched}
       />
     </Card>
   );

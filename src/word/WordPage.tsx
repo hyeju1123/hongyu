@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
 import {QuizPageStackParamList} from '../navigation/QuizNavigation';
@@ -41,6 +41,7 @@ function WordPage({
     data: [],
   });
   const wordsLength = useMemo(() => words.length, [words.length]);
+  const priorTouched = useRef<number[]>([]);
 
   const onEndReached = useCallback(
     (prevLen: number) => {
@@ -60,7 +61,11 @@ function WordPage({
         onPress={() =>
           navigate(isBusu ? 'BusuDetailPage' : 'VocaDetailPage', {id: _id})
         }>
-        <WordCard id={_id} isBusu={isBusu} />
+        <WordCard
+          id={_id}
+          isBusu={isBusu}
+          priorTouched={priorTouched.current}
+        />
       </TouchableOpacity>
     ),
     [navigate],

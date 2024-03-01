@@ -38,7 +38,13 @@ function QuizResultCard({
       <Text style={[styles.hanzi, {color: isCorrected ? healthy : warning}]}>
         {word}
       </Text>
-      <WordCardContent isBusu meaning={meaning} intonation={intonation} />
+      <WordCardContent
+        id={_id}
+        isBusu
+        meaning={meaning}
+        intonation={intonation}
+        priorTouched={[]}
+      />
     </Card>
   );
 }

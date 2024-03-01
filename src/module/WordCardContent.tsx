@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 
 import {useTheme} from '@react-navigation/native';
@@ -12,9 +12,11 @@ type ContentProps = {
 };
 
 type WordCardContentProps = {
+  id: number;
   isBusu: boolean;
   meaning: string;
   intonation: string;
+  priorTouched: number[];
 };
 
 const Content = ({
@@ -35,10 +37,14 @@ const Content = ({
 );
 
 function WordCardContent({
+  id,
   isBusu,
   meaning,
   intonation,
+  priorTouched,
 }: WordCardContentProps): JSX.Element {
+  const lastItemId = useRef(id);
+
   const {
     colors: {primary, textPrimary, iconPrimary, background, contentBackground},
   } = useTheme();
@@ -46,8 +52,20 @@ function WordCardContent({
   const [touched, setTouched] = useState(isBusu);
 
   const handleTouch = () => {
+    if (touched) {
+      const idx = priorTouched.indexOf(id);
+      priorTouched.splice(idx, 1);
+    } else {
+      priorTouched.push(id);
+    }
     setTouched(prev => !prev);
   };
+
+  if (!isBusu && id !== lastItemId.current) {
+    console.log(priorTouched, id);
+    lastItemId.current = id;
+    setTouched(priorTouched.includes(id));
+  }
 
   return (
     <TouchableOpacity
