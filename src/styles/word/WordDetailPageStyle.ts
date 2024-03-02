@@ -1,4 +1,4 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -11,7 +11,8 @@ type Style = {
   intonation: TextStyle;
   xunyin: TextStyle;
   flexDirRow: ViewStyle;
-  wordclassImg: ImageStyle;
+  classIconWrapper: ViewStyle;
+  classIconText: TextStyle;
   meaning: TextStyle;
   busuSubTitle: TextStyle;
   bookmarkButtonWrapper: ViewStyle;
@@ -53,12 +54,19 @@ export const commonPart: Style = {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
-  wordclassImg: {
-    resizeMode: 'stretch',
+  classIconWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 52,
-    height: 28,
+    height: 27,
     marginRight: 10,
     marginVertical: 1,
+    borderRadius: 5,
+  },
+  classIconText: {
+    fontFamily: fonts.mainBold,
+    fontSize: 15,
   },
   meaning: {
     width: '95%',
@@ -109,6 +117,16 @@ export const handleStyles = () => {
       },
       busuSubTitle: {
         ...commonPart.busuSubTitle,
+        fontSize: 11,
+      },
+      classIconWrapper: {
+        ...commonPart.classIconWrapper,
+        width: 40,
+        height: 20,
+        marginRight: 6,
+      },
+      classIconText: {
+        ...commonPart.classIconText,
         fontSize: 11,
       },
     });

@@ -1,4 +1,4 @@
-import {ImageStyle, StyleSheet, TextStyle, ViewStyle} from 'react-native';
+import {StyleSheet, TextStyle, ViewStyle} from 'react-native';
 import {DisplaySize, getDisplaySize} from '../screen';
 import {fonts} from '../fonts';
 
@@ -8,13 +8,16 @@ type Style = {
   scrollViewContent: ViewStyle;
   textInput: TextStyle;
   flexDirRow: ViewStyle;
-  wordclassImg: ImageStyle;
+  classIconWrapper: ViewStyle;
+  classIconText: TextStyle;
+  xButton: ViewStyle;
+  xText: TextStyle;
   buttonWrapper: ViewStyle;
   completeButton: ViewStyle;
   completeText: TextStyle;
   wordclassBox: ViewStyle;
   wordclassBoxNone: ViewStyle;
-  wcButton: ImageStyle;
+  wcButton: ViewStyle;
   closeButton: ViewStyle;
 };
 
@@ -47,12 +50,35 @@ export const commonPart: Style = {
     padding: 10,
     marginVertical: 10,
   },
-  wordclassImg: {
-    resizeMode: 'stretch',
+  classIconWrapper: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     width: 52,
-    height: 28,
+    height: 27,
     marginRight: 10,
     marginVertical: 1,
+    borderRadius: 5,
+  },
+  classIconText: {
+    fontFamily: fonts.mainBold,
+    fontSize: 15,
+  },
+  xButton: {
+    position: 'absolute',
+    top: -5,
+    right: -5,
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    display: 'flex',
+  },
+  xText: {
+    position: 'absolute',
+    top: -2,
+    right: 2,
+    fontFamily: fonts.mainBold,
+    fontSize: 9,
   },
   buttonWrapper: {
     flex: 1,
@@ -78,7 +104,7 @@ export const commonPart: Style = {
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     width: '100%',
     paddingTop: 40,
-    padding: 20,
+    padding: 30,
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'row',
@@ -88,7 +114,7 @@ export const commonPart: Style = {
     display: 'none',
   },
   wcButton: {
-    margin: 8,
+    marginVertical: 8,
   },
   closeButton: {
     position: 'absolute',
@@ -120,6 +146,29 @@ export const handleStyles = () => {
       completeText: {
         ...commonPart.completeText,
         fontSize: 10,
+      },
+      classIconWrapper: {
+        ...commonPart.classIconWrapper,
+        width: 40,
+        height: 20,
+      },
+      classIconText: {
+        ...commonPart.classIconText,
+        fontSize: 11,
+      },
+      xButton: {
+        ...commonPart.xButton,
+        top: -3,
+        right: -3,
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+      },
+      xText: {
+        ...commonPart.xText,
+        top: -1,
+        right: 2,
+        fontSize: 6,
       },
     });
   }

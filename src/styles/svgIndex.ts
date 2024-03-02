@@ -37,10 +37,9 @@ export {default as Circle10} from '../../svg/number/circle-ellipsis.svg';
 export {default as Circle214} from '../../svg/number/circle-bookmark.svg';
 
 // quiz type svg
-export {default as FourIdiom} from '../../svg/quiz/fourIdiom.svg';
+export {default as Picking} from '../../svg/quiz/picking.svg';
 export {default as Listening} from '../../svg/quiz/listening.svg';
 export {default as Matching} from '../../svg/quiz/matching.svg';
-export {default as Picking} from '../../svg/quiz/picking.svg';
 export {default as Writing} from '../../svg/quiz/writing.svg';
 export {default as Eraser} from '../../svg/quiz/eraser.svg';
 export {default as Sparkles} from '../../svg/quiz/sparkles.svg';

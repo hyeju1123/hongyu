@@ -4,7 +4,6 @@ import {
   ScrollView,
   TextInput,
   TouchableOpacity,
-  Image,
   Text,
   View,
 } from 'react-native';
@@ -21,7 +20,6 @@ import {vocaState} from '../recoil/WordListState';
 import {useRecoilCallback, useRecoilValue} from 'recoil';
 
 import {useTheme} from '@react-navigation/native';
-import images from '../styles/images';
 import styles from '../styles/word/EditVocaPageStyle';
 
 type EditVocaPageProps = NativeStackScreenProps<
@@ -67,8 +65,6 @@ function EditVocaPage({
   });
   const [currentWC, setCurrentWC] = useState(wordclass.split(', '));
   const [showWCTemplate, setShowWCTemplate] = useState(false);
-
-  const {wordClass, deleteWordClass} = images;
 
   const handleChangeText = (name: string, value: string) => {
     !limitTextLength(value) && setTextVal(prev => ({...prev, [name]: value}));
@@ -133,10 +129,16 @@ function EditVocaPage({
           {currentWC.map((wc: string) => (
             <TouchableOpacity
               key={wc}
+              style={[styles.classIconWrapper, {backgroundColor: iconPrimary}]}
               onPress={() =>
                 setCurrentWC(prev => prev.filter(label => label !== wc))
               }>
-              <Image style={styles.wordclassImg} source={deleteWordClass[wc]} />
+              <View style={[styles.xButton, {backgroundColor: ongoingState}]}>
+                <Text style={[styles.xText, {color: textPrimary}]}>x</Text>
+              </View>
+              <Text style={[styles.classIconText, {color: background}]}>
+                {wc}
+              </Text>
             </TouchableOpacity>
           ))}
         </TouchableOpacity>
@@ -186,10 +188,16 @@ function EditVocaPage({
         </TouchableOpacity>
         {getFilteredWC().map((wc: string) => (
           <TouchableOpacity
-            onPress={() => setCurrentWC(prev => [...prev, wc])}
             key={wc}
-            style={styles.wcButton}>
-            <Image style={styles.wordclassImg} source={wordClass[wc]} />
+            onPress={() => setCurrentWC(prev => [...prev, wc])}
+            style={[
+              styles.classIconWrapper,
+              styles.wcButton,
+              {backgroundColor: iconPrimary},
+            ]}>
+            <Text style={[styles.classIconText, {color: background}]}>
+              {wc}
+            </Text>
           </TouchableOpacity>
         ))}
       </View>

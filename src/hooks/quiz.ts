@@ -26,7 +26,7 @@ export default function Quiz() {
       {
         title: '뜻 고르기',
         desc: '단어와 일치하는 뜻을 골라보세요.',
-        icon: 'FourIdiom',
+        icon: 'Picking',
         navData: 'PickingQuizPage',
       },
       {

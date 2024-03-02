@@ -3,7 +3,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../../navigation/WordNavigation';
 import {SearchStackParamList} from '../../navigation/SearchNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {Image, ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 
 import Card from '../../module/Card';
 import SoundButton from '../../module/SoundButton';
@@ -15,7 +15,6 @@ import {useRecoilCallback, useRecoilValue} from 'recoil';
 import {vocaState} from '../../recoil/WordListState';
 import {useVoca} from '../../providers/VocaProvider';
 
-import images from '../../styles/images';
 import {useTheme} from '@react-navigation/native';
 import styles from '../../styles/word/WordDetailPageStyle';
 
@@ -31,7 +30,7 @@ function VocaDetailPage({
   },
 }: VocaDetailPageProps): JSX.Element {
   const {
-    colors: {transparent, textPrimary, iconPrimary},
+    colors: {transparent, background, textPrimary, iconPrimary},
   } = useTheme();
   const wordItem = useRecoilValue(vocaState(id));
   const {
@@ -54,8 +53,6 @@ function VocaDetailPage({
       },
     [wordItem],
   );
-
-  const {wordClass} = images;
 
   useEffect(() => {
     const getEditButton = () => {
@@ -90,11 +87,16 @@ function VocaDetailPage({
         <Card showShadow underColor={transparent} marginVertical={8}>
           <View style={styles.flexDirRow}>
             {wordclass.split(', ').map((wc: string) => (
-              <Image
-                style={styles.wordclassImg}
+              <View
                 key={wc}
-                source={wordClass[wc]}
-              />
+                style={[
+                  styles.classIconWrapper,
+                  {backgroundColor: iconPrimary},
+                ]}>
+                <Text style={[{color: background}, styles.classIconText]}>
+                  {wc}
+                </Text>
+              </View>
             ))}
           </View>
         </Card>

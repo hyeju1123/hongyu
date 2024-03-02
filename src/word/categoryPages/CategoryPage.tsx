@@ -54,7 +54,7 @@ function CategoryPage({
         : key + '획' + (key === '10' ? ' 이상' : '');
       const desc = (isVocaNav ? '단어 ' : '부수 ') + value + '개';
       const icon = (
-        isVocaNav ? 'CheckCircle' : 'Circle' + key
+        isVocaNav ? 'Circle' + level : 'Circle' + key
       ) as keyof typeof Icons;
 
       return {title, desc, icon, navData: key};
