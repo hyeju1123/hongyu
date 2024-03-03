@@ -54,16 +54,22 @@ export default function Polly() {
             const filePath = `${documentDir}/${mp3File}`;
             await RNFetchBlob.fs.unlink(filePath);
           } catch (e) {
-            console.log(`Error deleting file ${mp3File}: ${e}`);
+            fireToast({
+              text: '음성 파일을 삭제하는 데 실패했습니다',
+              icon: ToastIcon.AbNormal,
+              remove: true,
+            });
           }
         });
-
-        console.log(files);
       })
-      .catch(e => {
-        console.log('Error reading files: ', e);
+      .catch(() => {
+        fireToast({
+          text: '음성 파일을 삭제하는 데 실패했습니다',
+          icon: ToastIcon.AbNormal,
+          remove: true,
+        });
       });
-  }, []);
+  }, [fireToast]);
 
   const fetchPollyUrl = async (level: number, hanzi: string) => {
     const res = await fetch(`${apiUrl}/${level}/${hanzi}`);

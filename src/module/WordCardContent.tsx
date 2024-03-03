@@ -62,7 +62,6 @@ function WordCardContent({
   };
 
   if (!isBusu && id !== lastItemId.current) {
-    console.log(priorTouched, id);
     lastItemId.current = id;
     setTouched(priorTouched.includes(id));
   }
