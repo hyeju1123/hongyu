@@ -7,6 +7,8 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 // react-native-screens package requires one additional configuration step to properly work on Android devices.
 import android.os.Bundle;
+import android.content.res.Configuration;
+import org.devio.rn.splashscreen.SplashScreen;
 
 public class MainActivity extends ReactActivity {
 
@@ -38,6 +40,10 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    int nightFlag = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+    boolean isDark = Configuration.UI_MODE_NIGHT_YES == nightFlag ;
+    setTheme(isDark ? R.style.DarkTheme : R.style.LightTheme);
+    SplashScreen.show(this);
     super.onCreate(null);
   }
 }

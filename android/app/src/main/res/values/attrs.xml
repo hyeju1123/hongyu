@@ -1,0 +1,4 @@
+<resources>
+    <attr name="splashBg" format="color" />
+    <attr name="splashImage" format="reference" />
+</resources>
