@@ -43,6 +43,8 @@ public class MainActivity extends ReactActivity {
     int nightFlag = getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
     boolean isDark = Configuration.UI_MODE_NIGHT_YES == nightFlag ;
     setTheme(isDark ? R.style.DarkTheme : R.style.LightTheme);
+
+    androidx.core.splashscreen.SplashScreen.installSplashScreen(this);
     SplashScreen.show(this);
     super.onCreate(null);
   }
