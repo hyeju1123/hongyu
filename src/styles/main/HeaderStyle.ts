@@ -24,7 +24,7 @@ const handleStyles = () => {
       flexDirection: 'row',
       borderWidth: 1,
       borderRadius: 25,
-      paddingVertical: 5,
+      paddingVertical: 10,
       paddingHorizontal: 15,
     },
     text: {
@@ -44,7 +44,7 @@ const handleStyles = () => {
       ...commonPart,
       inputSection: {
         ...commonPart.inputSection,
-        paddingVertical: 3,
+        paddingVertical: 6,
       },
       text: {
         ...commonPart.text,
@@ -64,7 +64,7 @@ const handleStyles = () => {
       ...commonPart,
       headerBox: {
         ...commonPart.headerBox,
-        paddingVertical: 10,
+        paddingVertical: 20,
       },
       inputSection: {
         ...commonPart.inputSection,

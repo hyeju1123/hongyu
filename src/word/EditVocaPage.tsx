@@ -78,6 +78,15 @@ function EditVocaPage({
   const handleUpdateVoca = useRecoilCallback(
     ({set}) =>
       (finalTextVal: TextValProps, finalWC: string[]) => {
+        if (finalWC.length === 0) {
+          fireToast({
+            text: '품사를 하나 이상 선택해주세요!',
+            icon: ToastIcon.AbNormal,
+            remove: true,
+          });
+          return;
+        }
+
         const updatedVoca: UpdateVocaContent = {
           ...finalTextVal,
           intonation: '[' + finalTextVal.intonation + ']',
@@ -184,7 +193,11 @@ function EditVocaPage({
         <TouchableOpacity
           onPress={() => setShowWCTemplate(false)}
           style={styles.closeButton}>
-          <SvgIcon name="Cross" size={15} fill={textPrimary} />
+          <SvgIcon
+            name="Cross"
+            size={styles.closeIcon.width}
+            fill={textPrimary}
+          />
         </TouchableOpacity>
         {getFilteredWC().map((wc: string) => (
           <TouchableOpacity

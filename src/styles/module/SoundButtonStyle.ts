@@ -17,7 +17,7 @@ const commonPart: Style = {
     alignSelf: 'center',
   },
   smallVer: {
-    width: 20,
+    width: 23,
   },
   largeVer: {
     width: 50,
@@ -40,7 +40,7 @@ const handleStyles = () => {
     return StyleSheet.create({
       ...commonPart,
       smallVer: {
-        width: 22,
+        width: 24,
       },
       largeVer: {
         width: 50,

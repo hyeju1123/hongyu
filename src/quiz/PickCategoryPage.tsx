@@ -47,11 +47,11 @@ function PickCategoryPage({
       Object.entries(filteredTheme).map(([key, value]) => {
         const title = key;
         const desc = '단어 ' + value + '개';
-        const icon = 'CheckCircle' as keyof typeof Icons;
+        const icon = ('Circle' + level) as keyof typeof Icons;
 
         return {title, desc, icon, navData: key};
       }),
-    [filteredTheme],
+    [filteredTheme, level],
   );
   const setWords = useSetRecoilState(wordListState);
   const resetWords = useResetRecoilState(wordListState);

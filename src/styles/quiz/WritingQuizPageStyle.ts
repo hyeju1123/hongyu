@@ -50,12 +50,13 @@ const commonPart: Style = {
     bottom: 0,
   },
   serviceButtonWrapper: {
-    minWidth: 27,
+    minWidth: 37,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    margin: 5,
+    marginHorizontal: 12,
+    marginVertical: 5,
   },
   guideText: {
     fontFamily: fonts.pinyin,
@@ -107,10 +108,10 @@ const commonPart: Style = {
     width: 25,
   },
   checkBox: {
-    width: 14,
+    width: 18,
   },
   ox: {
-    width: 10,
+    width: 15,
   },
 };
 
@@ -136,7 +137,7 @@ const handleStyles = () => {
       },
       serviceButtonWrapper: {
         ...commonPart.serviceButtonWrapper,
-        minWidth: 20,
+        minWidth: 25,
       },
       lock: {
         width: 15,
@@ -145,10 +146,10 @@ const handleStyles = () => {
         width: 15,
       },
       checkBox: {
-        width: 10,
+        width: 12,
       },
       ox: {
-        width: 7,
+        width: 9,
       },
     });
   }
@@ -162,10 +163,10 @@ const handleStyles = () => {
         width: 25,
       },
       checkBox: {
-        width: 14,
+        width: 18,
       },
       ox: {
-        width: 10,
+        width: 15,
       },
     });
   }

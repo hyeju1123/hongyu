@@ -18,6 +18,7 @@ type Style = {
   wordclassBox: ViewStyle;
   wordclassBoxNone: ViewStyle;
   wcButton: ViewStyle;
+  closeIcon: ViewStyle;
   closeButton: ViewStyle;
 };
 
@@ -42,6 +43,7 @@ export const commonPart: Style = {
     marginVertical: 10,
   },
   flexDirRow: {
+    minHeight: 48,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -54,15 +56,15 @@ export const commonPart: Style = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 52,
-    height: 27,
+    width: 63,
+    height: 30,
     marginRight: 10,
     marginVertical: 1,
     borderRadius: 5,
   },
   classIconText: {
     fontFamily: fonts.mainBold,
-    fontSize: 15,
+    fontSize: 18,
   },
   xButton: {
     position: 'absolute',
@@ -91,19 +93,19 @@ export const commonPart: Style = {
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: 10,
+    padding: 12,
     borderRadius: 8,
   },
   completeText: {
     fontFamily: fonts.mainBold,
-    fontSize: 12,
+    fontSize: 15,
   },
   wordclassBox: {
     position: 'absolute',
     bottom: 0,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     width: '100%',
-    paddingTop: 40,
+    paddingTop: 60,
     padding: 30,
     display: 'flex',
     justifyContent: 'center',
@@ -116,11 +118,15 @@ export const commonPart: Style = {
   wcButton: {
     marginVertical: 8,
   },
+  closeIcon: {
+    width: 20,
+  },
   closeButton: {
     position: 'absolute',
     top: 8,
     right: 6,
     padding: 10,
+    margin: 5,
   },
 };
 
@@ -135,6 +141,7 @@ export const handleStyles = () => {
       },
       flexDirRow: {
         ...commonPart.flexDirRow,
+        minHeight: 40,
         borderWidth: 1,
         padding: 8,
       },
@@ -146,6 +153,10 @@ export const handleStyles = () => {
       completeText: {
         ...commonPart.completeText,
         fontSize: 10,
+      },
+      wordclassBox: {
+        ...commonPart.wordclassBox,
+        paddingTop: 40,
       },
       classIconWrapper: {
         ...commonPart.classIconWrapper,
@@ -170,6 +181,14 @@ export const handleStyles = () => {
         right: 2,
         fontSize: 6,
       },
+      closeIcon: {
+        width: 15,
+      },
+      closeButton: {
+        ...commonPart.closeButton,
+        padding: 5,
+        margin: 3,
+      },
     });
   }
   if (getDisplaySize() === DisplaySize.Large) {
@@ -187,6 +206,11 @@ export const handleStyles = () => {
       completeText: {
         ...commonPart.completeText,
         fontSize: 18,
+      },
+      classIconWrapper: {
+        ...commonPart.classIconWrapper,
+        width: 70,
+        height: 35,
       },
     });
   }

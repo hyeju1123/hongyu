@@ -20,9 +20,9 @@ const commonPart: Style = {
     justifyContent: 'space-between',
   },
   hanzi: {
-    marginVertical: 8,
+    marginVertical: 13,
     fontFamily: fonts.hanzi,
-    fontSize: 20,
+    fontSize: 22,
   },
   meaningText: {
     marginVertical: 2,
@@ -37,7 +37,7 @@ const commonPart: Style = {
     padding: 5,
   },
   notTouched: {
-    padding: 3,
+    padding: 8,
     borderWidth: 1,
   },
 };
@@ -71,8 +71,8 @@ const handleStyles = () => {
       ...commonPart,
       hanzi: {
         ...commonPart.hanzi,
-        marginVertical: 10,
-        fontSize: 25,
+        marginVertical: 15,
+        fontSize: 28,
       },
       meaningText: {
         ...commonPart.meaningText,

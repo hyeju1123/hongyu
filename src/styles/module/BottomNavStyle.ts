@@ -32,7 +32,7 @@ const commonPart: Style = {
     width: 25,
   },
   largeVerPlay: {
-    width: 40,
+    width: 45,
   },
 };
 
@@ -44,7 +44,7 @@ const handleStyles = () => {
         width: 25,
       },
       largeVerPlay: {
-        width: 40,
+        width: 45,
       },
     });
   }
@@ -55,7 +55,7 @@ const handleStyles = () => {
         width: 20,
       },
       largeVerPlay: {
-        width: 25,
+        width: 35,
       },
     });
   }

@@ -12,7 +12,7 @@ const commonPart: Style = {
     padding: 5,
   },
   smallVer: {
-    width: 20,
+    width: 23,
   },
   largeVer: {
     width: 45,
@@ -35,7 +35,7 @@ const handleStyles = () => {
     return StyleSheet.create({
       ...commonPart,
       smallVer: {
-        width: 22,
+        width: 24,
       },
       largeVer: {
         width: 45,
