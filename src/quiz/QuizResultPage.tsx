@@ -35,13 +35,6 @@ type ClassifiedDataProps = {
   wrong: Word[];
 };
 
-type ItemsProps = {
-  count: number;
-  data: Word[];
-};
-
-const LOAD_DATA_NUM = 15;
-
 function QuizResultPage({
   navigation: {dispatch},
   route: {
@@ -59,38 +52,15 @@ function QuizResultPage({
     correct: [],
     wrong: [],
   });
-  const [items, setItems] = useState<ItemsProps>({
-    count: 0,
-    data: [],
-  });
+
   const lenInfo = useMemo(() => {
     const {correct, wrong} = data;
     return {correctLen: correct.length, wrongLen: wrong.length};
   }, [data]);
 
-  const handleNav = useCallback(
-    (type: ResultType) => {
-      setNav(type);
-      setItems(() => ({
-        count: LOAD_DATA_NUM,
-        data: data[type].slice(0, LOAD_DATA_NUM),
-      }));
-    },
-    [data],
-  );
-
-  const onEndReached = useCallback(
-    (prevLen: number) => {
-      const {correctLen, wrongLen} = lenInfo;
-      const len = nav === CORRECT ? correctLen : wrongLen;
-      prevLen < len &&
-        setItems(prev => ({
-          count: prev.count + LOAD_DATA_NUM,
-          data: data[nav].slice(0, prev.count + LOAD_DATA_NUM),
-        }));
-    },
-    [data, nav, CORRECT, lenInfo],
-  );
+  const handleNav = useCallback((type: ResultType) => {
+    setNav(type);
+  }, []);
 
   const renderItem = useCallback(
     ({item: {_id}}: {item: Word}) => {
@@ -164,11 +134,9 @@ function QuizResultPage({
       <View
         style={[cardWrapperStyles.cardWrapper, {backgroundColor: background}]}>
         <FlashList
-          data={items.data}
-          estimatedItemSize={90}
+          data={data[nav]}
+          estimatedItemSize={135}
           renderItem={renderItem}
-          onEndReached={() => onEndReached(items.count)}
-          onEndReachedThreshold={0.8}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={styles.flatlistContent}
         />

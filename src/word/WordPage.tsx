@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
 import {QuizPageStackParamList} from '../navigation/QuizNavigation';
@@ -22,8 +22,6 @@ import styles from '../styles/word/WordPageStyle';
 
 type WordPageProps = NativeStackScreenProps<WordStackParamList, 'WordPage'>;
 
-const LOAD_DATA_NUM = 20;
-
 function WordPage({
   navigation: {navigate, setOptions},
   route: {
@@ -39,23 +37,7 @@ function WordPage({
   const {navType} = useRecoilValue(wordNavState);
   const words = useWordData(category).wordsFromRecoil;
   const [showModal, setShowModal] = useState(false);
-  const [items, setItems] = useState<{count: number; data: Word[]}>({
-    count: 0,
-    data: [],
-  });
-  const wordsLength = useMemo(() => words.length, [words.length]);
   const priorTouched = useRef<number[]>([]);
-
-  const onEndReached = useCallback(
-    (prevLen: number) => {
-      prevLen < wordsLength &&
-        setItems(prev => ({
-          count: prev.count + LOAD_DATA_NUM,
-          data: words.slice(0, prev.count + LOAD_DATA_NUM),
-        }));
-    },
-    [words, wordsLength],
-  );
 
   const renderItem = useCallback(
     ({item: {_id, isBusu}}: {item: Word}) => (
@@ -132,11 +114,9 @@ function WordPage({
         </TouchableOpacity>
       )}
       <FlashList
-        data={items.data}
+        data={words}
         renderItem={renderItem}
-        estimatedItemSize={100}
-        onEndReached={() => onEndReached(items.count)}
-        onEndReachedThreshold={0.8}
+        estimatedItemSize={120}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={styles.flashlistContent}
       />
