@@ -1,10 +1,4 @@
-import React, {
-  PropsWithChildren,
-  useCallback,
-  useMemo,
-  useState,
-  memo,
-} from 'react';
+import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import CategoryCard from './CategoryCard';
@@ -78,4 +72,4 @@ function CategoryCardWrapper<T>({nav, infos}: CategoryCardWrapperProps<T>) {
   );
 }
 
-export default memo(CategoryCardWrapper) as typeof CategoryCardWrapper;
+export default CategoryCardWrapper;

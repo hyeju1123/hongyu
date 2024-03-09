@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
 
 import {useRecoilValue} from 'recoil';
@@ -48,4 +48,4 @@ function SearchedItem({
   );
 }
 
-export default memo(SearchedItem);
+export default SearchedItem;

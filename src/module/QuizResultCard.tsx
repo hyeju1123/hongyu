@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {Text, View} from 'react-native';
 
 import Card from './Card';
@@ -49,4 +49,4 @@ function QuizResultCard({
   );
 }
 
-export default memo(QuizResultCard);
+export default QuizResultCard;

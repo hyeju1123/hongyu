@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {TouchableOpacity} from 'react-native';
 import SvgIcon from './SvgIcon';
 import useToast from '../hooks/toast';
@@ -61,4 +61,4 @@ function BookmarkButton({
   );
 }
 
-export default memo(BookmarkButton);
+export default BookmarkButton;

@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, memo} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {Text, View} from 'react-native';
 import Card from './Card';
 import SvgIcon from '../module/SvgIcon';
@@ -36,4 +36,4 @@ function CategoryCard({title, desc, icon}: CategoryCardProps): JSX.Element {
   );
 }
 
-export default memo(CategoryCard);
+export default CategoryCard;

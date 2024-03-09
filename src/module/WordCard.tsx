@@ -1,4 +1,4 @@
-import React, {memo} from 'react';
+import React from 'react';
 import {Text, View} from 'react-native';
 
 import Card from './Card';
@@ -50,4 +50,4 @@ function WordCard({
   );
 }
 
-export default memo(WordCard);
+export default WordCard;

@@ -1,4 +1,4 @@
-import React, {memo, useCallback} from 'react';
+import React, {useCallback} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import SvgIcon from './SvgIcon';
 import BookmarkButton, {ButtonSize} from './BookmarkButton';
@@ -99,4 +99,4 @@ function BottomNav({
   );
 }
 
-export default memo(BottomNav);
+export default BottomNav;

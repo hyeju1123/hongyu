@@ -1,4 +1,4 @@
-import React, {PropsWithChildren, memo} from 'react';
+import React, {PropsWithChildren} from 'react';
 import {TouchableOpacity} from 'react-native';
 import SvgIcon from './SvgIcon';
 import usePolly from '../hooks/polly';
@@ -25,4 +25,4 @@ function SoundButton({level, word, largeSize = false}: SoundButtonProps) {
   );
 }
 
-export default memo(SoundButton);
+export default SoundButton;
