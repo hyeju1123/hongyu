@@ -3,7 +3,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {WordStackParamList} from '../navigation/WordNavigation';
 import {QuizPageStackParamList} from '../navigation/QuizNavigation';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {TouchableOpacity, View} from 'react-native';
+import {Text, TouchableOpacity, View} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
 import {Word} from '../recoil/WordListState';
 import SvgIcon from '../module/SvgIcon';
@@ -112,6 +112,18 @@ function WordPage({
             handleMove={handleMove}
           />
         </TouchableOpacity>
+      )}
+      {words.length === 0 && (
+        <View style={styles.emptyBox}>
+          <SvgIcon
+            name={'Empty'}
+            fill={textPrimary}
+            size={styles.emptyIcon.width}
+          />
+          <Text style={[styles.emptyText, {color: textPrimary}]}>
+            {'저장된 단어가 없어요!\n홍등버튼을 눌러 단어장에 추가해보세요'}
+          </Text>
+        </View>
       )}
       <FlashList
         data={words}

@@ -27,9 +27,7 @@ function CategoryCardWrapper<T>({nav, infos}: CategoryCardWrapperProps<T>) {
   const renderItem = useCallback(
     ({item: {navData, title, desc, icon}}: {item: InfoType<T>}) => {
       return (
-        <TouchableOpacity
-          onLayout={e => console.log(e.nativeEvent.layout.height)}
-          onPress={() => nav(navData)}>
+        <TouchableOpacity onPress={() => nav(navData)}>
           <CategoryCard title={title} desc={desc} icon={icon} />
         </TouchableOpacity>
       );

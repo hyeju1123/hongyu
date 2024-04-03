@@ -21,6 +21,7 @@ export {default as Checkbox} from '../../svg/module/checkbox.svg';
 export {default as Square} from '../../svg/module/square.svg';
 export {default as Chart} from '../../svg/module/chart.svg';
 export {default as Search} from '../../svg/module/search.svg';
+export {default as Empty} from '../../svg/module/empty.svg';
 
 // circle number svg
 export {default as Circle0} from '../../svg/number/circle-a.svg';
