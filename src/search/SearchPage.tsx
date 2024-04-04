@@ -4,6 +4,8 @@ import {SafeAreaView} from 'react-native-safe-area-context';
 import {SearchStackParamList} from '../navigation/SearchNavigation';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useUtil from '../hooks/util';
+import useToast from '../hooks/toast';
+import {ToastIcon} from '../recoil/ToastState';
 import {useVoca} from '../providers/VocaProvider';
 
 import {Word, wordListState} from '../recoil/WordListState';
@@ -29,6 +31,7 @@ function SearchPage({
     colors: {background, iconPrimary, textPrimary},
   } = useTheme();
   const {convertToWord} = useUtil();
+  const {fireToast} = useToast();
   const {getVocasBySearch} = useVoca();
   const [searchedWords, setSearchedWords] = useRecoilState(wordListState);
   const resetWordList = useResetRecoilState(wordListState);
@@ -36,7 +39,13 @@ function SearchPage({
   const handleSearch = (val: string) => {
     const result = getVocasBySearch(val).map(convertToWord).slice(0, 20);
 
-    setSearchedWords([...result]);
+    result.length === 0 && val !== ''
+      ? fireToast({
+          text: `'${val}'에 일치하는 단어가 없습니다`,
+          icon: ToastIcon.AbNormal,
+          remove: true,
+        })
+      : setSearchedWords([...result]);
   };
 
   const moveToDetailPage = useCallback(
