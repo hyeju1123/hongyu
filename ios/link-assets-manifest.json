@@ -1,0 +1,21 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/KoPubWorldDotumMedium.ttf",
+      "sha1": "a97c8e315fcd73842db498bf9ebd971e90cdd646"
+    },
+    {
+      "path": "assets/fonts/PingFangSC.ttf",
+      "sha1": "416e4f7442216589b367e1edbb2d24e1f63dd38f"
+    },
+    {
+      "path": "assets/fonts/TmoneyRoundWind-ExtraBold.ttf",
+      "sha1": "239f22590abed8a518ba99d9093e4c26fdbfe677"
+    },
+    {
+      "path": "assets/fonts/TmoneyRoundWind-Regular.ttf",
+      "sha1": "ad5e22eef228daed167e1f6ee87617c7ad8de554"
+    }
+  ]
+}

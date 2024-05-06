@@ -1,6 +1,6 @@
 export const fonts = {
-  main: 'TmoneyRoundWindRegular',
-  mainBold: 'TmoneyRoundWindExtraBold',
-  hanzi: 'PingFang',
-  pinyin: 'KoPubWorld',
+  main: 'TmoneyRoundWind-Regular',
+  mainBold: 'TmoneyRoundWind-ExtraBold',
+  hanzi: 'PingFangSC',
+  pinyin: 'KoPubWorldDotumMedium',
 };
