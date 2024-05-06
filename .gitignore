@@ -21,6 +21,8 @@ DerivedData
 *.ipa
 *.xcuserstate
 ios/.xcode.env.local
+ios/tmp.xcconfig
+ios/assets/bundle.realm
 
 # Android/IntelliJ
 #

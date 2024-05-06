@@ -6,6 +6,7 @@ import useToast from './toast';
 import useDebounce from './debounce';
 import useDidMountEffect from './didMount';
 import {ToastIcon} from '../recoil/ToastState';
+import {Platform} from 'react-native';
 
 const apiUrl = Config.POLLY_API_URL;
 
@@ -96,7 +97,8 @@ export default function Polly() {
   };
 
   const playAudio = (path: string, errorCallback: (e: string) => void) => {
-    const sound = new Sound(path, Sound.DOCUMENT, error => {
+    const bundle = Platform.OS === 'ios' ? '' : Sound.DOCUMENT;
+    const sound = new Sound(path, bundle, error => {
       if (error) {
         errorCallback('음성 초기화 실패\n 재시도해주세요!');
       } else {

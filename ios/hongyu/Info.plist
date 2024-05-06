@@ -22,8 +22,6 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>LSRequiresIPhoneOS</key>
-	<true/>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -37,6 +35,15 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>KoPubWorldDotumMedium.ttf</string>
+		<string>PingFangSC.ttf</string>
+		<string>TmoneyRoundWind-ExtraBold.ttf</string>
+		<string>TmoneyRoundWind-Regular.ttf</string>
+	</array>
+	<key>POLLY_API_URL</key>
+	<string>$(POLLY_API_URL)</string>
 	<key>UILaunchStoryboardName</key>
 	<string>SplashScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
