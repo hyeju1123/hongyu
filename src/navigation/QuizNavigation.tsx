@@ -53,6 +53,7 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
     <Stack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
+        headerBackTitleVisible: false,
         headerShadowVisible: false,
         headerTintColor: textPrimary,
         headerStyle: {backgroundColor: background},
