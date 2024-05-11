@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import {useVoca} from '../providers/VocaProvider';
@@ -21,7 +21,7 @@ import styles from '../styles/quiz/QuizTypePageStyle';
 const PICK_MAXIMUM = 5;
 
 type PickCategoryPageProps = NativeStackScreenProps<
-  QuizStackParamList,
+  RootStackParamList,
   'PickCategoryPage'
 >;
 

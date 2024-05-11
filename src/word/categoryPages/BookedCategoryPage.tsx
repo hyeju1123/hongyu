@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, useCallback, useState} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {WordStackParamList} from '../../navigation/WordNavigation';
+import {RootStackParamList} from '../../navigation/StackParamListType';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, TouchableOpacity, View} from 'react-native';
 import {useFocusEffect} from '@react-navigation/native';
@@ -18,7 +18,7 @@ import {BookedNav, bookedNavState} from '../../recoil/WordNavState';
 
 type BookedCategoryPagepProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
-    WordStackParamList,
+    RootStackParamList,
     'CategoryBranchPage',
     undefined
   >;

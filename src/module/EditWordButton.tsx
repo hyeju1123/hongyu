@@ -1,16 +1,12 @@
 import React, {PropsWithChildren} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {WordStackParamList} from '../navigation/WordNavigation';
-import {SearchStackParamList} from '../navigation/SearchNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import Pencil from '../../svg/module/pencil.svg';
 import {useTheme} from '@react-navigation/native';
 
 type EditWordButtonProps = PropsWithChildren<{
-  navigation: NativeStackNavigationProp<
-    WordStackParamList | SearchStackParamList,
-    'VocaDetailPage'
-  >;
+  navigation: NativeStackNavigationProp<RootStackParamList, 'VocaDetailPage'>;
   id: number;
 }>;
 

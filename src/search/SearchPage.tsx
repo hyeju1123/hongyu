@@ -1,7 +1,7 @@
 import React, {useCallback, useEffect} from 'react';
 import {TouchableOpacity, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {SearchStackParamList} from '../navigation/SearchNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useUtil from '../hooks/util';
 import useToast from '../hooks/toast';
@@ -19,10 +19,7 @@ import DebouncedTextInput from '../module/DebouncedTextInput';
 import {useTheme} from '@react-navigation/native';
 import styles from '../styles/search/SearchPageStyle';
 
-type SearchPageProps = NativeStackScreenProps<
-  SearchStackParamList,
-  'SearchPage'
->;
+type SearchPageProps = NativeStackScreenProps<RootStackParamList, 'SearchPage'>;
 
 function SearchPage({
   navigation: {goBack, navigate},

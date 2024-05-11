@@ -1,5 +1,5 @@
 import React, {PropsWithChildren} from 'react';
-import {RootStackParamList} from '../navigation/RootNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {View, TouchableOpacity, Text} from 'react-native';
 import SvgIcon from '../module/SvgIcon';
@@ -38,7 +38,7 @@ function Header({navigation: {navigate}}: HeaderProps): JSX.Element {
         <SvgIcon name="Hong" size={styles.hongIcon.width} />
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigate('SearchNavigation')}
+        onPress={() => navigate('SearchPage')}
         style={[styles.inputSection, {borderColor: iconPrimary}]}>
         <Text style={[styles.text, {color: ongoingState}]}>
           단어를 검색해보세요!

@@ -1,6 +1,6 @@
 import React, {PropsWithChildren} from 'react';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../navigation/RootNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {useSetRecoilState} from 'recoil';
 import {WordNav, wordNavState} from '../recoil/WordNavState';
 
@@ -30,7 +30,7 @@ function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
       <Text style={[styles.sectionText, {color: textPrimary}]}>학습 도구</Text>
       <FlatCard
         navFn={() => {
-          navigate('QuizNavigation');
+          navigate('QuizTypePage');
         }}
         Icon={Vocatest}
         title="단어 암기 시험"
@@ -39,7 +39,7 @@ function ServiceSection({navigation: {navigate}}: ServiceSectionProps) {
       <FlatCard
         navFn={() => {
           navTypeSetter(prev => ({...prev, navType: WordNav.Busu}));
-          navigate('WordNavigation');
+          navigate('CategoryBranchPage');
         }}
         Icon={RadicalDict}
         title="부수 사전"

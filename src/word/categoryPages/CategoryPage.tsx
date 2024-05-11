@@ -5,7 +5,7 @@ import React, {
   useState,
 } from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {WordStackParamList} from '../../navigation/WordNavigation';
+import {RootStackParamList} from '../../navigation/StackParamListType';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import CategoryCardWrapper, {InfoType} from '../../module/CategoryCardWrapper';
 import {useRecoilValue} from 'recoil';
@@ -19,7 +19,7 @@ import styles from '../../styles/word/CategoryPageStyle';
 
 type CategoryPageProps = PropsWithChildren<{
   navigation: NativeStackNavigationProp<
-    WordStackParamList,
+    RootStackParamList,
     'CategoryBranchPage',
     undefined
   >;

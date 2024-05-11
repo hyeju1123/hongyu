@@ -2,7 +2,10 @@ import React, {useEffect, useRef} from 'react';
 import {HeaderBackButton} from '@react-navigation/elements';
 import {HeaderBackButtonProps} from '@react-navigation/native-stack/lib/typescript/src/types';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {
+  QuizStackParamList,
+  RootStackParamList,
+} from '../navigation/StackParamListType';
 
 import useToast from '../hooks/toast';
 import {ToastIcon} from '../recoil/ToastState';
@@ -10,7 +13,7 @@ import {BackHandler} from 'react-native';
 
 type BackButtonProps = {
   navigation: NativeStackNavigationProp<
-    QuizStackParamList,
+    RootStackParamList,
     keyof QuizStackParamList
   >;
 };

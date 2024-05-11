@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import {InfoType} from '../module/CategoryCardWrapper';
@@ -9,7 +9,7 @@ import * as Icons from '../styles/svgIndex';
 import styles from '../styles/quiz/QuizTypePageStyle';
 
 type PickLevelPageProps = NativeStackScreenProps<
-  QuizStackParamList,
+  RootStackParamList,
   'PickLevelPage'
 >;
 

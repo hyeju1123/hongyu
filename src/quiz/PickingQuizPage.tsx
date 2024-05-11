@@ -3,7 +3,7 @@ import {Text, ScrollView} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {StackActions} from '@react-navigation/native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {ResultDataProps} from './QuizResultPage';
 
 import BottomNav, {PageType} from '../module/BottomNav';
@@ -14,7 +14,7 @@ import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/PickingQuizPageStyle';
 
 type PickingQuizPageProps = NativeStackScreenProps<
-  QuizStackParamList,
+  RootStackParamList,
   'PickingQuizPage'
 >;
 

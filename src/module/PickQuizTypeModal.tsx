@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, TouchableOpacity} from 'react-native';
-import {QuizPageStackParamList} from '../navigation/QuizNavigation';
+import {QuizPageStackParamList} from '../navigation/StackParamListType';
 import useQuiz from '../hooks/quiz';
 import SvgIcon from './SvgIcon';
 import CategoryCard from './CategoryCard';

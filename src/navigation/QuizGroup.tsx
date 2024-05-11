@@ -1,10 +1,7 @@
 import React from 'react';
 
-import {
-  NativeStackScreenProps,
-  createNativeStackNavigator,
-} from '@react-navigation/native-stack';
-import {RootStackParamList} from './RootNavigation';
+import {Stack} from './RootNavigation';
+
 import QuizTypePage from '../quiz/QuizTypePage';
 import PickLevelPage from '../quiz/PickLevelPage';
 import PickCategoryPage from '../quiz/PickCategoryPage';
@@ -12,52 +9,11 @@ import MatchingQuizPage from '../quiz/MatchingQuizPage';
 import PickingQuizPage from '../quiz/PickingQuizPage';
 import ListeningQuizPage from '../quiz/ListeningQuizPage';
 import WritingQuizPage from '../quiz/WritingQuizPage';
-import QuizResultPage, {ResultDataProps} from '../quiz/QuizResultPage';
+import QuizResultPage from '../quiz/QuizResultPage';
 
-import {useTheme} from '@react-navigation/native';
-import {Word} from '../recoil/WordListState';
-
-export type QuizServiceStackParamList = {
-  QuizTypePage: undefined;
-  PickLevelPage: {quizType: keyof QuizPageStackParamList};
-  PickCategoryPage: {level: number; quizType: keyof QuizPageStackParamList};
-  QuizResultPage: {
-    resultData: ResultDataProps[];
-    quizType: keyof QuizPageStackParamList;
-  };
-};
-
-export type QuizPageStackParamList = {
-  MatchingQuizPage: {wordData: Word[]};
-  PickingQuizPage: {wordData: Word[]};
-  ListeningQuizPage: {wordData: Word[]};
-  WritingQuizPage: {wordData: Word[]};
-};
-
-export type QuizStackParamList = QuizServiceStackParamList &
-  QuizPageStackParamList;
-
-const Stack = createNativeStackNavigator<QuizStackParamList>();
-
-type QuizNavigationProps = NativeStackScreenProps<
-  RootStackParamList,
-  'QuizNavigation'
->;
-
-function QuizNavigation({}: QuizNavigationProps): JSX.Element {
-  const {
-    colors: {textPrimary, background},
-  } = useTheme();
-
+function QuizGroup() {
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitleAlign: 'center',
-        headerBackTitleVisible: false,
-        headerShadowVisible: false,
-        headerTintColor: textPrimary,
-        headerStyle: {backgroundColor: background},
-      }}>
+    <Stack.Group>
       <Stack.Screen
         name="QuizTypePage"
         component={QuizTypePage}
@@ -114,8 +70,8 @@ function QuizNavigation({}: QuizNavigationProps): JSX.Element {
           headerTitle: '결과',
         }}
       />
-    </Stack.Navigator>
+    </Stack.Group>
   );
 }
 
-export default QuizNavigation;
+export default QuizGroup;

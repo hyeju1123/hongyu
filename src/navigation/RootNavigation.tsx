@@ -3,33 +3,42 @@ import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import MainPage from '../main/MainPage';
-import SearchNavigation from './SearchNavigation';
-import WordNavigation from './WordNavigation';
-import QuizNavigation from './QuizNavigation';
+import SearchGroup from './SearchGroup';
+import WordGroup from './WordGroup';
+import QuizGroup from './QuizGroup';
 
 import {useRecoilValue} from 'recoil';
 import {themeState} from '../recoil/ThemeState';
 import {darkTheme, lightTheme} from '../styles/colors';
+import {RootStackParamList} from './StackParamListType';
 
-export type RootStackParamList = {
-  MainPage: undefined;
-  SearchNavigation: undefined;
-  WordNavigation: undefined;
-  QuizNavigation: undefined;
-};
-
-const Stack = createNativeStackNavigator<RootStackParamList>();
+export const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigation(): JSX.Element {
   const theme = useRecoilValue(themeState);
+  const themeColors = theme === 'dark' ? darkTheme : lightTheme;
+  const {
+    colors: {textPrimary, background},
+  } = themeColors;
 
   return (
-    <NavigationContainer theme={theme === 'dark' ? darkTheme : lightTheme}>
-      <Stack.Navigator screenOptions={{headerShown: false}}>
-        <Stack.Screen name="MainPage" component={MainPage} />
-        <Stack.Screen name="SearchNavigation" component={SearchNavigation} />
-        <Stack.Screen name="WordNavigation" component={WordNavigation} />
-        <Stack.Screen name="QuizNavigation" component={QuizNavigation} />
+    <NavigationContainer theme={themeColors}>
+      <Stack.Navigator
+        screenOptions={{
+          headerTitleAlign: 'center',
+          headerStyle: {backgroundColor: background},
+          headerBackTitleVisible: false,
+          headerTintColor: textPrimary,
+          headerShadowVisible: false,
+        }}>
+        <Stack.Screen
+          options={{headerShown: false}}
+          name="MainPage"
+          component={MainPage}
+        />
+        {SearchGroup()}
+        {WordGroup()}
+        {QuizGroup()}
       </Stack.Navigator>
     </NavigationContainer>
   );

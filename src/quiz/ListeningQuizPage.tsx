@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {StackActions} from '@react-navigation/native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, Text} from 'react-native';
@@ -14,7 +14,7 @@ import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/PickingQuizPageStyle';
 
 type ListeningQuizPageProps = NativeStackScreenProps<
-  QuizStackParamList,
+  RootStackParamList,
   'ListeningQuizPage'
 >;
 

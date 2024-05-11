@@ -1,6 +1,6 @@
 import React, {PropsWithChildren, useCallback, useMemo, useState} from 'react';
 import {View, Text, TouchableOpacity, FlatList} from 'react-native';
-import {RootStackParamList} from '../navigation/RootNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useSetRecoilState} from 'recoil';
 import {WordNav, wordNavState} from '../recoil/WordNavState';
@@ -33,7 +33,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
           style={{width: layoutWidth / numCols - 3}}
           onPress={() => {
             navTypeSetter(() => ({navType: WordNav.Voca, level: item}));
-            navigate('WordNavigation');
+            navigate('CategoryBranchPage');
           }}
           key={item}>
           <Card
@@ -77,7 +77,7 @@ function VocaSection({navigation: {navigate}}: VocaSectionProps) {
       <TouchableOpacity
         onPress={() => {
           navTypeSetter(prev => ({...prev, navType: WordNav.Book}));
-          navigate('WordNavigation');
+          navigate('CategoryBranchPage');
         }}>
         <Card color={colors.primary} underColor={colors.secondary}>
           <View style={styles.scrap}>

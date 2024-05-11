@@ -1,7 +1,9 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WordStackParamList} from '../navigation/WordNavigation';
-import {QuizPageStackParamList} from '../navigation/QuizNavigation';
+import {
+  RootStackParamList,
+  QuizPageStackParamList,
+} from '../navigation/StackParamListType';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {FlashList} from '@shopify/flash-list';
@@ -20,7 +22,7 @@ import {WordNav, wordNavState} from '../recoil/WordNavState';
 import {useTheme} from '@react-navigation/native';
 import styles from '../styles/word/WordPageStyle';
 
-type WordPageProps = NativeStackScreenProps<WordStackParamList, 'WordPage'>;
+type WordPageProps = NativeStackScreenProps<RootStackParamList, 'WordPage'>;
 
 function WordPage({
   navigation: {navigate, setOptions},

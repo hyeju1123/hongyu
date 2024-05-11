@@ -1,6 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {QuizStackParamList} from '../navigation/QuizNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {Text, TouchableOpacity, View} from 'react-native';
 import {StackActions} from '@react-navigation/native';
@@ -17,7 +17,7 @@ import styles from '../styles/quiz/QuizResultPageStyle';
 import cardWrapperStyles from '../styles/module/CardWrapperStyle';
 
 type QuizResultPageProps = NativeStackScreenProps<
-  QuizStackParamList,
+  RootStackParamList,
   'QuizResultPage'
 >;
 

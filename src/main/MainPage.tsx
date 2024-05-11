@@ -2,7 +2,7 @@ import React from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, StatusBar} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../navigation/RootNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import Header from './Header';
 import VocaSection from './VocaSection';
 import ServiceSection from './ServiceSection';

@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WordStackParamList} from '../../navigation/WordNavigation';
-import {SearchStackParamList} from '../../navigation/SearchNavigation';
+import {RootStackParamList} from '../../navigation/StackParamListType';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, Text, View} from 'react-native';
 
@@ -19,7 +18,7 @@ import {useTheme} from '@react-navigation/native';
 import styles from '../../styles/word/WordDetailPageStyle';
 
 type VocaDetailPageProps = NativeStackScreenProps<
-  WordStackParamList | SearchStackParamList,
+  RootStackParamList,
   'VocaDetailPage'
 >;
 

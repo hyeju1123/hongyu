@@ -31,10 +31,8 @@ function Card({
     <View
       style={[
         styles.underdressing,
-        showShadow && styles.shadow,
         {
           marginVertical,
-          shadowColor: shadow,
           backgroundColor: underColor || shadow,
         },
       ]}>
@@ -42,9 +40,11 @@ function Card({
         style={[
           styles.card,
           dirRow && styles.flexRow,
+          showShadow && styles.shadow,
           {
             paddingVertical,
             paddingHorizontal,
+            shadowColor: shadow,
             borderColor: cardBorderLine,
             backgroundColor: color || background,
           },

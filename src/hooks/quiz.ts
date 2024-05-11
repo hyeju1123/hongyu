@@ -4,7 +4,7 @@ import useUtil from './util';
 import Voca from '../model/Voca';
 import {Word} from '../recoil/WordListState';
 import {InfoType} from '../module/CategoryCardWrapper';
-import {QuizPageStackParamList} from '../navigation/QuizNavigation';
+import {QuizPageStackParamList} from '../navigation/StackParamListType';
 
 type WordDictProps = {
   _id: number;

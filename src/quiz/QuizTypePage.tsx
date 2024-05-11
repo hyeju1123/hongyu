@@ -3,8 +3,8 @@ import {Text} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   QuizPageStackParamList,
-  QuizStackParamList,
-} from '../navigation/QuizNavigation';
+  RootStackParamList,
+} from '../navigation/StackParamListType';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import CategoryCardWrapper from '../module/CategoryCardWrapper';
 import useQuiz from '../hooks/quiz';
@@ -13,7 +13,7 @@ import {useTheme} from '@react-navigation/native';
 import styles from '../styles/quiz/QuizTypePageStyle';
 
 type QuizTypePageProps = NativeStackScreenProps<
-  QuizStackParamList,
+  RootStackParamList,
   'QuizTypePage'
 >;
 

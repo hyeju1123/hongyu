@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {WordStackParamList} from '../../navigation/WordNavigation';
+import {RootStackParamList} from '../../navigation/StackParamListType';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {useRecoilValue} from 'recoil';
@@ -9,7 +9,7 @@ import CategoryPage from './CategoryPage';
 import BookedCategoryPage from './BookedCategoryPage';
 
 type CategoryBranchPageProps = NativeStackScreenProps<
-  WordStackParamList,
+  RootStackParamList,
   'CategoryBranchPage'
 >;
 

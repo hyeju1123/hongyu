@@ -8,8 +8,7 @@ import {
   View,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WordStackParamList} from '../navigation/WordNavigation';
-import {SearchStackParamList} from '../navigation/SearchNavigation';
+import {RootStackParamList} from '../navigation/StackParamListType';
 import {UpdateVocaContent, useVoca} from '../providers/VocaProvider';
 import useToast from '../hooks/toast';
 import useUtil from '../hooks/util';
@@ -23,7 +22,7 @@ import {useTheme} from '@react-navigation/native';
 import styles from '../styles/word/EditVocaPageStyle';
 
 type EditVocaPageProps = NativeStackScreenProps<
-  WordStackParamList | SearchStackParamList,
+  RootStackParamList,
   'EditVocaPage'
 >;
 

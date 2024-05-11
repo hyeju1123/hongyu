@@ -1,7 +1,7 @@
 import React from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {WordStackParamList} from '../../navigation/WordNavigation';
-import {SearchStackParamList} from '../../navigation/SearchNavigation';
+import {RootStackParamList} from '../../navigation/StackParamListType';
+
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ScrollView, Text, View} from 'react-native';
 import Card from '../../module/Card';
@@ -16,7 +16,7 @@ import {useTheme} from '@react-navigation/native';
 import styles from '../../styles/word/WordDetailPageStyle';
 
 type BusuDetailPageProps = NativeStackScreenProps<
-  WordStackParamList | SearchStackParamList,
+  RootStackParamList,
   'BusuDetailPage'
 >;
 
