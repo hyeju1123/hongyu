@@ -99,7 +99,9 @@ function WritingQuizPage({
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
       <BackButton navigation={navigation} />
-      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <ScrollView
+        bounces={false}
+        contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.serviceButtonWrapper}>
           <CheckAnswerButton
             oButton

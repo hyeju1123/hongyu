@@ -17,8 +17,10 @@ type Style = {
   resetButtonText: TextStyle;
   shadow: ViewStyle;
   auxiliaryLine: ViewStyle;
-  horizonLine: ViewStyle;
-  verticalLine: ViewStyle;
+  horizonContainer: ViewStyle;
+  verticalContainer: ViewStyle;
+  verticalDottedLineDot: ViewStyle;
+  horizontalDottedLineDot: ViewStyle;
   writingReset: ViewStyle;
 };
 
@@ -26,7 +28,8 @@ const width = Dimensions.get('screen').width;
 const bottomBarHeight =
   Dimensions.get('screen').height -
   Dimensions.get('window').height -
-  (StatusBar.currentHeight || 0);
+  (StatusBar.currentHeight || 0) +
+  60;
 
 const commonPart: Style = {
   canvasBackground: {
@@ -46,8 +49,6 @@ const commonPart: Style = {
     bottom: bottomBarHeight,
     right: 0,
     left: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
   },
   buttonWrapper: {
     display: 'flex',
@@ -78,13 +79,37 @@ const commonPart: Style = {
     position: 'absolute',
     borderStyle: 'dashed',
   },
-  horizonLine: {
+  verticalContainer: {
+    position: 'absolute',
     width: '100%',
-    borderTopWidth: 1,
-  },
-  verticalLine: {
     height: '100%',
-    borderRightWidth: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
+  },
+  horizonContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  verticalDottedLineDot: {
+    width: 1,
+    height: 4,
+    borderRadius: 100,
+    marginBottom: 4,
+    borderWidth: 1,
+  },
+  horizontalDottedLineDot: {
+    width: 4,
+    height: 1,
+    borderRadius: 100,
+    marginLeft: 4,
+    borderWidth: 1,
   },
   writingReset: {
     width: 20,

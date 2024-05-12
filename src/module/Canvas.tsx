@@ -64,6 +64,21 @@ const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
     setPaths(prev => prev.slice(0, -1));
   }, []);
 
+  const dottedLineDots = (horizon: Boolean) =>
+    Array.from({length: 100}, (_, idx) => (
+      <View
+        key={idx}
+        style={[
+          {
+            borderColor: ongoingState,
+          },
+          horizon
+            ? styles.horizontalDottedLineDot
+            : styles.verticalDottedLineDot,
+        ]}
+      />
+    ));
+
   useEffect(() => {
     setPaths(writings[index]);
   }, [writings, index]);
@@ -124,20 +139,8 @@ const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
           }
         }}>
         <View style={styles.backHanziWrapper}>
-          <View
-            style={[
-              styles.auxiliaryLine,
-              styles.horizonLine,
-              {borderColor: ongoingState},
-            ]}
-          />
-          <View
-            style={[
-              styles.auxiliaryLine,
-              styles.verticalLine,
-              {borderColor: ongoingState},
-            ]}
-          />
+          <View style={styles.horizonContainer}>{dottedLineDots(true)}</View>
+          <View style={styles.verticalContainer}>{dottedLineDots(false)}</View>
         </View>
         <Svg height={'100%'} width={'100%'}>
           {paths?.map(({path, color: c, stroke: s}, i) => {
