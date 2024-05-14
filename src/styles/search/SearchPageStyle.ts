@@ -7,6 +7,7 @@ type Style = {
   container: ViewStyle;
   flashlistContent: ViewStyle;
   inputWrapper: ViewStyle;
+  iosVerticalPadding: ViewStyle;
   input: TextStyle;
   backButton: ViewStyle;
   resultBar: ViewStyle;
@@ -28,6 +29,9 @@ export const commonPart: Style = {
     alignItems: 'center',
     paddingHorizontal: 15,
     borderBottomWidth: 1,
+  },
+  iosVerticalPadding: {
+    paddingVertical: 10,
   },
   input: {
     flex: 1,

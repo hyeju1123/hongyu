@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect} from 'react';
-import {TouchableOpacity, View} from 'react-native';
+import {TouchableOpacity, View, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {RootStackParamList} from '../navigation/StackParamListType';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
@@ -71,7 +71,12 @@ function SearchPage({
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor: background}]}>
-      <View style={[styles.inputWrapper, {borderBottomColor: iconPrimary}]}>
+      <View
+        style={[
+          styles.inputWrapper,
+          {borderBottomColor: iconPrimary},
+          Platform.OS === 'ios' && styles.iosVerticalPadding,
+        ]}>
         <TouchableOpacity style={styles.backButton} onPress={goBack}>
           <SvgIcon
             name="MainArrow"
