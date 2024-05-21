@@ -142,7 +142,7 @@ function EditVocaPage({
                 setCurrentWC(prev => prev.filter(label => label !== wc))
               }>
               <View style={[styles.xButton, {backgroundColor: ongoingState}]}>
-                <Text style={[styles.xText, {color: textPrimary}]}>x</Text>
+                <SvgIcon name="Cross" size={5} fill={textPrimary} />
               </View>
               <Text style={[styles.classIconText, {color: background}]}>
                 {wc}

@@ -11,7 +11,6 @@ type Style = {
   classIconWrapper: ViewStyle;
   classIconText: TextStyle;
   xButton: ViewStyle;
-  xText: TextStyle;
   buttonWrapper: ViewStyle;
   completeButton: ViewStyle;
   completeText: TextStyle;
@@ -68,19 +67,14 @@ export const commonPart: Style = {
   },
   xButton: {
     position: 'absolute',
-    top: -5,
-    right: -5,
-    width: 10,
-    height: 10,
-    borderRadius: 5,
     display: 'flex',
-  },
-  xText: {
-    position: 'absolute',
-    top: -2,
-    right: 2,
-    fontFamily: fonts.mainBold,
-    fontSize: 9,
+    justifyContent: 'center',
+    alignItems: 'center',
+    top: -4,
+    right: -5,
+    width: 12,
+    height: 12,
+    borderRadius: 6,
   },
   buttonWrapper: {
     flex: 1,
@@ -174,12 +168,6 @@ export const handleStyles = () => {
         width: 8,
         height: 8,
         borderRadius: 4,
-      },
-      xText: {
-        ...commonPart.xText,
-        top: -1,
-        right: 2,
-        fontSize: 6,
       },
       closeIcon: {
         width: 15,
