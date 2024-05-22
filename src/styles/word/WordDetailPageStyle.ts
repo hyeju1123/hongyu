@@ -69,7 +69,7 @@ export const commonPart: Style = {
     fontSize: 15,
   },
   meaning: {
-    width: '95%',
+    width: '100%',
     fontFamily: fonts.pinyin,
     fontSize: 13,
     margin: 5,
@@ -154,6 +154,7 @@ export const handleStyles = () => {
       meaning: {
         ...commonPart.meaning,
         fontSize: 16,
+        paddingHorizontal: 3,
       },
       busuSubTitle: {
         ...commonPart.busuSubTitle,

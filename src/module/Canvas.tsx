@@ -65,7 +65,7 @@ const Canvas = ({index, writings, writingRef}: CanvasProp): JSX.Element => {
   }, []);
 
   const dottedLineDots = (horizon: Boolean) =>
-    Array.from({length: 100}, (_, idx) => (
+    Array.from({length: 200}, (_, idx) => (
       <View
         key={idx}
         style={[

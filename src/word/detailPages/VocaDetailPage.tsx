@@ -1,8 +1,14 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/StackParamListType';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ScrollView, Text, View} from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 
 import Card from '../../module/Card';
 import SoundButton from '../../module/SoundButton';
@@ -43,6 +49,7 @@ function VocaDetailPage({
     isBusu,
   } = wordItem;
   const {updateExplanation} = useVoca();
+  const scrollViewRef = useRef<ScrollView>(null);
 
   const handleExplanation = useRecoilCallback(
     ({set}) =>
@@ -65,61 +72,70 @@ function VocaDetailPage({
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}>
-        <Card showShadow underColor={transparent} marginVertical={8}>
-          <SoundButton level={level} word={word} />
-          <Text
-            style={
-              word.length > 3
-                ? {...styles.longWord, color: textPrimary}
-                : {...styles.word, color: textPrimary}
-            }>
-            {word}
-          </Text>
-          <Text style={[styles.intonation, {color: iconPrimary}]}>
-            {intonation}
-          </Text>
-        </Card>
-        <Card showShadow underColor={transparent} marginVertical={8}>
-          <View style={styles.flexDirRow}>
-            {wordclass.split(', ').map((wc: string) => (
-              <View
-                key={wc}
-                style={[
-                  styles.classIconWrapper,
-                  {backgroundColor: iconPrimary},
-                ]}>
-                <Text style={[{color: background}, styles.classIconText]}>
-                  {wc}
-                </Text>
-              </View>
-            ))}
+      <KeyboardAvoidingView
+        style={styles.container}
+        keyboardVerticalOffset={60}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView
+          ref={scrollViewRef}
+          onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollViewContent}>
+          <Card showShadow underColor={transparent} marginVertical={8}>
+            <SoundButton level={level} word={word} />
+            <Text
+              style={
+                word.length > 3
+                  ? {...styles.longWord, color: textPrimary}
+                  : {...styles.word, color: textPrimary}
+              }>
+              {word}
+            </Text>
+            <Text style={[styles.intonation, {color: iconPrimary}]}>
+              {intonation}
+            </Text>
+          </Card>
+          <Card showShadow underColor={transparent} marginVertical={8}>
+            <View style={styles.flexDirRow}>
+              {wordclass.split(', ').map((wc: string) => (
+                <View
+                  key={wc}
+                  style={[
+                    styles.classIconWrapper,
+                    {backgroundColor: iconPrimary},
+                  ]}>
+                  <Text style={[{color: background}, styles.classIconText]}>
+                    {wc}
+                  </Text>
+                </View>
+              ))}
+            </View>
+          </Card>
+          <Card showShadow underColor={transparent} marginVertical={8}>
+            <Text style={[styles.meaning, {color: textPrimary}]}>
+              {meaning}
+            </Text>
+          </Card>
+          <Card showShadow underColor={transparent} marginVertical={8}>
+            <DebouncedTextInput
+              style={[styles.meaning, {color: textPrimary}]}
+              textVal={explanation || ''}
+              placeholder="# 메모를 남겨보세요."
+              updateFn={val => handleExplanation(val)}
+            />
+          </Card>
+          <View style={styles.bookmarkButtonWrapper}>
+            <BookmarkButton
+              id={id}
+              word={word}
+              isBusu={isBusu}
+              size={ButtonSize.Large}
+              bookmarked={bookmarked}
+            />
           </View>
-        </Card>
-        <Card showShadow underColor={transparent} marginVertical={8}>
-          <Text style={[styles.meaning, {color: textPrimary}]}>{meaning}</Text>
-        </Card>
-        <Card showShadow underColor={transparent} marginVertical={8}>
-          <DebouncedTextInput
-            style={[styles.meaning, {color: textPrimary}]}
-            textVal={explanation || ''}
-            placeholder="# 메모를 남겨보세요."
-            updateFn={val => handleExplanation(val)}
-          />
-        </Card>
-        <View style={styles.bookmarkButtonWrapper}>
-          <BookmarkButton
-            id={id}
-            word={word}
-            isBusu={isBusu}
-            size={ButtonSize.Large}
-            bookmarked={bookmarked}
-          />
-        </View>
-      </ScrollView>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

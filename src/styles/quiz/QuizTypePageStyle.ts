@@ -110,7 +110,7 @@ const handleStyles = () => {
       },
       label: {
         ...commonPart.label,
-        fontSize: 18,
+        fontSize: 16,
       },
       closeWrapper: {
         marginLeft: 7,

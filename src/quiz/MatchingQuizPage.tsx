@@ -127,6 +127,7 @@ function MatchingQuizPage({
       )}
       <ScrollView
         style={styles.scrollView}
+        bounces={false}
         contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.timerWrapper}>
           <Timer duration={TIMEOUT} currentPage={currentPage} />

@@ -54,7 +54,7 @@ const commonPart: Style = {
     padding: 10,
   },
   smallText: {
-    fontSize: 9,
+    fontSize: 10,
   },
   timerWrapper: {
     display: 'flex',
@@ -90,8 +90,15 @@ const handleStyles = () => {
       scrollView: {
         marginHorizontal: 35,
       },
+      largeText: {
+        fontSize: 35,
+        padding: 20,
+      },
+      smallText: {
+        fontSize: 18,
+      },
       manIcon: {
-        width: 100,
+        width: 140,
       },
     });
   }

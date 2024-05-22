@@ -38,7 +38,9 @@ export const commonPart: Style = {
     borderWidth: 1,
     fontFamily: fonts.hanzi,
     fontSize: 15,
-    padding: 10,
+    paddingHorizontal: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
     marginVertical: 10,
   },
   flexDirRow: {
@@ -55,15 +57,15 @@ export const commonPart: Style = {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    width: 63,
-    height: 30,
+    width: 55,
+    height: 27,
     marginRight: 10,
     marginVertical: 1,
     borderRadius: 5,
   },
   classIconText: {
     fontFamily: fonts.mainBold,
-    fontSize: 18,
+    fontSize: 16,
   },
   xButton: {
     position: 'absolute',
@@ -185,7 +187,8 @@ export const handleStyles = () => {
       textInput: {
         ...commonPart.textInput,
         fontSize: 16,
-        padding: 13,
+        paddingTop: 13,
+        paddingBottom: 13,
       },
       flexDirRow: {
         ...commonPart.flexDirRow,
@@ -197,8 +200,8 @@ export const handleStyles = () => {
       },
       classIconWrapper: {
         ...commonPart.classIconWrapper,
-        width: 70,
-        height: 35,
+        width: 62,
+        height: 30,
       },
     });
   }

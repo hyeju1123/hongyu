@@ -69,14 +69,13 @@ const handleStyles = () => {
       inputSection: {
         ...commonPart.inputSection,
         borderWidth: 1.5,
-        paddingVertical: 5,
       },
       text: {
         ...commonPart.text,
         fontSize: 14,
       },
       hongIcon: {
-        width: 95,
+        width: 85,
       },
       searchIcon: {
         width: 15,

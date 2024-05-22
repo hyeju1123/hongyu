@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useMemo, useRef, useState} from 'react';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {
   ScrollView,
@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   Text,
   View,
+  KeyboardAvoidingView,
+  Platform,
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../navigation/StackParamListType';
@@ -65,6 +67,12 @@ function EditVocaPage({
   const [currentWC, setCurrentWC] = useState(wordclass.split(', '));
   const [showWCTemplate, setShowWCTemplate] = useState(false);
 
+  const scrollViewRef = useRef<ScrollView>(null);
+  const inputYRef = useRef({
+    meaning: 0,
+    memo: 0,
+  });
+
   const handleChangeText = (name: string, value: string) => {
     !limitTextLength(value) && setTextVal(prev => ({...prev, [name]: value}));
   };
@@ -107,112 +115,154 @@ function EditVocaPage({
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={styles.scrollView}
-        contentContainerStyle={styles.scrollViewContent}>
-        <TextInput
-          style={[
-            styles.textInput,
-            {color: textPrimary, borderColor: cardBorderLine},
-          ]}
-          value={textVal.word}
-          onChangeText={value => handleChangeText('word', value)}
-          placeholder="단어를 입력하세요"
-          onFocus={() => setShowWCTemplate(false)}
-        />
-        <TextInput
-          style={[
-            styles.textInput,
-            {color: textPrimary, borderColor: cardBorderLine},
-          ]}
-          value={textVal.intonation}
-          onChangeText={value => handleChangeText('intonation', value)}
-          placeholder="발음을 입력하세요"
-          onFocus={() => setShowWCTemplate(false)}
-        />
-        <TouchableOpacity
-          onPress={() => setShowWCTemplate(true)}
-          style={[styles.flexDirRow, {borderColor: cardBorderLine}]}>
-          {currentWC.map((wc: string) => (
+      <KeyboardAvoidingView
+        style={styles.container}
+        keyboardVerticalOffset={60}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+        <ScrollView
+          ref={scrollViewRef}
+          showsVerticalScrollIndicator={false}
+          style={styles.scrollView}
+          contentContainerStyle={styles.scrollViewContent}>
+          <TextInput
+            style={[
+              styles.textInput,
+              {color: textPrimary, borderColor: cardBorderLine},
+            ]}
+            value={textVal.word}
+            onChangeText={value => handleChangeText('word', value)}
+            placeholder="단어를 입력하세요"
+            onFocus={() => setShowWCTemplate(false)}
+          />
+          <TextInput
+            style={[
+              styles.textInput,
+              {color: textPrimary, borderColor: cardBorderLine},
+            ]}
+            value={textVal.intonation}
+            onChangeText={value => handleChangeText('intonation', value)}
+            placeholder="발음을 입력하세요"
+            onFocus={() => setShowWCTemplate(false)}
+          />
+          <TouchableOpacity
+            onPress={() => setShowWCTemplate(true)}
+            style={[styles.flexDirRow, {borderColor: cardBorderLine}]}>
+            {currentWC.map((wc: string) => (
+              <TouchableOpacity
+                key={wc}
+                style={[
+                  styles.classIconWrapper,
+                  {backgroundColor: iconPrimary},
+                ]}
+                onPress={() =>
+                  setCurrentWC(prev => prev.filter(label => label !== wc))
+                }>
+                <View style={[styles.xButton, {backgroundColor: ongoingState}]}>
+                  <SvgIcon name="Cross" size={5} fill={textPrimary} />
+                </View>
+                <Text style={[styles.classIconText, {color: background}]}>
+                  {wc}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </TouchableOpacity>
+          <TextInput
+            multiline
+            style={[
+              styles.textInput,
+              {color: textPrimary, borderColor: cardBorderLine},
+            ]}
+            value={textVal.meaning}
+            onChangeText={value => handleChangeText('meaning', value)}
+            placeholder="뜻을 입력하세요"
+            onFocus={() => {
+              scrollViewRef.current?.scrollTo({
+                y: inputYRef.current.meaning,
+              });
+              setShowWCTemplate(false);
+            }}
+            onLayout={({
+              nativeEvent: {
+                layout: {y},
+              },
+            }) => {
+              inputYRef.current = {
+                ...inputYRef.current,
+                meaning: y,
+              };
+            }}
+          />
+          <TextInput
+            multiline
+            style={[
+              styles.textInput,
+              {color: textPrimary, borderColor: cardBorderLine},
+            ]}
+            value={textVal.explanation}
+            onChangeText={value => handleChangeText('explanation', value)}
+            placeholder="메모를 입력하세요"
+            placeholderTextColor={ongoingState}
+            onFocus={() => {
+              scrollViewRef.current?.scrollTo({
+                y: inputYRef.current.memo,
+              });
+              setShowWCTemplate(false);
+            }}
+            onLayout={({
+              nativeEvent: {
+                layout: {y},
+              },
+            }) => {
+              inputYRef.current = {
+                ...inputYRef.current,
+                memo: y,
+              };
+            }}
+          />
+          <View style={styles.buttonWrapper}>
+            <TouchableOpacity
+              onPress={() => handleUpdateVoca(textVal, currentWC)}
+              style={[styles.completeButton, {backgroundColor: iconPrimary}]}>
+              <Text style={[styles.completeText, {color: background}]}>
+                수정하기
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+        <View
+          style={
+            showWCTemplate
+              ? {
+                  ...styles.wordclassBox,
+                  backgroundColor: transparentContentBack,
+                }
+              : styles.wordclassBoxNone
+          }>
+          <TouchableOpacity
+            onPress={() => setShowWCTemplate(false)}
+            style={styles.closeButton}>
+            <SvgIcon
+              name="Cross"
+              size={styles.closeIcon.width}
+              fill={textPrimary}
+            />
+          </TouchableOpacity>
+          {getFilteredWC().map((wc: string) => (
             <TouchableOpacity
               key={wc}
-              style={[styles.classIconWrapper, {backgroundColor: iconPrimary}]}
-              onPress={() =>
-                setCurrentWC(prev => prev.filter(label => label !== wc))
-              }>
-              <View style={[styles.xButton, {backgroundColor: ongoingState}]}>
-                <SvgIcon name="Cross" size={5} fill={textPrimary} />
-              </View>
+              onPress={() => setCurrentWC(prev => [...prev, wc])}
+              style={[
+                styles.classIconWrapper,
+                styles.wcButton,
+                {backgroundColor: iconPrimary},
+              ]}>
               <Text style={[styles.classIconText, {color: background}]}>
                 {wc}
               </Text>
             </TouchableOpacity>
           ))}
-        </TouchableOpacity>
-        <TextInput
-          multiline
-          style={[
-            styles.textInput,
-            {color: textPrimary, borderColor: cardBorderLine},
-          ]}
-          value={textVal.meaning}
-          onChangeText={value => handleChangeText('meaning', value)}
-          placeholder="뜻을 입력하세요"
-          onFocus={() => setShowWCTemplate(false)}
-        />
-        <TextInput
-          multiline
-          style={[
-            styles.textInput,
-            {color: textPrimary, borderColor: cardBorderLine},
-          ]}
-          value={textVal.explanation}
-          onChangeText={value => handleChangeText('explanation', value)}
-          placeholder="메모를 입력하세요"
-          placeholderTextColor={ongoingState}
-          onFocus={() => setShowWCTemplate(false)}
-        />
-        <View style={styles.buttonWrapper}>
-          <TouchableOpacity
-            onPress={() => handleUpdateVoca(textVal, currentWC)}
-            style={[styles.completeButton, {backgroundColor: iconPrimary}]}>
-            <Text style={[styles.completeText, {color: background}]}>
-              수정하기
-            </Text>
-          </TouchableOpacity>
         </View>
-      </ScrollView>
-      <View
-        style={
-          showWCTemplate
-            ? {...styles.wordclassBox, backgroundColor: transparentContentBack}
-            : styles.wordclassBoxNone
-        }>
-        <TouchableOpacity
-          onPress={() => setShowWCTemplate(false)}
-          style={styles.closeButton}>
-          <SvgIcon
-            name="Cross"
-            size={styles.closeIcon.width}
-            fill={textPrimary}
-          />
-        </TouchableOpacity>
-        {getFilteredWC().map((wc: string) => (
-          <TouchableOpacity
-            key={wc}
-            onPress={() => setCurrentWC(prev => [...prev, wc])}
-            style={[
-              styles.classIconWrapper,
-              styles.wcButton,
-              {backgroundColor: iconPrimary},
-            ]}>
-            <Text style={[styles.classIconText, {color: background}]}>
-              {wc}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }

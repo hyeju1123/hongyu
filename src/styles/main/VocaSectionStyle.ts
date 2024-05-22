@@ -92,12 +92,13 @@ const handleStyles = () => {
         ...commonPart.levelText,
         fontSize: 20,
       },
+      scrap: {
+        ...commonPart.scrap,
+        paddingVertical: 5,
+      },
       scrapText: {
         ...commonPart.scrapText,
-        fontSize: 15,
-      },
-      lanternIcon: {
-        width: 18,
+        fontSize: 17,
       },
     });
   }
