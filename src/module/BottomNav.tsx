@@ -71,7 +71,7 @@ function BottomNav({
   return (
     <View style={[styles.bottomNav, !large && styles.smallSize]}>
       <TouchableOpacity
-        style={styles.horizonFlip}
+        style={[styles.horizonFlip, styles.playButtonPadding]}
         onPress={() => handlePageMove(false)}>
         <SvgIcon
           name="Play"
@@ -88,7 +88,9 @@ function BottomNav({
           size={large ? ButtonSize.Large : ButtonSize.Small}
         />
       )}
-      <TouchableOpacity onPress={() => handlePageMove(true)}>
+      <TouchableOpacity
+        style={styles.playButtonPadding}
+        onPress={() => handlePageMove(true)}>
         <SvgIcon
           name="Play"
           size={large ? styles.largeVerPlay.width : styles.smallVerPlay.width}

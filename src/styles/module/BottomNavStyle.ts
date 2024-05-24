@@ -5,6 +5,7 @@ type Style = {
   bottomNav: ViewStyle;
   smallSize: ViewStyle;
   horizonFlip: ViewStyle;
+  playButtonPadding: ViewStyle;
   smallVerPlay: ViewStyle;
   largeVerPlay: ViewStyle;
 };
@@ -28,6 +29,9 @@ const commonPart: Style = {
   horizonFlip: {
     transform: [{rotateY: '180deg'}],
   },
+  playButtonPadding: {
+    padding: 8,
+  },
   smallVerPlay: {
     width: 25,
   },
@@ -40,6 +44,9 @@ const handleStyles = () => {
   if (getDisplaySize() === DisplaySize.Large) {
     return StyleSheet.create({
       ...commonPart,
+      playButtonPadding: {
+        padding: 10,
+      },
       smallVerPlay: {
         width: 25,
       },
