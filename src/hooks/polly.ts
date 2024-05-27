@@ -9,6 +9,7 @@ import {ToastIcon} from '../recoil/ToastState';
 import {Platform} from 'react-native';
 
 const apiUrl = Config.POLLY_API_URL;
+Sound.setCategory('Playback');
 
 export default function Polly() {
   const {fireToast} = useToast();
