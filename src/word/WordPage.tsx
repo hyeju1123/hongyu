@@ -1,4 +1,10 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {
   RootStackParamList,
@@ -78,7 +84,7 @@ function WordPage({
     setShowModal(prev => !prev);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const moveQuizPage = () =>
       category === '부수' ? (
         <View />
@@ -91,19 +97,13 @@ function WordPage({
     navType === Busu
       ? setOptions({headerTitle: category + '획'})
       : setOptions({headerTitle: category, headerRight: moveQuizPage});
+  }, [navType, Busu, setOptions, category, handleModal, textPrimary]);
 
+  useEffect(() => {
     return () => {
       clearMp3File();
     };
-  }, [
-    clearMp3File,
-    navType,
-    Busu,
-    setOptions,
-    category,
-    handleModal,
-    textPrimary,
-  ]);
+  }, [clearMp3File]);
 
   return (
     <SafeAreaView edges={['bottom']} style={styles.container}>

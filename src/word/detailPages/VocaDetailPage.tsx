@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useLayoutEffect, useRef} from 'react';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../navigation/StackParamListType';
 import {SafeAreaView} from 'react-native-safe-area-context';
@@ -60,7 +60,7 @@ function VocaDetailPage({
     [wordItem],
   );
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const getEditButton = () => {
       return <EditWordButton navigation={navigation} id={id} />;
     };

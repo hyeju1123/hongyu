@@ -30,6 +30,7 @@ function RootNavigation(): JSX.Element {
           headerBackTitleVisible: false,
           headerTintColor: textPrimary,
           headerShadowVisible: false,
+          headerTitle: '',
         }}>
         <Stack.Screen
           options={{headerShown: false}}
