@@ -13,6 +13,7 @@ import {
 import Card from '../../module/Card';
 import SoundButton from '../../module/SoundButton';
 import EditWordButton from '../../module/EditWordButton';
+import ProgressButton from '../../module/ProgressButton';
 import DebouncedTextInput from '../../module/DebouncedTextInput';
 import BookmarkButton, {ButtonSize} from '../../module/BookmarkButton';
 
@@ -47,6 +48,7 @@ function VocaDetailPage({
     level,
     explanation,
     isBusu,
+    progress,
   } = wordItem;
   const {updateExplanation} = useVoca();
   const scrollViewRef = useRef<ScrollView>(null);
@@ -83,7 +85,10 @@ function VocaDetailPage({
           style={styles.scrollView}
           contentContainerStyle={styles.scrollViewContent}>
           <Card showShadow underColor={transparent} marginVertical={8}>
-            <SoundButton level={level} word={word} />
+            <View style={styles.topButtonWrapper}>
+              <SoundButton level={level} word={word} />
+              <ProgressButton wordItem={wordItem} progress={progress} />
+            </View>
             <Text
               style={
                 word.length > 3

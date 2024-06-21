@@ -10,6 +10,7 @@ export default class Voca extends Realm.Object<Voca> {
   theme!: string;
   explanation?: string;
   bookmarked!: boolean;
+  progress!: number;
 
   static schema: ObjectSchema = {
     name: 'Voca',
@@ -23,6 +24,7 @@ export default class Voca extends Realm.Object<Voca> {
       theme: 'string',
       explanation: 'string?',
       bookmarked: 'bool',
+      progress: 'int',
     },
     primaryKey: '_id',
   };

@@ -5,9 +5,12 @@ import Busu from './src/model/Busu';
 
 Realm.copyBundledRealmFiles();
 
+const schemaVersion = 1;
+
 const realmConfig: Realm.Configuration = {
   schema: [Voca, Busu],
   path: 'bundle.realm',
+  schemaVersion,
 };
 
 export const {RealmProvider, useRealm, useObject, useQuery} =

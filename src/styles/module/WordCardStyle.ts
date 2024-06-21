@@ -4,10 +4,12 @@ import {fonts} from '../fonts';
 
 type Style = {
   dirRow: ViewStyle;
+  dirCol: ViewStyle;
   hanzi: TextStyle;
   meaningText: TextStyle;
   content: ViewStyle;
   notTouched: ViewStyle;
+  progressDot: ViewStyle;
 };
 
 const commonPart: Style = {
@@ -18,6 +20,10 @@ const commonPart: Style = {
     display: 'flex',
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
+  },
+  dirCol: {
+    display: 'flex',
+    alignItems: 'center',
   },
   hanzi: {
     marginVertical: 13,
@@ -39,6 +45,13 @@ const commonPart: Style = {
   notTouched: {
     padding: 8,
     borderWidth: 1,
+  },
+  progressDot: {
+    marginTop: 3,
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    backgroundColor: 'black',
   },
 };
 

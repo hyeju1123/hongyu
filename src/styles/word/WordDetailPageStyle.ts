@@ -6,6 +6,7 @@ type Style = {
   container: ViewStyle;
   scrollView: ViewStyle;
   scrollViewContent: ViewStyle;
+  topButtonWrapper: ViewStyle;
   word: TextStyle;
   longWord: TextStyle;
   intonation: TextStyle;
@@ -29,6 +30,13 @@ export const commonPart: Style = {
   scrollViewContent: {
     flexGrow: 1,
     justifyContent: 'center',
+  },
+  topButtonWrapper: {
+    width: '100%',
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   word: {
     fontFamily: fonts.hanzi,

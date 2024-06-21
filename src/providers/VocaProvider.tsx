@@ -30,6 +30,7 @@ type VocaContextType = {
   updateBusuBookmark: (_id: number) => void;
   updateExplanation: (_id: number, explanation: string) => void;
   updateBusuExplanation: (_id: number, explanation: string) => void;
+  updateProgress: (_id: number, updatedProgress: number) => void;
 };
 
 export const getDefaultWord = () => {
@@ -99,6 +100,7 @@ const VocaContext = createContext<VocaContextType>({
   updateBusuBookmark: () => {},
   updateExplanation: () => {},
   updateBusuExplanation: () => {},
+  updateProgress: () => {},
 });
 
 export function VocaProvider({children}: PropsWithChildren) {
@@ -285,6 +287,17 @@ export function VocaProvider({children}: PropsWithChildren) {
     [realm, getBusu],
   );
 
+  const updateProgress = useCallback(
+    (_id: number, updatedProgress: number) => {
+      const voca = getVoca(_id);
+
+      realm.write(() => {
+        voca.progress = updatedProgress;
+      });
+    },
+    [realm, getVoca],
+  );
+
   const contextValue = {
     getVoca,
     getVocasByLevel,
@@ -302,6 +315,7 @@ export function VocaProvider({children}: PropsWithChildren) {
     updateBusuBookmark,
     updateExplanation,
     updateBusuExplanation,
+    updateProgress,
   };
 
   return (

@@ -74,6 +74,7 @@ export default function Util() {
         explanation: word.explanation,
         info: '',
         isBusu: false,
+        progress: word.progress,
       };
     } else {
       return {
@@ -87,6 +88,7 @@ export default function Util() {
         explanation: word.explanation,
         info: word.info,
         isBusu: true,
+        progress: 0,
       };
     }
   }, []);

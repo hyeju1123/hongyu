@@ -11,6 +11,7 @@ export type Word = {
   explanation: string | undefined;
   info: string;
   isBusu: boolean;
+  progress: number;
 };
 
 const EmptyWord = {
@@ -24,6 +25,7 @@ const EmptyWord = {
   explanation: '',
   info: '',
   isBusu: false,
+  progress: 0,
 };
 
 export const wordListState = atom<Word[]>({
