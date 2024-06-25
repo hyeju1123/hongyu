@@ -22,7 +22,8 @@
 - **Android**: 2023.10 - 2024.03
   <img src="https://github.com/hyeju1123/hongyu/assets/65005334/7511edf0-bd2a-4c52-8a8d-8b2e0918ac77" width="15px"/> (**Google Play**) https://play.google.com/store/apps/details?id=com.hongyu
   <br/>
-- **IOS**: 2023.10 - 🚧
+- **IOS**: 2023.10 - 2024.06
+  <img src="https://github.com/hyeju1123/hongyu/assets/65005334/51dd341f-3103-4181-a111-78a8811302bd" width="15px"/> (**App Store**) https://apps.apple.com/kr/app/%EC%95%94%EA%B8%B0%EC%A4%91-hsk-%EC%A4%91%EA%B5%AD%EC%96%B4-%EB%8B%A8%EC%96%B4%EC%9E%A5/id6503228823
 
 <br/>
 <br/>
