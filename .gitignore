@@ -20,9 +20,9 @@ DerivedData
 *.hmap
 *.ipa
 *.xcuserstate
-ios/.xcode.env.local
-ios/tmp.xcconfig
-ios/assets/bundle.realm
+**/.xcode.env.local
+**/tmp.xcconfig
+**/assets/bundle.realm
 
 # Android/IntelliJ
 #
@@ -59,7 +59,7 @@ yarn-error.log
 *.jsbundle
 
 # Ruby / CocoaPods
-/ios/Pods/
+**/Pods/
 /vendor/bundle/
 
 # Temporary files created by Metro to check the health of the file watcher
@@ -72,3 +72,12 @@ yarn-error.log
 
 # DB file
 android/app/src/main/assets/bundle.realm
+
+ 
+# Yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
