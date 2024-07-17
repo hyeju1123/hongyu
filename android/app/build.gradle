@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: "org.jetbrains.kotlin.android"
 apply plugin: "com.facebook.react"
 
 /**
@@ -81,10 +82,15 @@ def enableSeparateBuildPerCPUArchitecture = true
  */
 def jscFlavor = 'org.webkit:android-jsc:+'
 
+kotlin {
+    jvmToolchain(17)
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
-    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdk rootProject.ext.compileSdkVersion
 
     namespace "com.hongyu"
     defaultConfig {
@@ -95,6 +101,25 @@ android {
         versionName "1.1.5"
         resValue "string", "build_config_package", "com.hongyu"
     }
+
+    kotlinOptions {
+        jvmTarget = "17"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.3"
+    }
+
+    buildFeatures {
+        compose true
+        buildConfig = true
+    }
+
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -137,12 +162,6 @@ dependencies {
     // The version of react-native is set by the React Native Gradle Plugin
     implementation("com.facebook.react:react-android")
 
-    debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}")
-    debugImplementation("com.facebook.flipper:flipper-network-plugin:${FLIPPER_VERSION}") {
-        exclude group:'com.squareup.okhttp3', module:'okhttp'
-    }
-
-    debugImplementation("com.facebook.flipper:flipper-fresco-plugin:${FLIPPER_VERSION}")
     if (hermesEnabled.toBoolean()) {
         implementation("com.facebook.react:hermes-android")
     } else {
@@ -150,6 +169,7 @@ dependencies {
     }
     implementation project(':react-native-splash-screen')
     implementation "androidx.core:core-splashscreen:1.0.0-beta02"
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
