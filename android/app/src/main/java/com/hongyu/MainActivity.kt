@@ -29,7 +29,7 @@ class MainActivity : ReactActivity() {
    * react-native-screens package requires one additional configuration step to properly work on Android devices.
    */
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
+    super.onCreate(null)
 
     val nightFlag = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
     val isDark = nightFlag == Configuration.UI_MODE_NIGHT_YES
